@@ -1,0 +1,142 @@
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Clash Display", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Clash Display", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background-color: #000000;
+  color: #F0F0F0;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  letter-spacing: 0.015em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.01em;
+}
+
+/* Offset anchor targets below fixed header */
+section[id] {
+  scroll-margin-top: clamp(64px, 10vw, 80px);
+}
+
+/* Hide scrollbar for cleaner look */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #000000; 
+}
+::-webkit-scrollbar-thumb {
+  background: #333; 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+/* Lazy load wrapper for iframes */
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #111;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Cinematic film grain animation */
+@keyframes grain {
+  0%,100% { transform: translate(0,0) }
+  10%     { transform: translate(-2%,-3%) }
+  20%     { transform: translate(3%, 1%) }
+  30%     { transform: translate(-1%, 4%) }
+  40%     { transform: translate(2%,-2%) }
+  50%     { transform: translate(-3%, 3%) }
+  60%     { transform: translate(1%,-1%) }
+  70%     { transform: translate(-2%, 2%) }
+  80%     { transform: translate(3%,-3%) }
+  90%     { transform: translate(-1%, 1%) }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes marquee-reverse {
+  from { transform: translate3d(-50%, 0, 0); }
+  to   { transform: translate3d(0, 0, 0); }
+}
+
+/* Film grain overlay — fixed over entire site */
+.film-grain {
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.032;
+  mix-blend-mode: overlay;
+  animation: grain 0.6s steps(1) infinite;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* Disable grain on mobile — saves compositing cost on low-end devices */
+@media (max-width: 768px) {
+  .film-grain {
+    display: none;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .film-grain { animation: none; }
+  .animate-marquee,
+  .animate-marquee-slow,
+  .animate-marquee-reverse { animation: none; }
+}
+
+/* Vignette — darkens edges for cinematic depth */
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, rgba(0,0,0,0.55) 100%);
+}
+
+@layer utilities {
+  .animate-fadeIn {
+    animation: fadeIn 0.2s ease-out forwards;
+  }
+  .animate-marquee {
+    animation: marquee 28s linear infinite;
+  }
+  .animate-marquee-slow {
+    animation: marquee 38s linear infinite;
+  }
+  .animate-marquee-reverse {
+    animation: marquee-reverse 32s linear infinite;
+  }
+}
