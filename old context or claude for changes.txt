@@ -1,0 +1,15 @@
+Project: Rahul Jain Portfolio (Video Editor & Motion Designer)
+
+Repo: https://github.com/borntoflyrjbc/rahul-portfolio-2026
+Local path: c:\Users\MY PC\Documents\Rahul_portfolio_April-2026_claudecode
+Live: https://rahul-portfolio-2026.vercel.app  (Vercel auto-deploys on push to main)
+
+Tech: React 19 + Vite 6 + TypeScript + Tailwind v4 + Framer Motion. Single-file architecture — sab kuch src/App.tsx me hai (~1940 lines). Tailwind v4 syntax use hota hai (NOT v3).
+
+IMPORTANT: Project ke root me CLAUDE.md file hai — usme full project context, design rules, mobile considerations, "do-not-break" list, aur sab sections ka location diya hai. Pehle CLAUDE.md padho — uske baad hi koi change suggest karna ya code likhna.
+
+Communication: Hinglish (Hindi + English mix) me baat karo, simple language. Mai layman hoon — code khud nahi likhta, tum karke do. Direct execution prefer karta hoon, lambi explanation ki zaroorat nahi.
+
+Workflow: Change karne ke baad git add . && git commit -m "..." && git push — Vercel khud 30-60 sec me live kar deta hai.
+
+Ab batao kya karna hai.

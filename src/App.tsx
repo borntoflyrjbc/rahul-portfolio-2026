@@ -402,8 +402,9 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
 
           {/* Close */}
           <button onClick={onClose}
-            className="absolute top-4 right-4 z-30 w-8 h-8 rounded-full bg-white/[0.05] border border-white/[0.1] flex items-center justify-center text-white/40 hover:text-white hover:bg-white/[0.1] transition-all duration-200">
-            <X size={14} />
+            aria-label="Close resume"
+            className="absolute top-3.5 right-3.5 z-30 w-10 h-10 rounded-full bg-white border border-black/10 flex items-center justify-center text-black hover:bg-white/95 hover:scale-105 transition-all duration-200 shadow-[0_4px_14px_rgba(0,0,0,0.35)]">
+            <X size={18} strokeWidth={2.5} />
           </button>
 
           {/* ── HEADER ── */}
@@ -1047,7 +1048,7 @@ const ToolsMarquee = () => {
           </motion.p>
         </div>
 
-        <div className="flex flex-nowrap sm:flex-wrap justify-start sm:justify-center gap-5 sm:gap-10 md:gap-14 overflow-x-auto sm:overflow-x-visible pb-3 sm:pb-0 px-1 sm:px-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div className="flex flex-wrap justify-center gap-x-5 gap-y-6 sm:gap-10 md:gap-14 px-1 sm:px-0">
 
           {/* Premiere Pro */}
           <ToolIcon label="Premiere Pro" glow="rgba(153,120,255,0.35)">
@@ -1110,7 +1111,7 @@ const ToolsMarquee = () => {
           </ToolIcon>
 
           {/* Sketch — correct logo: diamond shape */}
-          <ToolIcon label="Sketch" glow="rgba(247,183,49,0.3)">
+          <ToolIcon label="Sketch (UI/UX)" glow="rgba(247,183,49,0.3)">
             <svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
               <rect width="88" height="88" fill="#1c1400"/>
               {/* Sketch diamond/gem shape */}
@@ -1269,9 +1270,9 @@ const ClientsSection = () => (
             {_clDoubled1.map((c, i) => (
               <div
                 key={i}
-                className="relative flex-shrink-0 w-[170px] sm:w-[210px] h-[90px] sm:h-[110px] mr-4 sm:mr-5
+                className="relative flex-shrink-0 w-[140px] sm:w-[210px] h-[76px] sm:h-[110px] mr-3 sm:mr-5
                            bg-gradient-to-br from-white via-white to-gray-50/95
-                           rounded-2xl px-5 sm:px-7 py-4 sm:py-5
+                           rounded-2xl px-4 sm:px-7 py-3 sm:py-5
                            ring-1 ring-black/[0.06]
                            shadow-[0_2px_14px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.9)]
                            flex items-center justify-center
@@ -1294,9 +1295,9 @@ const ClientsSection = () => (
             {_clDoubled2.map((c, i) => (
               <div
                 key={i}
-                className="relative flex-shrink-0 w-[170px] sm:w-[210px] h-[90px] sm:h-[110px] mr-4 sm:mr-5
+                className="relative flex-shrink-0 w-[140px] sm:w-[210px] h-[76px] sm:h-[110px] mr-3 sm:mr-5
                            bg-gradient-to-br from-white via-white to-gray-50/95
-                           rounded-2xl px-5 sm:px-7 py-4 sm:py-5
+                           rounded-2xl px-4 sm:px-7 py-3 sm:py-5
                            ring-1 ring-black/[0.06]
                            shadow-[0_2px_14px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.9)]
                            flex items-center justify-center
@@ -1538,33 +1539,35 @@ const VideoCard: React.FC<{
     if (!playing && !preloaded) setIframeReady(false);
   }, [playing, preloaded]);
 
-  // Mobile: preload observer — mounts iframe invisibly 400px before card enters viewport
+  // Mobile: preload observer — mounts iframe invisibly 700px before card enters viewport
+  // Aggressive preload ensures buffering completes before user reaches card
   useEffect(() => {
     if (!isMobile) return;
     const el = cardRef.current;
     if (!el) return;
     const obs = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) setPreloaded(true); },
-      { rootMargin: "0px 0px 400px 0px", threshold: 0 }
+      { rootMargin: "0px 0px 700px 0px", threshold: 0 }
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, [isMobile]);
 
-  // Mobile: active observer — triggers playback at 35% visibility (fires sooner than 50%)
+  // Mobile: active observer — triggers playback as soon as card edge enters viewport
+  // Lower threshold (0.15) + 100px below-viewport rootMargin = near-instant autoplay on scroll
   useEffect(() => {
     if (!isMobile) return;
     const el = cardRef.current;
     if (!el) return;
     const obs = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.35) {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.15) {
           onSetActive?.(item.id ?? null);
         } else if (!entry.isIntersecting && activeIdRef.current === item.id) {
           onSetActive?.(null);
         }
       },
-      { threshold: [0, 0.35] }
+      { rootMargin: "0px 0px 100px 0px", threshold: [0, 0.15, 0.5] }
     );
     obs.observe(el);
     return () => obs.disconnect();

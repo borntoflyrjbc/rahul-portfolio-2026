@@ -1,0 +1,7 @@
+Jab bhi koi change karwana ho, mai code edit karunga, phir tum/mai bas 3 commands:
+
+
+git add .
+git commit -m "kya change kiya"
+git push
+Bas. Vercel khud naya version live kar dega 30-60 second me. Tumhe Vercel pe jaakar kuch nahi karna har baar — sirf pehli baar repo connect karte ho, baadme sab automatic.
