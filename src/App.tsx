@@ -1512,44 +1512,6 @@ function VideoModal({ item, onClose }: { item: WorkItem; onClose: () => void }) 
   );
 }
 
-// Load YouTube IFrame API once, return a promise that resolves when ready
-const ytApiPromise: { current: Promise<any> | null } = { current: null };
-const loadYouTubeAPI = (): Promise<any> => {
-  if (typeof window === "undefined") return Promise.reject();
-  if ((window as any).YT?.Player) return Promise.resolve((window as any).YT);
-  if (ytApiPromise.current) return ytApiPromise.current;
-  ytApiPromise.current = new Promise((resolve) => {
-    const prev = (window as any).onYouTubeIframeAPIReady;
-    (window as any).onYouTubeIframeAPIReady = () => {
-      prev?.();
-      resolve((window as any).YT);
-    };
-    if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
-      const s = document.createElement('script');
-      s.src = 'https://www.youtube.com/iframe_api';
-      document.head.appendChild(s);
-    }
-  });
-  return ytApiPromise.current;
-};
-
-// Track all active players so we can force-play them on first user gesture
-const activePlayers = new Set<any>();
-let firstGestureBound = false;
-const bindFirstGesture = () => {
-  if (firstGestureBound || typeof window === "undefined") return;
-  firstGestureBound = true;
-  const handler = () => {
-    activePlayers.forEach((p) => {
-      try { p.mute?.(); p.playVideo?.(); } catch {}
-    });
-  };
-  window.addEventListener("touchstart", handler, { once: false, passive: true });
-  window.addEventListener("click", handler, { once: false, passive: true });
-};
-
-let cardCounter = 0;
-
 const VideoCard: React.FC<{
   item: WorkItem;
   onCardClick: (item: WorkItem) => void;
@@ -1557,93 +1519,6 @@ const VideoCard: React.FC<{
 }> = ({ item, onCardClick, eager }) => {
   const isVertical = item.aspect === "vertical";
   const isSquare = item.aspect === "aspect-square";
-  const [desktopPlaying, setDesktopPlaying] = useState(false);
-  const [iframeReady, setIframeReady] = useState(false);
-  const isMobile = React.useRef(
-    typeof window !== "undefined" && window.matchMedia("(hover: none)").matches
-  ).current;
-  // Eager cards (first few) mount instantly on mobile — no observer wait
-  const [shouldMount, setShouldMount] = useState(!!eager && isMobile);
-  const cardRef = React.useRef<HTMLDivElement>(null);
-  const playerRef = React.useRef<any>(null);
-  const playerDivIdRef = React.useRef(`yt-player-${++cardCounter}-${item.id}`);
-
-  // Kick off YT API download immediately on mobile so it's ready by scroll time
-  useEffect(() => {
-    if (isMobile) loadYouTubeAPI();
-  }, [isMobile]);
-
-  // Mobile: mount player when card nears viewport (big bottom buffer = early preload)
-  useEffect(() => {
-    if (!isMobile) return;
-    const el = cardRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setShouldMount(true); },
-      { rootMargin: "200px 0px 1200px 0px", threshold: 0 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [isMobile]);
-
-  const iframeMounted = isMobile ? shouldMount : desktopPlaying;
-  const playing = iframeMounted;
-
-  // Instantiate YT.Player when mounted; force playVideo() in onReady.
-  useEffect(() => {
-    if (!iframeMounted) {
-      if (playerRef.current) {
-        activePlayers.delete(playerRef.current);
-        try { playerRef.current.destroy(); } catch {}
-        playerRef.current = null;
-        setIframeReady(false);
-      }
-      return;
-    }
-    let cancelled = false;
-    bindFirstGesture();
-    loadYouTubeAPI().then((YT) => {
-      if (cancelled || !document.getElementById(playerDivIdRef.current)) return;
-      playerRef.current = new YT.Player(playerDivIdRef.current, {
-        videoId: item.id,
-        width: "100%",
-        height: "100%",
-        host: "https://www.youtube-nocookie.com",
-        playerVars: {
-          autoplay: 1, mute: 1, controls: 0, modestbranding: 1,
-          rel: 0, playsinline: 1, loop: 1, playlist: item.id,
-          disablekb: 1, iv_load_policy: 3, fs: 0,
-        },
-        events: {
-          onReady: (e: any) => {
-            try {
-              e.target.mute();
-              e.target.setPlaybackQuality?.("small");
-              e.target.playVideo();
-              activePlayers.add(e.target);
-            } catch {}
-          },
-          onStateChange: (e: any) => {
-            if (e.data === 1) setIframeReady(true);
-            if (e.data === 0) {
-              try { e.target.playVideo(); } catch {}
-            }
-            if (e.data === 2) {
-              try { e.target.playVideo(); } catch {}
-            }
-          },
-        },
-      });
-    });
-    return () => {
-      cancelled = true;
-      if (playerRef.current) {
-        activePlayers.delete(playerRef.current);
-        try { playerRef.current.destroy(); } catch {}
-        playerRef.current = null;
-      }
-    };
-  }, [iframeMounted, item.id]);
 
   const fallbackThumbnail = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
@@ -1654,20 +1529,16 @@ const VideoCard: React.FC<{
 
   return (
     <div
-      ref={cardRef}
       className="break-inside-avoid cursor-pointer group"
-      onMouseEnter={() => !isMobile && setDesktopPlaying(true)}
-      onMouseLeave={() => !isMobile && setDesktopPlaying(false)}
       onClick={() => onCardClick(item)}
     >
       <div className={`
         relative overflow-hidden rounded-xl md:rounded-2xl bg-[#080808]
         ${isVertical ? "aspect-[9/16]" : isSquare ? "aspect-square" : "aspect-video"}
-        ring-1 ring-white/[0.05] transition-shadow duration-300
-        group-hover:ring-white/[0.12] group-hover:shadow-[0_16px_48px_rgba(0,0,0,0.7)]
+        ring-1 ring-white/[0.05] transition-all duration-300
+        group-hover:ring-white/[0.15] group-hover:shadow-[0_16px_48px_rgba(0,0,0,0.7)]
       `}>
 
-        {/* Thumbnail — stays visible until iframe is fully ready */}
         <img
           src={`https://i.ytimg.com/vi/${item.id}/maxresdefault.jpg`}
           onLoad={(e) => {
@@ -1675,55 +1546,42 @@ const VideoCard: React.FC<{
             if (img.naturalWidth <= 120) fallbackThumbnail(e);
           }}
           onError={fallbackThumbnail}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-out ${isVertical ? "scale-[1.4] origin-center" : ""} ${playing && iframeReady ? "opacity-0" : "opacity-100"}`}
+          className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out ${isVertical ? "scale-[1.4] origin-center" : ""} group-hover:scale-[1.04]`}
           alt={item.title || ""}
           loading={eager ? "eager" : "lazy"}
           decoding="async"
         />
 
-        {/* Subtle loading ring — visible while iframe is mounting */}
-        {playing && !iframeReady && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-            <div className="w-8 h-8 rounded-full border-2 border-white/15 border-t-white/60 animate-spin" />
-          </div>
-        )}
+        {/* Subtle bottom-to-top gradient for depth */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent pointer-events-none" />
 
-        {/* YT.Player mounts here — playVideo() forced via API in onReady */}
-        {iframeMounted && (
-          <div
-            className={`absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-500 ${iframeReady ? "opacity-100" : "opacity-0"}`}
-          >
-            <div id={playerDivIdRef.current} className="w-full h-full" />
-          </div>
-        )}
-
-        {/* Tag badge — always visible */}
-        <span className="absolute top-2 left-2 z-20 px-2 py-[3px] rounded-full bg-black/55 backdrop-blur-sm text-[8px] sm:text-[9px] font-semibold uppercase tracking-widest text-white/55 border border-white/[0.1] pointer-events-none">
+        {/* Tag badge */}
+        <span className="absolute top-2 left-2 z-20 px-2 py-[3px] rounded-full bg-black/55 backdrop-blur-sm text-[8px] sm:text-[9px] font-semibold uppercase tracking-widest text-white/60 border border-white/[0.1] pointer-events-none">
           {getItemTag(item)}
         </span>
 
-        {/* Dark gradient + title — only when not playing */}
-        {!playing && item.title && (
+        {/* Title — always faintly visible on mobile, fades in on desktop hover */}
+        {item.title && (
           <div className="absolute bottom-0 left-0 right-0 z-10 p-3 md:p-4
-                          bg-gradient-to-t from-black/85 via-black/20 to-transparent
-                          translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100
-                          transition-all duration-250 ease-out">
+                          bg-gradient-to-t from-black/90 via-black/40 to-transparent
+                          opacity-100 md:opacity-0 md:group-hover:opacity-100
+                          translate-y-0 md:translate-y-1 md:group-hover:translate-y-0
+                          transition-all duration-300 ease-out">
             <p className="text-white text-[11px] md:text-[13px] font-semibold leading-snug drop-shadow-md line-clamp-2">{item.title}</p>
           </div>
         )}
 
-        {/* Play button */}
-        {!playing && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-            <div className="w-11 h-11 md:w-12 md:h-12 rounded-full bg-black/40 backdrop-blur-sm border border-white/25 flex items-center justify-center
-                            opacity-60 group-hover:opacity-100 group-hover:bg-white/15 group-hover:scale-110 group-hover:border-white/40
-                            transition-all duration-300">
-              <svg className="w-4 h-4 text-white translate-x-[2px]" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-            </div>
+        {/* Play button — always visible, scales on hover */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+          <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/55 backdrop-blur-md border border-white/30 flex items-center justify-center
+                          shadow-[0_4px_24px_rgba(0,0,0,0.5)]
+                          group-hover:bg-white/15 group-hover:scale-110 group-hover:border-white/50
+                          transition-all duration-300">
+            <svg className="w-5 h-5 md:w-6 md:h-6 text-white translate-x-[2px]" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
