@@ -1258,25 +1258,28 @@ const ClientsSection = () => (
       <div className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-40 z-10 bg-gradient-to-r from-[#0b0b0b] to-transparent" />
       <div className="pointer-events-none absolute inset-y-0 right-0 w-24 sm:w-40 z-10 bg-gradient-to-l from-[#0b0b0b] to-transparent" />
 
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-4 sm:gap-5">
 
         {/* Row 1 — scrolls left — mr instead of gap for perfect seamless loop */}
         <div className="overflow-hidden">
           <div
             className="flex w-max"
-            style={{ willChange: "transform", animation: "marquee 22s linear infinite" }}
+            style={{ willChange: "transform", animation: "marquee 26s linear infinite" }}
           >
             {_clDoubled1.map((c, i) => (
               <div
                 key={i}
-                className="relative flex-shrink-0 w-[120px] sm:w-[148px] h-[56px] sm:h-[70px] mr-3
-                           bg-white rounded-xl p-2.5 sm:p-3
+                className="relative flex-shrink-0 w-[170px] sm:w-[210px] h-[90px] sm:h-[110px] mr-4 sm:mr-5
+                           bg-gradient-to-br from-white via-white to-gray-50/95
+                           rounded-2xl px-5 sm:px-7 py-4 sm:py-5
+                           ring-1 ring-black/[0.06]
+                           shadow-[0_2px_14px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.9)]
                            flex items-center justify-center
                            transition-all duration-300 ease-out
-                           hover:scale-[1.08] hover:shadow-[0_6px_28px_rgba(0,0,0,0.4),0_0_0_1.5px_rgba(168,85,247,0.2)]
+                           hover:scale-[1.05] hover:shadow-[0_10px_36px_rgba(0,0,0,0.45),0_0_0_1.5px_rgba(168,85,247,0.25)]
                            hover:z-20 cursor-default"
               >
-                <img src={c.src} alt={c.name} className="w-full h-full object-contain" loading="lazy" draggable="false" />
+                <img src={c.src} alt={c.name} className="max-w-full max-h-full object-contain" loading="lazy" draggable="false" />
               </div>
             ))}
           </div>
@@ -1286,19 +1289,22 @@ const ClientsSection = () => (
         <div className="overflow-hidden">
           <div
             className="flex w-max"
-            style={{ willChange: "transform", animation: "marquee-reverse 28s linear infinite" }}
+            style={{ willChange: "transform", animation: "marquee-reverse 32s linear infinite" }}
           >
             {_clDoubled2.map((c, i) => (
               <div
                 key={i}
-                className="relative flex-shrink-0 w-[120px] sm:w-[148px] h-[56px] sm:h-[70px] mr-3
-                           bg-white rounded-xl p-2.5 sm:p-3
+                className="relative flex-shrink-0 w-[170px] sm:w-[210px] h-[90px] sm:h-[110px] mr-4 sm:mr-5
+                           bg-gradient-to-br from-white via-white to-gray-50/95
+                           rounded-2xl px-5 sm:px-7 py-4 sm:py-5
+                           ring-1 ring-black/[0.06]
+                           shadow-[0_2px_14px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.9)]
                            flex items-center justify-center
                            transition-all duration-300 ease-out
-                           hover:scale-[1.08] hover:shadow-[0_6px_28px_rgba(0,0,0,0.4),0_0_0_1.5px_rgba(168,85,247,0.2)]
+                           hover:scale-[1.05] hover:shadow-[0_10px_36px_rgba(0,0,0,0.45),0_0_0_1.5px_rgba(168,85,247,0.25)]
                            hover:z-20 cursor-default"
               >
-                <img src={c.src} alt={c.name} className="w-full h-full object-contain" loading="lazy" draggable="false" />
+                <img src={c.src} alt={c.name} className="max-w-full max-h-full object-contain" loading="lazy" draggable="false" />
               </div>
             ))}
           </div>
