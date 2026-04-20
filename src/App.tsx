@@ -1512,6 +1512,44 @@ function VideoModal({ item, onClose }: { item: WorkItem; onClose: () => void }) 
   );
 }
 
+// Load YouTube IFrame API once, return a promise that resolves when ready
+const ytApiPromise: { current: Promise<any> | null } = { current: null };
+const loadYouTubeAPI = (): Promise<any> => {
+  if (typeof window === "undefined") return Promise.reject();
+  if ((window as any).YT?.Player) return Promise.resolve((window as any).YT);
+  if (ytApiPromise.current) return ytApiPromise.current;
+  ytApiPromise.current = new Promise((resolve) => {
+    const prev = (window as any).onYouTubeIframeAPIReady;
+    (window as any).onYouTubeIframeAPIReady = () => {
+      prev?.();
+      resolve((window as any).YT);
+    };
+    if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
+      const s = document.createElement('script');
+      s.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(s);
+    }
+  });
+  return ytApiPromise.current;
+};
+
+// Track all active players so we can force-play them on first user gesture
+const activePlayers = new Set<any>();
+let firstGestureBound = false;
+const bindFirstGesture = () => {
+  if (firstGestureBound || typeof window === "undefined") return;
+  firstGestureBound = true;
+  const handler = () => {
+    activePlayers.forEach((p) => {
+      try { p.mute?.(); p.playVideo?.(); } catch {}
+    });
+  };
+  window.addEventListener("touchstart", handler, { once: false, passive: true });
+  window.addEventListener("click", handler, { once: false, passive: true });
+};
+
+let cardCounter = 0;
+
 const VideoCard: React.FC<{
   item: WorkItem;
   onCardClick: (item: WorkItem) => void;
@@ -1523,12 +1561,13 @@ const VideoCard: React.FC<{
   const [iframeReady, setIframeReady] = useState(false);
   const [shouldMount, setShouldMount] = useState(false);
   const cardRef = React.useRef<HTMLDivElement>(null);
+  const playerRef = React.useRef<any>(null);
+  const playerDivIdRef = React.useRef(`yt-player-${++cardCounter}-${item.id}`);
   const isMobile = React.useRef(
     typeof window !== "undefined" && window.matchMedia("(hover: none)").matches
   ).current;
 
-  // Mobile: mount iframe when card is near viewport, keep mounted until far away.
-  // YouTube's autoplay=1&mute=1&loop=1 handles playback — no manual play/pause needed.
+  // Mobile: mount player when card nears viewport, keep mounted while close.
   useEffect(() => {
     if (!isMobile) return;
     const el = cardRef.current;
@@ -1544,11 +1583,59 @@ const VideoCard: React.FC<{
   const iframeMounted = isMobile ? shouldMount : desktopPlaying;
   const playing = iframeMounted;
 
+  // Instantiate YT.Player when mounted; force playVideo() in onReady.
   useEffect(() => {
-    if (!iframeMounted) setIframeReady(false);
-  }, [iframeMounted]);
-
-  const embedSrc = `https://www.youtube-nocookie.com/embed/${item.id}?autoplay=1&mute=1&loop=1&playlist=${item.id}&controls=0&modestbranding=1&rel=0&playsinline=1`;
+    if (!iframeMounted) {
+      if (playerRef.current) {
+        activePlayers.delete(playerRef.current);
+        try { playerRef.current.destroy(); } catch {}
+        playerRef.current = null;
+        setIframeReady(false);
+      }
+      return;
+    }
+    let cancelled = false;
+    bindFirstGesture();
+    loadYouTubeAPI().then((YT) => {
+      if (cancelled || !document.getElementById(playerDivIdRef.current)) return;
+      playerRef.current = new YT.Player(playerDivIdRef.current, {
+        videoId: item.id,
+        width: "100%",
+        height: "100%",
+        playerVars: {
+          autoplay: 1, mute: 1, controls: 0, modestbranding: 1,
+          rel: 0, playsinline: 1, loop: 1, playlist: item.id,
+          disablekb: 1, iv_load_policy: 3, fs: 0,
+        },
+        events: {
+          onReady: (e: any) => {
+            try {
+              e.target.mute();
+              e.target.playVideo();
+              activePlayers.add(e.target);
+            } catch {}
+          },
+          onStateChange: (e: any) => {
+            if (e.data === 1) setIframeReady(true);
+            if (e.data === 0) {
+              try { e.target.playVideo(); } catch {}
+            }
+            if (e.data === 2) {
+              try { e.target.playVideo(); } catch {}
+            }
+          },
+        },
+      });
+    });
+    return () => {
+      cancelled = true;
+      if (playerRef.current) {
+        activePlayers.delete(playerRef.current);
+        try { playerRef.current.destroy(); } catch {}
+        playerRef.current = null;
+      }
+    };
+  }, [iframeMounted, item.id]);
 
   const fallbackThumbnail = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
@@ -1593,15 +1680,13 @@ const VideoCard: React.FC<{
           </div>
         )}
 
-        {/* Autoplay iframe — mounts when near viewport, YouTube handles playback */}
+        {/* YT.Player mounts here — playVideo() forced via API in onReady */}
         {iframeMounted && (
-          <iframe
-            src={embedSrc}
-            allow="autoplay; encrypted-media; picture-in-picture"
+          <div
             className={`absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-500 ${iframeReady ? "opacity-100" : "opacity-0"}`}
-            style={{ border: "none" }}
-            onLoad={() => setIframeReady(true)}
-          />
+          >
+            <div id={playerDivIdRef.current} className="w-full h-full" />
+          </div>
         )}
 
         {/* Tag badge — always visible */}
