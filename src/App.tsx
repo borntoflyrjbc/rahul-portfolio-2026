@@ -1559,22 +1559,28 @@ const VideoCard: React.FC<{
   const isSquare = item.aspect === "aspect-square";
   const [desktopPlaying, setDesktopPlaying] = useState(false);
   const [iframeReady, setIframeReady] = useState(false);
-  const [shouldMount, setShouldMount] = useState(false);
-  const cardRef = React.useRef<HTMLDivElement>(null);
-  const playerRef = React.useRef<any>(null);
-  const playerDivIdRef = React.useRef(`yt-player-${++cardCounter}-${item.id}`);
   const isMobile = React.useRef(
     typeof window !== "undefined" && window.matchMedia("(hover: none)").matches
   ).current;
+  // Eager cards (first few) mount instantly on mobile — no observer wait
+  const [shouldMount, setShouldMount] = useState(!!eager && isMobile);
+  const cardRef = React.useRef<HTMLDivElement>(null);
+  const playerRef = React.useRef<any>(null);
+  const playerDivIdRef = React.useRef(`yt-player-${++cardCounter}-${item.id}`);
 
-  // Mobile: mount player when card nears viewport, keep mounted while close.
+  // Kick off YT API download immediately on mobile so it's ready by scroll time
+  useEffect(() => {
+    if (isMobile) loadYouTubeAPI();
+  }, [isMobile]);
+
+  // Mobile: mount player when card nears viewport (big bottom buffer = early preload)
   useEffect(() => {
     if (!isMobile) return;
     const el = cardRef.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([entry]) => setShouldMount(entry.isIntersecting),
-      { rootMargin: "400px 0px 400px 0px", threshold: 0 }
+      ([entry]) => { if (entry.isIntersecting) setShouldMount(true); },
+      { rootMargin: "200px 0px 1200px 0px", threshold: 0 }
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -1602,6 +1608,7 @@ const VideoCard: React.FC<{
         videoId: item.id,
         width: "100%",
         height: "100%",
+        host: "https://www.youtube-nocookie.com",
         playerVars: {
           autoplay: 1, mute: 1, controls: 0, modestbranding: 1,
           rel: 0, playsinline: 1, loop: 1, playlist: item.id,
@@ -1611,6 +1618,7 @@ const VideoCard: React.FC<{
           onReady: (e: any) => {
             try {
               e.target.mute();
+              e.target.setPlaybackQuality?.("small");
               e.target.playVideo();
               activePlayers.add(e.target);
             } catch {}
