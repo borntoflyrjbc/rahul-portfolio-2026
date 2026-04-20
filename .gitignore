@@ -10,3 +10,8 @@ coverage/
 .idea/
 *.tsbuildinfo
 video-for bg.mp4
+
+# Personal notes — keep local only
+future me chnages.txt
+old context or claude for changes.txt
+*.notes.txt
