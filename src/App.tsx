@@ -1519,7 +1519,6 @@ const VideoCard: React.FC<{
 }> = ({ item, onCardClick, eager }) => {
   const isVertical = item.aspect === "vertical";
   const isSquare = item.aspect === "aspect-square";
-  const [previewFailed, setPreviewFailed] = useState(false);
 
   const fallbackThumbnail = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
@@ -1527,12 +1526,6 @@ const VideoCard: React.FC<{
     else if (img.src.includes("sddefault")) img.src = `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`;
     else if (img.src.includes("hqdefault")) img.src = `https://i.ytimg.com/vi/${item.id}/mqdefault.jpg`;
   };
-
-  // Animated WebP preview — YouTube's auto-generated 6s loop. Browser autoplays
-  // <img> animations natively (no iframe restrictions), so it works on every
-  // mobile browser. Falls back to static thumbnail if no preview exists.
-  const previewSrc = `https://i.ytimg.com/an_webp/${item.id}/mqdefault_6s.webp`;
-  const staticSrc = `https://i.ytimg.com/vi/${item.id}/maxresdefault.jpg`;
 
   return (
     <div
@@ -1546,31 +1539,18 @@ const VideoCard: React.FC<{
         group-hover:ring-white/[0.15] group-hover:shadow-[0_16px_48px_rgba(0,0,0,0.7)]
       `}>
 
-        {/* Static thumbnail — always rendered as base layer */}
         <img
-          src={staticSrc}
+          src={`https://i.ytimg.com/vi/${item.id}/maxresdefault.jpg`}
           onLoad={(e) => {
             const img = e.currentTarget;
             if (img.naturalWidth <= 120) fallbackThumbnail(e);
           }}
           onError={fallbackThumbnail}
-          className={`absolute inset-0 w-full h-full object-cover ${isVertical ? "scale-[1.4] origin-center" : ""}`}
+          className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out ${isVertical ? "scale-[1.4] origin-center" : ""} group-hover:scale-[1.04]`}
           alt={item.title || ""}
           loading={eager ? "eager" : "lazy"}
           decoding="async"
         />
-
-        {/* Animated preview — fades in on top once loaded */}
-        {!previewFailed && (
-          <img
-            src={previewSrc}
-            onError={() => setPreviewFailed(true)}
-            className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out ${isVertical ? "scale-[1.4] origin-center" : ""} group-hover:scale-[1.04]`}
-            alt=""
-            loading={eager ? "eager" : "lazy"}
-            decoding="async"
-          />
-        )}
 
         {/* Subtle bottom-to-top gradient for depth */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent pointer-events-none" />
