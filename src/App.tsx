@@ -1515,66 +1515,40 @@ function VideoModal({ item, onClose }: { item: WorkItem; onClose: () => void }) 
 const VideoCard: React.FC<{
   item: WorkItem;
   onCardClick: (item: WorkItem) => void;
-  activeId?: string | null;
-  onSetActive?: (id: string | null) => void;
   eager?: boolean;
-}> = ({ item, onCardClick, activeId, onSetActive, eager }) => {
+}> = ({ item, onCardClick, eager }) => {
   const isVertical = item.aspect === "vertical";
   const isSquare = item.aspect === "aspect-square";
   const [desktopPlaying, setDesktopPlaying] = useState(false);
   const [iframeReady, setIframeReady] = useState(false);
-  const [preloaded, setPreloaded] = useState(false);
+  const [shouldMount, setShouldMount] = useState(false);
   const cardRef = React.useRef<HTMLDivElement>(null);
-  // Stable mobile check — evaluated once, doesn't change during session
   const isMobile = React.useRef(
     typeof window !== "undefined" && window.matchMedia("(hover: none)").matches
   ).current;
-  const activeIdRef = React.useRef(activeId);
-  useEffect(() => { activeIdRef.current = activeId; }, [activeId]);
 
-  const playing = isMobile ? activeId === item.id : desktopPlaying;
-
-  // Reset iframeReady whenever iframe fully unmounts (not playing AND not preloaded)
-  useEffect(() => {
-    if (!playing && !preloaded) setIframeReady(false);
-  }, [playing, preloaded]);
-
-  // Mobile: preload observer — mounts iframe invisibly 700px before card enters viewport
-  // Aggressive preload ensures buffering completes before user reaches card
+  // Mobile: mount iframe when card is near viewport, keep mounted until far away.
+  // YouTube's autoplay=1&mute=1&loop=1 handles playback — no manual play/pause needed.
   useEffect(() => {
     if (!isMobile) return;
     const el = cardRef.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setPreloaded(true); },
-      { rootMargin: "0px 0px 700px 0px", threshold: 0 }
+      ([entry]) => setShouldMount(entry.isIntersecting),
+      { rootMargin: "400px 0px 400px 0px", threshold: 0 }
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, [isMobile]);
 
-  // Mobile: active observer — triggers playback as soon as card edge enters viewport
-  // Lower threshold (0.15) + 100px below-viewport rootMargin = near-instant autoplay on scroll
+  const iframeMounted = isMobile ? shouldMount : desktopPlaying;
+  const playing = iframeMounted;
+
   useEffect(() => {
-    if (!isMobile) return;
-    const el = cardRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.15) {
-          onSetActive?.(item.id ?? null);
-        } else if (!entry.isIntersecting && activeIdRef.current === item.id) {
-          onSetActive?.(null);
-        }
-      },
-      { rootMargin: "0px 0px 100px 0px", threshold: [0, 0.15, 0.5] }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [isMobile]);
+    if (!iframeMounted) setIframeReady(false);
+  }, [iframeMounted]);
 
-  // Use youtube-nocookie.com — lighter, no cookie tracking overhead, slightly faster
-  const embedSrc = `https://www.youtube-nocookie.com/embed/${item.id}?autoplay=1&mute=1&loop=1&playlist=${item.id}&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=0`;
+  const embedSrc = `https://www.youtube-nocookie.com/embed/${item.id}?autoplay=1&mute=1&loop=1&playlist=${item.id}&controls=0&modestbranding=1&rel=0&playsinline=1`;
 
   const fallbackThumbnail = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
@@ -1619,12 +1593,12 @@ const VideoCard: React.FC<{
           </div>
         )}
 
-        {/* Autoplay iframe — preloads invisibly before card is visible, fades in when active */}
-        {(preloaded || playing) && (
+        {/* Autoplay iframe — mounts when near viewport, YouTube handles playback */}
+        {iframeMounted && (
           <iframe
             src={embedSrc}
-            allow="autoplay; encrypted-media"
-            className={`absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-500 ${playing && iframeReady ? "opacity-100" : "opacity-0"}`}
+            allow="autoplay; encrypted-media; picture-in-picture"
+            className={`absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-500 ${iframeReady ? "opacity-100" : "opacity-0"}`}
             style={{ border: "none" }}
             onLoad={() => setIframeReady(true)}
           />
@@ -1667,11 +1641,6 @@ const CreativeWorks = () => {
   const [activeCategory, setActiveCategory] = useState("All Work");
   const [modalItem, setModalItem] = useState<WorkItem | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  // On mobile, preload the first video immediately so it's ready when user reaches gallery
-  const isMobileDevice = typeof window !== "undefined" && window.matchMedia("(hover: none)").matches;
-  const [activeVideoId, setActiveVideoId] = useState<string | null>(
-    isMobileDevice ? (allWorks.find(w => w.type !== "image")?.id ?? null) : null
-  );
 
   const filtered = useMemo(
     () => activeCategory === "All Work" ? allWorks : allWorks.filter(item => item.category === activeCategory),
@@ -1708,7 +1677,7 @@ const CreativeWorks = () => {
               {categories.map((cat) => (
                 <button
                   key={cat}
-                  onClick={() => { setActiveCategory(cat); setActiveVideoId(null); }}
+                  onClick={() => setActiveCategory(cat)}
                   className={`px-4 md:px-5 py-2 md:py-2 rounded-xl text-[12px] md:text-[13px] font-medium transition-all duration-200 ${
                     activeCategory === cat
                       ? "bg-white text-black shadow-lg"
@@ -1758,7 +1727,7 @@ const CreativeWorks = () => {
                       )}
                     </div>
                   ) : (
-                    <VideoCard item={item} onCardClick={(item) => setModalItem(item)} activeId={activeVideoId} onSetActive={setActiveVideoId} eager={index < 4} />
+                    <VideoCard item={item} onCardClick={(item) => setModalItem(item)} eager={index < 4} />
                   )}
                 </motion.div>
               ))}
