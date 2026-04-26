@@ -1489,7 +1489,7 @@ function VideoModal({ item, onClose }: { item: WorkItem; onClose: () => void }) 
 
       {/* VIDEO CONTAINER */}
       <div
-        className={`relative w-full ${isVertical ? "max-w-[min(85vw,340px)] aspect-[9/16]" : "max-w-5xl aspect-video"}`}
+        className={`relative ${isVertical ? "h-[88vh] max-h-[760px] aspect-[9/16]" : "w-full max-w-5xl aspect-video"}`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Loading skeleton */}
