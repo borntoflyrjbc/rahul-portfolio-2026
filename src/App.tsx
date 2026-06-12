@@ -39,7 +39,10 @@ const categories = ["All Work", "Video & Motion", "Graphics & Design"];
 
 const allWorks: WorkItem[] = [
   // ── PINNED TO TOP ──
+  { id:"4ooLnEDfc1s", title:"Save Environment — World Environment Day 2026", category: "Video & Motion", aspect:"horizontal" },
   { id:"_v_U-I4VKG4", title:"Dr. Paul – Video 3", category: "Video & Motion", aspect:"vertical" },
+  { id:"UVlZmflV9Kw", title:"Railway Safety — जल्दबाज़ी जीवन पर भारी", category: "Video & Motion", aspect:"vertical" },
+  { id:"_EAsdMbttjA", title:"Train Me Pet Kaise Le Jaye — Railway Rules", category: "Video & Motion", aspect:"horizontal" },
   { id:"O5E16Ke0hHo", title:"Udyam Project Edit", category: "Video & Motion", aspect:"aspect-square" },
   { id:"NyyMRQHWfcE", title:"Cinematic Ad", category: "Video & Motion", aspect:"horizontal" },
   { id:"aMfbbqBKJFk", title:"Cinematic 4K Showreel", category: "Video & Motion", aspect:"horizontal" },
@@ -50,6 +53,7 @@ const allWorks: WorkItem[] = [
   { id:"GxrwZRI8sB0", title:"New Reel 2", category: "Video & Motion", aspect:"horizontal" },
   { id:"bBhplejUSho", title:"New Reel 3", category: "Video & Motion", aspect:"horizontal" },
   { id:"bGKxo6ZDig8", title:"New Reel 4", category: "Video & Motion", aspect:"horizontal" },
+  { id:"l3FdAX0i1sY", title:"Train Journey Ka Golden Rule", category: "Video & Motion", aspect:"horizontal" },
   { id:"Lw98VpMZTSM", title:"2K Udyam Independence Day", category: "Video & Motion", aspect:"horizontal" },
   { id:"iDjxRU1tiUw", title:"HCET Promo Video", category: "Video & Motion", aspect:"horizontal" },
   { id:"_zCEfwWNPM8", title:"Hitkarini Hills Live", category: "Video & Motion", aspect:"horizontal" },
@@ -331,7 +335,7 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
       ]
     },
     {
-      title: "Video Editor, Graphic & Motion Designer",
+      title: "Video Editor Graphics & Motion Designer",
       company: "Business Culture, Jabalpur", period: "2023 – Present", current: true,
       points: [
         "Designed visual content for social media & digital marketing campaigns",
@@ -709,6 +713,26 @@ const Hero = () => {
   const contentY = useTransform(scrollY, [0, 700], [0, 70]);
   const contentOpacity = useTransform(scrollY, [0, 550], [1, 0.25]);
 
+  // Running timecode — writes straight to the DOM node, zero React re-renders
+  const tcRef = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    let raf: number;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const el = tcRef.current;
+      if (el) {
+        const t = (now - start) / 1000;
+        const f = Math.floor((t % 1) * 24);
+        const s = Math.floor(t % 60);
+        const m = Math.floor(t / 60) % 60;
+        el.textContent = `00:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}:${String(f).padStart(2, "0")}`;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
 
@@ -740,69 +764,95 @@ const Hero = () => {
       <div className="absolute bottom-20 left-4 sm:left-10 w-10 sm:w-16 h-10 sm:h-16 border-l border-b border-white/10 rounded-bl-lg pointer-events-none" />
       <div className="absolute bottom-20 right-4 sm:right-10 w-10 sm:w-16 h-10 sm:h-16 border-r border-b border-white/10 rounded-br-lg pointer-events-none" />
 
+      {/* Editorial side rails — desktop only */}
+      <div className="hidden lg:flex absolute left-8 top-1/2 -translate-y-1/2 flex-col items-center gap-4 pointer-events-none">
+        <span className="h-16 w-px bg-gradient-to-b from-transparent via-white/15 to-transparent" />
+        <span className="text-[9px] tracking-[0.4em] uppercase text-white/25 [writing-mode:vertical-rl]">Showreel — 2026</span>
+        <span className="h-16 w-px bg-gradient-to-b from-transparent via-white/15 to-transparent" />
+      </div>
+      <div className="hidden lg:flex absolute right-8 top-1/2 -translate-y-1/2 flex-col items-center gap-4 pointer-events-none">
+        <span className="h-16 w-px bg-gradient-to-b from-transparent via-white/15 to-transparent" />
+        <span className="text-[9px] tracking-[0.4em] uppercase text-white/25 [writing-mode:vertical-rl]">Jabalpur · India</span>
+        <span className="h-16 w-px bg-gradient-to-b from-transparent via-white/15 to-transparent" />
+      </div>
+
       <motion.div style={{ y: contentY, opacity: contentOpacity }} className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 pt-24 pb-16 md:pt-36 md:pb-28 text-center">
 
-        {/* Badge */}
+        {/* Eyebrow — REC-style pulse + plain editorial line */}
         <motion.div
-          initial={{ opacity: 0, y: 16, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 mb-7 sm:mb-12 rounded-2xl bg-white/[0.05] backdrop-blur-2xl border border-purple-500/25 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_0_24px_rgba(168,85,247,0.15)]"
+          className="flex items-center justify-center gap-2.5 mb-6 sm:mb-10"
         >
-          <span className="font-medium tracking-[0.1em] sm:tracking-[0.18em] uppercase text-[10px] sm:text-[11px] text-white/70 text-center leading-[1.9]">
-            Crafting Digital Content
-            <span className="block sm:inline">
-              {" "}<span className="inline-flex items-center gap-1.5">
-                <span className="relative flex h-2 w-2 flex-shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-400" />
-                </span>
-                <span className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-200 bg-clip-text text-transparent font-bold">
-                  with AI Innovation
-                </span>
-              </span>
-            </span>
+          <span className="relative flex h-2 w-2 flex-shrink-0">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-400" />
+          </span>
+          <span className="text-[10px] sm:text-[11px] font-medium tracking-[0.2em] sm:tracking-[0.3em] uppercase text-white/55">
+            Crafting Digital Content <span className="text-white/25">—</span>{" "}
+            <span className="bg-gradient-to-r from-purple-300 to-fuchsia-300 bg-clip-text text-transparent font-bold">with AI Innovation</span>
           </span>
         </motion.div>
 
-        {/* Main heading — mask reveal, line-by-line lift (AE text-animator style) */}
-        <div className="mb-8">
+        {/* Main heading — line mask-reveal with film-title settle */}
+        <div className="mb-7 sm:mb-9">
           <h1 className="font-extrabold tracking-tight">
             <span className="block overflow-hidden pb-[0.08em]">
               <motion.span
-                initial={{ y: "112%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.9, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                className="block text-[clamp(2.8rem,10vw,6rem)] leading-[0.95] text-white drop-shadow-[0_0_60px_rgba(255,255,255,0.12)]"
+                initial={{ y: "112%", rotateZ: 2.5 }}
+                animate={{ y: 0, rotateZ: 0 }}
+                transition={{ duration: 0.95, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                style={{ transformOrigin: "0% 100%" }}
+                className="block text-[clamp(3rem,11vw,7rem)] leading-[0.92] text-white drop-shadow-[0_0_60px_rgba(255,255,255,0.12)]"
               >
                 Video Editor
               </motion.span>
             </span>
 
-            {/* Separator — adds visual rhythm on mobile */}
-            <motion.span
-              initial={{ opacity: 0, scaleX: 0 }}
-              animate={{ opacity: 1, scaleX: 1 }}
-              transition={{ duration: 0.5, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center justify-center gap-2 sm:gap-3 my-2 sm:my-3"
-            >
-              <span className="h-[1px] w-6 sm:w-10 bg-gradient-to-r from-transparent to-purple-400/50" />
-              <span className="text-[9px] sm:text-[10px] text-white/25 tracking-[0.35em] uppercase font-medium">&amp;</span>
-              <span className="h-[1px] w-6 sm:w-10 bg-gradient-to-l from-transparent to-fuchsia-400/50" />
-            </motion.span>
-
-            <span className="block overflow-hidden pb-[0.12em]">
+            <span className="block overflow-hidden pb-[0.14em] mt-1 sm:mt-2">
               <motion.span
-                initial={{ y: "112%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.9, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
-                className="block text-[clamp(1.3rem,5.5vw,3.2rem)] leading-[1.2] bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-200 bg-clip-text text-transparent"
+                initial={{ y: "112%", rotateZ: 1.5 }}
+                animate={{ y: 0, rotateZ: 0 }}
+                transition={{ duration: 0.95, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
+                style={{ transformOrigin: "0% 100%" }}
+                className="block text-[clamp(1.4rem,5.5vw,3.4rem)] leading-[1.15] bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-200 bg-clip-text text-transparent"
               >
                 Graphics &amp; <span className="italic font-semibold">Motion</span> Designer
               </motion.span>
             </span>
           </h1>
         </div>
+
+        {/* Timeline scrubber — looping playhead + live timecode (editor's signature) */}
+        <motion.div
+          initial={{ opacity: 0, scaleX: 0.9 }}
+          animate={{ opacity: 1, scaleX: 1 }}
+          transition={{ duration: 0.7, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
+          className="flex items-center gap-2.5 sm:gap-4 w-full max-w-[320px] sm:max-w-md mx-auto mb-7 sm:mb-9"
+        >
+          <span className="font-mono text-[8px] sm:text-[9px] tracking-widest text-white/30">IN</span>
+          <div className="relative flex-1 h-[14px] flex items-center">
+            <div
+              className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[7px] opacity-50"
+              style={{ backgroundImage: "repeating-linear-gradient(to right, rgba(255,255,255,0.16) 0 1px, transparent 1px 10%)" }}
+            />
+            <div className="relative w-full h-[2px] bg-white/10 rounded-full">
+              <motion.div
+                className="absolute left-0 top-0 h-full rounded-full bg-gradient-to-r from-purple-400 to-fuchsia-400"
+                animate={{ width: ["0%", "100%"] }}
+                transition={{ duration: 9, repeat: Infinity, ease: "linear" }}
+              />
+              <motion.div
+                className="absolute top-1/2 -translate-y-1/2 -ml-[2px] w-[3px] h-[13px] rounded-sm bg-white shadow-[0_0_12px_rgba(232,121,249,0.8)]"
+                animate={{ left: ["0%", "100%"] }}
+                transition={{ duration: 9, repeat: Infinity, ease: "linear" }}
+              />
+            </div>
+          </div>
+          <span className="font-mono text-[8px] sm:text-[9px] tracking-widest text-white/30">OUT</span>
+          <span ref={tcRef} className="font-mono text-[10px] sm:text-[11px] text-purple-300/80 tabular-nums w-[78px] sm:w-[86px] text-left">00:00:00:00</span>
+        </motion.div>
 
         {/* Description */}
         <motion.p
@@ -839,23 +889,25 @@ const Hero = () => {
           </a>
         </motion.div>
 
-        {/* Floating tool badges */}
+        {/* Tools — minimal editorial line */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.1 }}
-          className="flex flex-wrap items-center justify-center gap-2"
+          className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 px-2"
         >
           {tools.map((tool, i) => (
-            <motion.span
-              key={tool}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 1.1 + i * 0.07 }}
-              className="px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/40 text-[11px] font-medium tracking-wide backdrop-blur-sm hover:border-purple-500/30 hover:text-white/60 transition-colors duration-200 cursor-default"
-            >
-              {tool}
-            </motion.span>
+            <React.Fragment key={tool}>
+              {i > 0 && <span className="text-purple-400/40 text-[10px] select-none">/</span>}
+              <motion.span
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 1.1 + i * 0.07 }}
+                className="text-[10px] sm:text-[11px] tracking-[0.16em] uppercase text-white/35 hover:text-white/70 transition-colors duration-200 cursor-default"
+              >
+                {tool}
+              </motion.span>
+            </React.Fragment>
           ))}
         </motion.div>
       </motion.div>
@@ -887,7 +939,7 @@ const experiences = [
     bgImage: "https://images.unsplash.com/photo-1492724441997-5dc865305da7?w=800&q=80",
   },
   {
-    title: "Video Editor & Motion Designer",
+    title: "Video Editor Graphics & Motion Designer",
     company: "Business Culture, Jabalpur",
     duration: "2023 - Present",
     icon: "🎬",
