@@ -1064,7 +1064,7 @@ const About = () => {
         {/* Paragraph */}
         <p className="text-gray-200 text-base md:text-[17px] leading-relaxed drop-shadow-md max-w-xl mx-auto mb-10 md:mb-14">
           With <span className="text-white font-semibold">6+ years</span> of experience in video production, motion graphics, and digital design, I create compelling visual content that tells powerful stories. Currently working at{" "}
-          <span className="text-purple-300 font-medium">Business Culture, Jabalpur</span>, I combine traditional creativity with cutting-edge AI tools to deliver exceptional results.
+          <span className="text-purple-300 font-medium">Degree360 Solutions, Delhi</span>, I combine traditional creativity with cutting-edge AI tools to deliver exceptional results.
         </p>
 
         {/* Experience label */}
