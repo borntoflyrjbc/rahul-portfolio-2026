@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { Menu, X, Mail, Video, Layers, MonitorPlay, PenTool, Sparkles, Megaphone, ArrowUp, Film, Palette, Radio, Phone, MapPin, Download, Camera, Wand2, ImagePlay, Tv2 } from 'lucide-react';
 
 const skillCategories = [
@@ -187,6 +187,20 @@ const services = [
 
 
 const Preloader = () => {
+  // Counter synced to the ~2.4s preloader window (bar finishes at ~2.15s)
+  const [pct, setPct] = useState(0);
+  useEffect(() => {
+    const start = performance.now();
+    let raf: number;
+    const tick = (now: number) => {
+      const p = Math.min(100, ((now - start) / 2150) * 100);
+      setPct(p);
+      if (p < 100) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   return (
     <motion.div
       initial={{ opacity: 1 }}
@@ -246,19 +260,22 @@ const Preloader = () => {
           <p className="text-white/30 text-[9px] tracking-[0.22em] mt-0.5">Graphics &amp; Motion Designer</p>
         </motion.div>
 
-        {/* Progress bar */}
+        {/* Progress bar + counter */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.4 }}
-          className="w-48 h-[2px] bg-white/10 rounded-full overflow-hidden mt-2"
+          className="flex flex-col items-center gap-2 mt-2"
         >
-          <motion.div
-            initial={{ width: "0%" }}
-            animate={{ width: "100%" }}
-            transition={{ delay: 0.55, duration: 1.6, ease: [0.4, 0, 0.2, 1] }}
-            className="h-full bg-gradient-to-r from-purple-500 via-fuchsia-400 to-cyan-400 rounded-full"
-          />
+          <div className="w-48 h-[2px] bg-white/10 rounded-full overflow-hidden">
+            <motion.div
+              initial={{ width: "0%" }}
+              animate={{ width: "100%" }}
+              transition={{ delay: 0.55, duration: 1.6, ease: [0.4, 0, 0.2, 1] }}
+              className="h-full bg-gradient-to-r from-purple-500 via-fuchsia-400 to-purple-300 rounded-full"
+            />
+          </div>
+          <span className="text-white/25 text-[10px] tracking-[0.25em] tabular-nums">{Math.round(pct)}%</span>
         </motion.div>
 
         {/* Loading dots */}
@@ -305,6 +322,14 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
   };
 
   const jobs = [
+    {
+      title: "Video Editor & Motion Designer",
+      company: "Degree360 Solutions, Delhi", period: "May 2026 – Present", current: true,
+      points: [
+        "Video editing & motion design for digital campaigns and brand content",
+        "Blending AI-assisted production workflows with traditional editing craft",
+      ]
+    },
     {
       title: "Video Editor, Graphic & Motion Designer",
       company: "Business Culture, Jabalpur", period: "2023 – Present", current: true,
@@ -425,7 +450,7 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
               {/* Info */}
               <div className="text-center sm:text-left">
                 <h2 className="text-[24px] sm:text-[28px] font-bold text-white tracking-tight leading-none">Rahul Jain</h2>
-                <p className="text-[10px] font-semibold tracking-[0.2em] uppercase mt-1.5 bg-gradient-to-r from-purple-300 to-cyan-300 bg-clip-text text-transparent">
+                <p className="text-[10px] font-semibold tracking-[0.2em] uppercase mt-1.5 bg-gradient-to-r from-purple-300 to-fuchsia-300 bg-clip-text text-transparent">
                   Video Editor · Graphics &amp; Motion Designer
                 </p>
                 <div className="flex flex-wrap justify-center sm:justify-start gap-x-4 gap-y-1 mt-3">
@@ -606,7 +631,7 @@ const Header = ({ onOpenResume }: { onOpenResume: () => void }) => {
                 >
                   {link.name}
                   <motion.span
-                    className="absolute bottom-1 left-1/2 -translate-x-1/2 h-[1.5px] bg-gradient-to-r from-purple-400 to-cyan-400 rounded-full"
+                    className="absolute bottom-1 left-1/2 -translate-x-1/2 h-[1.5px] bg-gradient-to-r from-purple-400 to-fuchsia-400 rounded-full"
                     animate={{ width: isActive ? 20 : 0 }}
                     transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                   />
@@ -678,6 +703,11 @@ const Header = ({ onOpenResume }: { onOpenResume: () => void }) => {
 
 const Hero = () => {
   const tools = ["Premiere Pro", "After Effects", "Photoshop", "Illustrator", "OBS Studio", "Sketch"];
+  const { scrollY } = useScroll();
+  const orbY1 = useTransform(scrollY, [0, 900], [0, 140]);
+  const orbY2 = useTransform(scrollY, [0, 900], [0, -110]);
+  const contentY = useTransform(scrollY, [0, 700], [0, 70]);
+  const contentOpacity = useTransform(scrollY, [0, 550], [1, 0.25]);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -690,17 +720,18 @@ const Hero = () => {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_50%_at_80%_55%,rgba(34,211,238,0.12)_0%,transparent_70%)] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_50%_80%,rgba(217,70,239,0.08)_0%,transparent_70%)] pointer-events-none" />
 
-      {/* Animated orbs — desktop only, blur-[100px] is GPU-heavy on mobile */}
+      {/* Animated orbs — desktop only, blur-[100px] is GPU-heavy on mobile. Parallax-linked to scroll */}
       <motion.div
         className="hidden md:block absolute top-1/3 -left-32 w-[420px] h-[420px] rounded-full bg-purple-600/20 blur-[100px] pointer-events-none"
-        animate={{ x: [0, 50, 0], y: [0, 25, 0] }}
+        animate={{ x: [0, 50, 0] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        style={{ y: orbY1 }}
       />
       <motion.div
         className="hidden md:block absolute bottom-1/3 -right-32 w-[380px] h-[380px] rounded-full bg-cyan-500/15 blur-[100px] pointer-events-none"
-        animate={{ x: [0, -40, 0], y: [0, -20, 0] }}
+        animate={{ x: [0, -40, 0] }}
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-        style={{ willChange: "transform" }}
+        style={{ y: orbY2, willChange: "transform" }}
       />
 
       {/* Decorative corner lines */}
@@ -709,7 +740,7 @@ const Hero = () => {
       <div className="absolute bottom-20 left-4 sm:left-10 w-10 sm:w-16 h-10 sm:h-16 border-l border-b border-white/10 rounded-bl-lg pointer-events-none" />
       <div className="absolute bottom-20 right-4 sm:right-10 w-10 sm:w-16 h-10 sm:h-16 border-r border-b border-white/10 rounded-br-lg pointer-events-none" />
 
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 pt-24 pb-16 md:pt-36 md:pb-28 text-center">
+      <motion.div style={{ y: contentY, opacity: contentOpacity }} className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 pt-24 pb-16 md:pt-36 md:pb-28 text-center">
 
         {/* Badge */}
         <motion.div
@@ -726,7 +757,7 @@ const Hero = () => {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-400" />
                 </span>
-                <span className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-cyan-300 bg-clip-text text-transparent font-bold">
+                <span className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-200 bg-clip-text text-transparent font-bold">
                   with AI Innovation
                 </span>
               </span>
@@ -734,17 +765,19 @@ const Hero = () => {
           </span>
         </motion.div>
 
-        {/* Main heading */}
+        {/* Main heading — mask reveal, line-by-line lift (AE text-animator style) */}
         <div className="mb-8">
           <h1 className="font-extrabold tracking-tight">
-            <motion.span
-              initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="block text-[clamp(2.8rem,10vw,6rem)] leading-[0.95] text-white drop-shadow-[0_0_60px_rgba(255,255,255,0.12)]"
-            >
-              Video Editor
-            </motion.span>
+            <span className="block overflow-hidden pb-[0.08em]">
+              <motion.span
+                initial={{ y: "112%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.9, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                className="block text-[clamp(2.8rem,10vw,6rem)] leading-[0.95] text-white drop-shadow-[0_0_60px_rgba(255,255,255,0.12)]"
+              >
+                Video Editor
+              </motion.span>
+            </span>
 
             {/* Separator — adds visual rhythm on mobile */}
             <motion.span
@@ -755,17 +788,19 @@ const Hero = () => {
             >
               <span className="h-[1px] w-6 sm:w-10 bg-gradient-to-r from-transparent to-purple-400/50" />
               <span className="text-[9px] sm:text-[10px] text-white/25 tracking-[0.35em] uppercase font-medium">&amp;</span>
-              <span className="h-[1px] w-6 sm:w-10 bg-gradient-to-l from-transparent to-cyan-400/50" />
+              <span className="h-[1px] w-6 sm:w-10 bg-gradient-to-l from-transparent to-fuchsia-400/50" />
             </motion.span>
 
-            <motion.span
-              initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ duration: 0.8, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="block text-[clamp(1.3rem,5.5vw,3.2rem)] leading-[1.2] bg-gradient-to-r from-purple-300 via-fuchsia-300 to-cyan-400 bg-clip-text text-transparent"
-            >
-              Graphics &amp; Motion Designer
-            </motion.span>
+            <span className="block overflow-hidden pb-[0.12em]">
+              <motion.span
+                initial={{ y: "112%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.9, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
+                className="block text-[clamp(1.3rem,5.5vw,3.2rem)] leading-[1.2] bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-200 bg-clip-text text-transparent"
+              >
+                Graphics &amp; <span className="italic font-semibold">Motion</span> Designer
+              </motion.span>
+            </span>
           </h1>
         </div>
 
@@ -823,7 +858,7 @@ const Hero = () => {
             </motion.span>
           ))}
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div
@@ -844,6 +879,13 @@ const Hero = () => {
 };
 
 const experiences = [
+  {
+    title: "Video Editor & Motion Designer",
+    company: "Degree360 Solutions, Delhi",
+    duration: "May 2026 - Present",
+    icon: "🎞️",
+    bgImage: "https://images.unsplash.com/photo-1492724441997-5dc865305da7?w=800&q=80",
+  },
   {
     title: "Video Editor & Motion Designer",
     company: "Business Culture, Jabalpur",
@@ -953,7 +995,7 @@ const About = () => {
         {/* Heading */}
         <h2 className="text-[clamp(2rem,7vw,4.5rem)] font-bold text-white mb-5 md:mb-7 leading-[1.02] tracking-tight drop-shadow-lg">
           About{" "}
-          <span className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-blue-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-purple-300 bg-clip-text text-transparent">
             Me
           </span>
         </h2>
@@ -994,7 +1036,7 @@ const About = () => {
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="text-white font-semibold text-[15px] leading-tight truncate">{card.title}</h3>
-                <p className="text-[13px] mt-0.5 truncate bg-gradient-to-r from-purple-300 to-blue-300 bg-clip-text text-transparent font-medium">{card.company}</p>
+                <p className="text-[13px] mt-0.5 truncate bg-gradient-to-r from-purple-300 to-fuchsia-300 bg-clip-text text-transparent font-medium">{card.company}</p>
               </div>
               <span className="hidden sm:block flex-shrink-0 text-[10px] text-gray-400 font-medium tracking-wider uppercase whitespace-nowrap">{card.duration}</span>
             </div>
@@ -1170,7 +1212,7 @@ const AiToolsSection = () => {
           className="text-3xl md:text-4xl font-bold text-white mb-4"
         >
           Specialisation in{" "}
-          <span className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-cyan-300 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-200 bg-clip-text text-transparent">
             AI Tools
           </span>
         </motion.h2>
@@ -1243,7 +1285,7 @@ const ClientsSection = () => (
       <motion.h2 initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
         transition={{ delay: 0.08 }} className="text-2xl md:text-3xl font-bold text-white">
         Brands I've{" "}
-        <span className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-cyan-300 bg-clip-text text-transparent">
+        <span className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-200 bg-clip-text text-transparent">
           Worked With
         </span>
       </motion.h2>
@@ -1405,7 +1447,7 @@ const ServicesSection = () => (
         <motion.h2 initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           transition={{ delay: 0.07 }} className="text-3xl md:text-4xl font-bold text-white">
           My{" "}
-          <span className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-cyan-300 bg-clip-text text-transparent">Expertise</span>
+          <span className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-200 bg-clip-text text-transparent">Expertise</span>
         </motion.h2>
         <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
           transition={{ delay: 0.12 }} className="text-white/30 text-sm max-w-sm leading-relaxed">
@@ -1413,8 +1455,8 @@ const ServicesSection = () => (
         </motion.p>
       </div>
 
-      {/* 8 cards — 2 col mobile, 4 col md */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3">
+      {/* 8 cards — 2 col mobile, bento rhythm on md (3-2-3 rows) */}
+      <div className="grid grid-cols-2 md:grid-cols-6 gap-2 md:gap-3">
         {serviceCards.map((s, i) => (
           <motion.div
             key={s.title}
@@ -1422,7 +1464,7 @@ const ServicesSection = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: i * 0.05 }}
-            className="group relative bg-[#0d0d0d] rounded-xl md:rounded-2xl p-3.5 md:p-5 overflow-hidden cursor-default border border-white/[0.06] transition-all duration-300 hover:border-white/[0.12] hover:-translate-y-1"
+            className={`group relative bg-[#0d0d0d] rounded-xl md:rounded-2xl p-3.5 md:p-5 overflow-hidden cursor-default border border-white/[0.06] transition-all duration-300 hover:border-white/[0.12] hover:-translate-y-1 ${i === 3 || i === 4 ? "md:col-span-3" : "md:col-span-2"}`}
             style={{ transition: "transform 0.25s ease, border-color 0.3s ease, box-shadow 0.3s ease" }}
             onMouseEnter={e => (e.currentTarget.style.boxShadow = `0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08)`)}
             onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}
@@ -1489,20 +1531,33 @@ function VideoModal({ item, onClose }: { item: WorkItem; onClose: () => void }) 
 
       {/* VIDEO CONTAINER */}
       <div
-        className={`relative ${isVertical ? "" : "w-full max-w-5xl aspect-video"}`}
+        className={`relative rounded-xl overflow-hidden bg-black ${isVertical ? "" : "w-full max-w-5xl aspect-video"}`}
         style={isVertical ? { width: "min(94vw, 440px)", aspectRatio: "9 / 16", maxHeight: "92vh" } : undefined}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Loading skeleton */}
         {!loaded && (
-          <div className="absolute inset-0 rounded-xl bg-[#0d0d0d] flex flex-col items-center justify-center gap-4">
+          <div className="absolute inset-0 bg-[#0d0d0d] flex flex-col items-center justify-center gap-4 z-10">
             <div className="w-12 h-12 rounded-full border-2 border-white/10 border-t-purple-400 animate-spin" />
             <p className="text-white/30 text-xs tracking-widest uppercase">Loading</p>
           </div>
         )}
         <iframe
-          className={`w-full h-full rounded-xl shadow-2xl transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`}
-          src={`https://www.youtube-nocookie.com/embed/${item.id}?autoplay=1&controls=1&modestbranding=1&rel=0&playsinline=1&mute=0`}
+          className={`transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`}
+          style={
+            isVertical
+              ? {
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  height: "100%",
+                  width: "316%",
+                  border: "0",
+                }
+              : { width: "100%", height: "100%", border: "0" }
+          }
+          src={`https://www.youtube-nocookie.com/embed/${item.id}?autoplay=1&controls=${isVertical ? 0 : 1}&modestbranding=1&rel=0&playsinline=1&mute=0&fs=0`}
           title={item.title || "Video"}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
           allowFullScreen
@@ -1521,6 +1576,30 @@ const VideoCard: React.FC<{
   const isVertical = item.aspect === "vertical";
   const isSquare = item.aspect === "aspect-square";
 
+  // Hover preview — muted iframe autoplay (browsers only allow autoplay when muted).
+  // Animated webp thumbnails are hotlink-blocked by YouTube, so iframe is the reliable path.
+  const [preview, setPreview] = useState(false);
+  const [previewReady, setPreviewReady] = useState(false);
+  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const canHover = useRef(typeof window !== "undefined" && window.matchMedia("(hover: hover)").matches);
+
+  const startPreview = () => {
+    if (!canHover.current) return;
+    hoverTimer.current = setTimeout(() => setPreview(true), 350);
+  };
+  const stopPreview = () => {
+    if (hoverTimer.current) clearTimeout(hoverTimer.current);
+    setPreview(false);
+    setPreviewReady(false);
+  };
+
+  // 16:9 embed must overflow-fill non-16:9 cards (same trick as VideoModal)
+  const previewStyle: React.CSSProperties = isVertical
+    ? { position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", height: "100%", width: "316%", border: 0 }
+    : isSquare
+      ? { position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", height: "100%", width: "178%", border: 0 }
+      : { position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 };
+
   const fallbackThumbnail = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
     if (img.src.includes("maxresdefault")) img.src = `https://i.ytimg.com/vi/${item.id}/sddefault.jpg`;
@@ -1532,6 +1611,8 @@ const VideoCard: React.FC<{
     <div
       className="break-inside-avoid cursor-pointer group"
       onClick={() => onCardClick(item)}
+      onMouseEnter={startPreview}
+      onMouseLeave={stopPreview}
     >
       <div className={`
         relative overflow-hidden rounded-xl md:rounded-2xl bg-[#080808]
@@ -1552,6 +1633,20 @@ const VideoCard: React.FC<{
           loading={eager ? "eager" : "lazy"}
           decoding="async"
         />
+
+        {/* Hover preview — muted autoplay iframe, fades in over the thumbnail */}
+        {preview && (
+          <div className={`absolute inset-0 z-[5] overflow-hidden pointer-events-none transition-opacity duration-500 ${previewReady ? "opacity-100" : "opacity-0"}`}>
+            <iframe
+              style={previewStyle}
+              src={`https://www.youtube-nocookie.com/embed/${item.id}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&playsinline=1&disablekb=1&iv_load_policy=3&fs=0`}
+              title=""
+              tabIndex={-1}
+              allow="autoplay; encrypted-media"
+              onLoad={() => setPreviewReady(true)}
+            />
+          </div>
+        )}
 
         {/* Subtle bottom-to-top gradient for depth */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent pointer-events-none" />
@@ -1615,7 +1710,7 @@ const CreativeWorks = () => {
                 transition={{ delay: 0.07 }}
                 className="text-3xl md:text-4xl font-bold text-white">
                 Creative{" "}
-                <span className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-cyan-300 bg-clip-text text-transparent">Works</span>
+                <span className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-200 bg-clip-text text-transparent">Works</span>
               </motion.h2>
               <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
                 transition={{ delay: 0.13 }}
@@ -1752,11 +1847,38 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-16 md:py-24 bg-[#050505]">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-10 md:mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Let's Connect</h2>
-          <p className="text-gray-400 max-w-xl mx-auto">Ready to bring your vision to life? Let's discuss your project and create something extraordinary together.</p>
+    <section id="contact" className="relative py-20 md:py-32 bg-[#050505] overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_100%,rgba(168,85,247,0.08)_0%,transparent_70%)] pointer-events-none" />
+      <div className="relative max-w-5xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-12 md:mb-16">
+          <motion.p initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            className="text-[10px] tracking-[0.35em] uppercase text-purple-400/70 font-medium mb-5">
+            Get In Touch
+          </motion.p>
+          <span className="block overflow-hidden pb-[0.1em]">
+            <motion.h2
+              initial={{ y: "108%" }}
+              whileInView={{ y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              className="text-[clamp(2.2rem,7vw,4.8rem)] font-bold leading-[1.04] tracking-tight"
+            >
+              Let's make something{" "}
+              <span className="italic bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-200 bg-clip-text text-transparent">extraordinary</span>
+            </motion.h2>
+          </span>
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
+            className="text-white/40 max-w-xl mx-auto mt-5">
+            Ready to bring your vision to life? Let's discuss your project.
+          </motion.p>
+          <motion.a
+            initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}
+            href="mailto:borntoflyrj@gmail.com"
+            className="group inline-block mt-7 text-[clamp(1.05rem,3vw,1.6rem)] font-display font-medium text-white/85 hover:text-white transition-colors duration-300"
+          >
+            borntoflyrj@gmail.com
+            <span className="block h-[1.5px] mt-1 bg-gradient-to-r from-purple-400 to-fuchsia-400 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-400 ease-out" />
+          </motion.a>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">

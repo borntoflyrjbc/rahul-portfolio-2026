@@ -15,3 +15,8 @@ video-for bg.mp4
 future me chnages.txt
 old context or claude for changes.txt
 *.notes.txt
+
+# Antigravity migration pack — local only, holds an API key (do NOT commit)
+.agents/
+CLAUDE_MEMORY_LOG.md
+WCR-PSA-PRODUCTION-MASTER-GUIDE-v1.md
