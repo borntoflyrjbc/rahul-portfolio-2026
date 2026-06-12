@@ -131,7 +131,17 @@ section[id] {
   background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, rgba(0,0,0,0.55) 100%);
 }
 
+/* Subtle drifting gradient for clipped text */
+@keyframes gradient-drift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
 @layer utilities {
+  .animate-gradient-text {
+    background-size: 220% auto;
+    animation: gradient-drift 7s ease-in-out infinite;
+  }
   .animate-fadeIn {
     animation: fadeIn 0.2s ease-out forwards;
   }

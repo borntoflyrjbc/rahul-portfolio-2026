@@ -706,7 +706,7 @@ const Header = ({ onOpenResume }: { onOpenResume: () => void }) => {
 };
 
 const Hero = () => {
-  const tools = ["Premiere Pro", "After Effects", "Photoshop", "Illustrator", "OBS Studio", "Sketch"];
+  const tools = ["Generative AI", "Premiere Pro", "After Effects", "Photoshop", "Illustrator", "OBS Studio"];
   const { scrollY } = useScroll();
   const orbY1 = useTransform(scrollY, [0, 900], [0, 140]);
   const orbY2 = useTransform(scrollY, [0, 900], [0, -110]);
@@ -816,9 +816,11 @@ const Hero = () => {
                 animate={{ y: 0, rotateZ: 0 }}
                 transition={{ duration: 0.95, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
                 style={{ transformOrigin: "0% 100%" }}
-                className="block text-[clamp(1.4rem,5.5vw,3.4rem)] leading-[1.15] bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-200 bg-clip-text text-transparent"
+                className="block text-[clamp(1.4rem,5.5vw,3.4rem)] leading-[1.15]"
               >
-                Graphics &amp; <span className="italic font-semibold">Motion</span> Designer
+                <span className="animate-gradient-text bg-gradient-to-r from-purple-300 via-fuchsia-300 via-purple-200 to-purple-300 bg-clip-text text-transparent">Graphics</span>
+                {" "}<span className="text-white">&amp;</span>{" "}
+                <span className="animate-gradient-text bg-gradient-to-r from-purple-300 via-fuchsia-300 via-purple-200 to-purple-300 bg-clip-text text-transparent">Motion Designer</span>
               </motion.span>
             </span>
           </h1>
