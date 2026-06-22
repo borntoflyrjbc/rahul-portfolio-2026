@@ -2193,11 +2193,11 @@ const ShowcaseTriad = () => (
             className="scroll-mt-24"
           >
             <div className={`flex flex-col gap-5 mb-9 ${idx % 2 ? "md:items-end md:text-right" : ""}`}>
-              <div className={`flex items-center gap-4 sm:gap-6 ${idx % 2 ? "md:flex-row-reverse" : ""}`}>
-                <span className="num3d font-display text-[clamp(2.6rem,7vw,5rem)] font-extrabold text-white/[0.08] leading-none select-none">{b.n}</span>
-                <div>
+              <div className={`flex items-center gap-3 sm:gap-6 ${idx % 2 ? "md:flex-row-reverse" : ""}`}>
+                <span className="num3d font-display text-[clamp(1.9rem,6vw,5rem)] font-extrabold text-white/[0.08] leading-none select-none flex-shrink-0">{b.n}</span>
+                <div className="min-w-0">
                   <p className="text-[10px] tracking-[0.34em] uppercase mb-2.5 font-medium" style={{ color: b.tone.chip }}>{b.eyebrow}</p>
-                  <h3 className="font-display text-[clamp(2.1rem,7vw,4.6rem)] font-extrabold leading-[0.9] tracking-tight text-white">
+                  <h3 className="font-display text-[clamp(1.7rem,6.5vw,4.6rem)] font-extrabold leading-[0.9] tracking-tight text-white">
                     {b.word1}{" "}
                     <span className="bg-clip-text text-transparent" style={{ backgroundImage: b.tone.grad }}>{b.word2}.</span>
                   </h3>
