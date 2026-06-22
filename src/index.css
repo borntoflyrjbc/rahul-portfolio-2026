@@ -155,3 +155,81 @@ section[id] {
     animation: marquee-reverse 32s linear infinite;
   }
 }
+
+/* ============================================================
+   WOW REDESIGN LAYER — 2026  (additive, award-grade)
+   ============================================================ */
+
+/* --- Aurora gradient-mesh field --- */
+@keyframes auroraDrift  { 0%{transform:translate3d(-8%,-4%,0) scale(1)}   50%{transform:translate3d(7%,6%,0) scale(1.18)} 100%{transform:translate3d(-8%,-4%,0) scale(1)} }
+@keyframes auroraDrift2 { 0%{transform:translate3d(7%,4%,0) scale(1.12)}  50%{transform:translate3d(-7%,-7%,0) scale(1)} 100%{transform:translate3d(7%,4%,0) scale(1.12)} }
+@keyframes spinSlow     { to { transform: rotate(360deg) } }
+@keyframes shimmerText  { 0%{background-position:0% 50%} 100%{background-position:200% 50%} }
+@keyframes floatY       { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+
+.aurora-field { position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.aurora-field .blob { position:absolute; border-radius:50%; filter:blur(90px); mix-blend-mode:screen; will-change:transform; }
+
+/* --- Shimmering gradient text --- */
+.text-shimmer {
+  background:linear-gradient(90deg,#ffffff 0%,#c084fc 22%,#f0abfc 45%,#67e8f9 68%,#ffffff 100%);
+  background-size:220% auto; -webkit-background-clip:text; background-clip:text; color:transparent;
+  animation:shimmerText 7s linear infinite;
+}
+
+/* --- Custom magnetic cursor (desktop pointer only) --- */
+.cursor-dot, .cursor-ring { position:fixed; top:0; left:0; z-index:10000; pointer-events:none; border-radius:9999px; will-change:transform; }
+.cursor-dot  { width:6px; height:6px; background:#e879f9; box-shadow:0 0 14px #e879f9; }
+.cursor-ring { width:38px; height:38px; border:1.5px solid rgba(232,121,249,0.55); mix-blend-mode:screen;
+               transition:width .25s ease, height .25s ease, border-color .25s ease, background .25s ease; }
+.cursor-ring.hot { width:62px; height:62px; border-color:rgba(34,211,238,0.7); background:rgba(168,85,247,0.10); }
+body.has-custom-cursor { cursor:none; }
+body.has-custom-cursor a, body.has-custom-cursor button { cursor:none; }
+
+/* --- Top scroll-progress bar --- */
+.scroll-progress { position:fixed; top:0; left:0; right:0; height:2.5px; z-index:10001; transform-origin:0 50%;
+  background:linear-gradient(90deg,#a855f7,#e879f9,#22d3ee); box-shadow:0 0 14px rgba(232,121,249,0.6); }
+
+/* --- Showcase tilted-marquee cards --- */
+.perspective { perspective:1500px; }
+.tilt-row { transform-style:preserve-3d; }
+.show-card {
+  position:relative; flex:0 0 auto; border-radius:16px; overflow:hidden;
+  background-size:cover; background-position:center;
+  box-shadow:0 18px 50px -22px rgba(0,0,0,0.85), inset 0 0 0 1px rgba(255,255,255,0.06);
+  transform:rotate(var(--rot,0deg));
+  transition:transform .55s cubic-bezier(.2,.7,.2,1), box-shadow .55s, filter .55s;
+  filter:saturate(1.02);
+}
+.show-card::after { content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg,transparent 38%,rgba(0,0,0,.72)); }
+.show-card::before { content:""; position:absolute; inset:0; z-index:1; opacity:0; transition:opacity .5s;
+  background:radial-gradient(120% 80% at 50% 0%, var(--glow,rgba(168,85,247,.35)), transparent 60%); mix-blend-mode:screen; }
+.show-card:hover { transform:translateY(-14px) scale(1.06) rotateY(-7deg) rotateX(3deg); filter:saturate(1.18);
+  box-shadow:-22px 34px 70px -24px rgba(0,0,0,.92), inset 0 0 0 1px rgba(255,255,255,.16); z-index:5; }
+.show-card:hover::before { opacity:1; }
+
+/* 3D glossy light-sweep (motion-graphics feel) */
+.show-card .glare{position:absolute;inset:0;z-index:1;pointer-events:none;transform:translateX(-130%) skewX(-12deg);
+  background:linear-gradient(90deg,transparent 30%,rgba(255,255,255,.30) 50%,transparent 70%)}
+.show-card:hover .glare{animation:glareSweep .95s cubic-bezier(.22,1,.36,1)}
+@keyframes glareSweep{from{transform:translateX(-130%) skewX(-12deg)}to{transform:translateX(130%) skewX(-12deg)}}
+
+/* extruded 3D section numbers */
+.num3d{ text-shadow:1px 1px 0 rgba(255,255,255,.04), 3px 4px 0 rgba(168,85,247,.10), 6px 8px 14px rgba(0,0,0,.5); }
+
+/* --- Conic award badge spin --- */
+.spin-slow { animation:spinSlow 14s linear infinite; }
+.float-y   { animation:floatY 6s ease-in-out infinite; }
+
+/* --- Marquee speeds for showcase strips --- */
+@layer utilities {
+  .animate-strip       { animation: marquee 46s linear infinite; }
+  .animate-strip-rev   { animation: marquee-reverse 52s linear infinite; }
+  .strip-paused:hover *[class*="animate-strip"] { animation-play-state: paused; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-field .blob, .text-shimmer, .spin-slow, .float-y,
+  .animate-strip, .animate-strip-rev { animation:none !important; }
+}

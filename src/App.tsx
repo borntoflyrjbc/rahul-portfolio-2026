@@ -573,7 +573,7 @@ const Header = ({ onOpenResume }: { onOpenResume: () => void }) => {
   const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
-    const sectionIds = ['about', 'services', 'creative-works', 'contact'];
+    const sectionIds = ['about', 'services', 'showreel', 'creative-works', 'contact'];
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
       const scrollMid = window.scrollY + window.innerHeight / 3;
@@ -590,8 +590,9 @@ const Header = ({ onOpenResume }: { onOpenResume: () => void }) => {
 
   const navLinks = [
     { name: 'About',     id: 'about' },
-    { name: 'Work',      id: 'creative-works' },
     { name: 'Expertise', id: 'services' },
+    { name: 'Showreel',  id: 'showreel' },
+    { name: 'Work',      id: 'creative-works' },
     { name: 'Contact',   id: 'contact' },
   ];
 
@@ -715,6 +716,7 @@ const Hero = () => {
 
   // Running timecode — writes straight to the DOM node, zero React re-renders
   const tcRef = useRef<HTMLSpanElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     let raf: number;
     const start = performance.now();
@@ -731,6 +733,19 @@ const Hero = () => {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
+  }, []);
+
+  // Mouse-parallax 3D tilt on the headline
+  useEffect(() => {
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    const el = titleRef.current; if (!el) return;
+    const onMove = (e: MouseEvent) => {
+      const rx = (e.clientY / window.innerHeight - 0.5) * -7;
+      const ry = (e.clientX / window.innerWidth - 0.5) * 7;
+      el.style.transform = `perspective(1100px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    };
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => window.removeEventListener("mousemove", onMove);
   }, []);
 
   return (
@@ -778,49 +793,48 @@ const Hero = () => {
 
       <motion.div style={{ y: contentY, opacity: contentOpacity }} className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 pt-24 pb-16 md:pt-36 md:pb-28 text-center">
 
-        {/* Eyebrow — REC-style pulse + plain editorial line */}
+        {/* Eyebrow — availability pill + locale */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex items-center justify-center gap-2.5 mb-6 sm:mb-10"
+          className="flex flex-wrap items-center justify-center gap-3 mb-7 sm:mb-10"
         >
-          <span className="relative flex h-2 w-2 flex-shrink-0">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-400" />
+          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.12] backdrop-blur-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+            </span>
+            <span className="text-[10px] sm:text-[11px] font-semibold tracking-[0.18em] uppercase text-white/70">Available for work · 2026</span>
           </span>
-          <span className="text-[10px] sm:text-[11px] font-medium tracking-[0.2em] sm:tracking-[0.3em] uppercase text-white/55">
-            Crafting Digital Content <span className="text-white/25">—</span>{" "}
-            <span className="bg-gradient-to-r from-purple-300 to-fuchsia-300 bg-clip-text text-transparent font-bold">with AI Innovation</span>
-          </span>
+          <span className="hidden sm:inline text-[10px] sm:text-[11px] font-medium tracking-[0.28em] uppercase text-white/30">Jabalpur · India</span>
         </motion.div>
 
-        {/* Main heading — line mask-reveal with film-title settle */}
-        <div className="mb-7 sm:mb-9">
-          <h1 className="font-extrabold tracking-tight">
+        {/* Main heading — editorial mask-reveal + mouse-parallax 3D */}
+        <div ref={titleRef} className="mb-7 sm:mb-9 [transform-style:preserve-3d] transition-transform duration-300 ease-out will-change-transform">
+          <motion.p
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1, duration: 0.6 }}
+            className="text-[10px] sm:text-[11px] tracking-[0.4em] uppercase text-white/35 mb-3 sm:mb-5"
+          >
+            Portfolio — Rahul Jain
+          </motion.p>
+          <h1 className="font-display font-extrabold tracking-tight">
             <span className="block overflow-hidden pb-[0.08em]">
               <motion.span
-                initial={{ y: "112%", rotateZ: 2.5 }}
-                animate={{ y: 0, rotateZ: 0 }}
-                transition={{ duration: 0.95, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                style={{ transformOrigin: "0% 100%" }}
-                className="block text-[clamp(3rem,11vw,7rem)] leading-[0.92] text-white drop-shadow-[0_0_60px_rgba(255,255,255,0.12)]"
+                initial={{ y: "115%" }} animate={{ y: 0 }}
+                transition={{ duration: 0.95, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
+                className="block text-[clamp(3.2rem,12vw,8.4rem)] leading-[0.85] text-white drop-shadow-[0_0_70px_rgba(168,85,247,0.18)]"
               >
-                Video Editor
+                Video <span className="text-shimmer">Editor</span>
               </motion.span>
             </span>
-
-            <span className="block overflow-hidden pb-[0.14em] mt-1 sm:mt-2">
+            <span className="block overflow-hidden pb-[0.14em] mt-1.5 sm:mt-3">
               <motion.span
-                initial={{ y: "112%", rotateZ: 1.5 }}
-                animate={{ y: 0, rotateZ: 0 }}
-                transition={{ duration: 0.95, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
-                style={{ transformOrigin: "0% 100%" }}
-                className="block text-[clamp(1.4rem,5.5vw,3.4rem)] leading-[1.15]"
+                initial={{ y: "115%" }} animate={{ y: 0 }}
+                transition={{ duration: 0.95, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className="block text-[clamp(1.3rem,5vw,3rem)] leading-[1.08] font-semibold tracking-tight text-white/85"
               >
-                <span className="animate-gradient-text bg-gradient-to-r from-purple-300 via-fuchsia-300 via-purple-200 to-purple-300 bg-clip-text text-transparent">Graphics</span>
-                {" "}<span className="text-white">&amp;</span>{" "}
-                <span className="animate-gradient-text bg-gradient-to-r from-purple-300 via-fuchsia-300 via-purple-200 to-purple-300 bg-clip-text text-transparent">Motion Designer</span>
+                Graphics <span className="text-white/30">&amp;</span> Motion Designer
               </motion.span>
             </span>
           </h1>
@@ -875,19 +889,22 @@ const Hero = () => {
           className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-10 sm:mb-14"
         >
           <a
-            href="#creative-works"
-            className="group w-full sm:w-auto min-h-[52px] px-10 py-3.5 rounded-2xl font-semibold text-black bg-white hover:bg-white/94 transition-all duration-300 flex items-center justify-center gap-2.5 shadow-[0_0_40px_rgba(255,255,255,0.12)] hover:shadow-[0_0_50px_rgba(168,85,247,0.25)] hover:-translate-y-0.5"
+            href="#showreel"
+            className="cursor-hot group w-full sm:w-auto min-h-[52px] pl-3 pr-8 py-2.5 rounded-full font-semibold text-black bg-white hover:bg-white transition-all duration-300 flex items-center justify-center gap-3 shadow-[0_0_40px_rgba(255,255,255,0.12)] hover:shadow-[0_0_55px_rgba(168,85,247,0.35)] hover:-translate-y-0.5"
           >
-            View My Work
-            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M5 12h14M13 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+            <span className="grid place-items-center w-9 h-9 rounded-full bg-black text-white group-hover:scale-110 transition-transform duration-300">
+              <svg className="w-3.5 h-3.5 translate-x-[1px]" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+            </span>
+            Watch Showreel
           </a>
           <a
             href="#contact"
-            className="w-full sm:w-auto min-h-[52px] px-10 py-3.5 rounded-2xl font-semibold text-white/90 bg-white/[0.05] backdrop-blur-sm hover:bg-white/[0.09] transition-all duration-300 border border-white/[0.12] hover:border-white/25 flex items-center justify-center hover:-translate-y-0.5"
+            className="cursor-hot group w-full sm:w-auto min-h-[52px] px-9 py-3.5 rounded-full font-semibold text-white/90 bg-white/[0.05] backdrop-blur-sm hover:bg-white/[0.09] transition-all duration-300 border border-white/[0.14] hover:border-purple-400/40 flex items-center justify-center gap-2 hover:-translate-y-0.5"
           >
-            Contact Me
+            Let's talk
+            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+              <path d="M5 12h14M13 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </a>
         </motion.div>
 
@@ -1509,40 +1526,33 @@ const ServicesSection = () => (
         </motion.p>
       </div>
 
-      {/* 8 cards — 2 col mobile, bento rhythm on md (3-2-3 rows) */}
-      <div className="grid grid-cols-2 md:grid-cols-6 gap-2 md:gap-3">
+      {/* 8 cards — premium uniform bento */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         {serviceCards.map((s, i) => (
           <motion.div
             key={s.title}
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: i * 0.05 }}
-            className={`group relative bg-[#0d0d0d] rounded-xl md:rounded-2xl p-3.5 md:p-5 overflow-hidden cursor-default border border-white/[0.06] transition-all duration-300 hover:border-white/[0.12] hover:-translate-y-1 ${i === 3 || i === 4 ? "md:col-span-3" : "md:col-span-2"}`}
-            style={{ transition: "transform 0.25s ease, border-color 0.3s ease, box-shadow 0.3s ease" }}
-            onMouseEnter={e => (e.currentTarget.style.boxShadow = `0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08)`)}
-            onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}
+            transition={{ duration: 0.45, delay: (i % 4) * 0.06 }}
+            className="cursor-hot group relative rounded-2xl p-5 md:p-6 overflow-hidden border border-white/[0.07] bg-gradient-to-b from-white/[0.04] to-white/[0.01] hover:border-white/20 transition-all duration-300 hover:-translate-y-1.5"
           >
-            {/* Top accent bar */}
-            <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${s.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-
-            {/* Icon */}
-            <div className={`w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl flex items-center justify-center ${s.iconBg} mb-3 md:mb-5 group-hover:scale-105 transition-transform duration-300`}>
-              <span className="scale-75 md:scale-100">{s.icon}</span>
+            {/* hover glow */}
+            <div className={`absolute -top-16 -right-10 w-40 h-40 rounded-full bg-gradient-to-br ${s.accent} opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-500 pointer-events-none`} />
+            {/* index */}
+            <span className="absolute top-4 right-4 font-display text-[12px] font-bold text-white/15 group-hover:text-white/35 transition-colors duration-300">0{i + 1}</span>
+            {/* icon */}
+            <div className={`relative w-11 h-11 md:w-12 md:h-12 rounded-xl flex items-center justify-center ${s.iconBg} mb-5 ring-1 ring-white/10 group-hover:scale-110 group-hover:ring-white/25 transition-all duration-300`}>
+              {s.icon}
             </div>
-
-            {/* Tag — mobile only pill */}
-            <span className="md:hidden text-[10px] font-semibold uppercase tracking-widest text-white/30 mb-1.5 block">{s.tag}</span>
-
-            {/* Title */}
-            <h3 className="text-[12px] md:text-[14px] font-bold text-white/80 group-hover:text-white leading-snug mb-1 md:mb-2 transition-colors duration-200">
+            <span className="relative block text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white/35 mb-2">{s.tag}</span>
+            <h3 className="relative text-[13.5px] md:text-[15px] font-bold text-white/85 group-hover:text-white leading-snug mb-2 transition-colors duration-200">
               {s.title}
             </h3>
-
-            {/* Desc — hidden on mobile */}
-            <p className="hidden md:block text-[11.5px] text-white/30 leading-relaxed line-clamp-3 group-hover:text-white/45 transition-colors duration-300">
+            <p className="relative hidden sm:block text-[12px] text-white/35 leading-relaxed group-hover:text-white/55 transition-colors duration-300">
               {s.desc}
             </p>
+            <span className={`absolute left-5 right-5 bottom-4 h-px bg-gradient-to-r ${s.accent} scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500`} />
           </motion.div>
         ))}
       </div>
@@ -1935,30 +1945,35 @@ const Contact = () => {
           </motion.a>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          {contactCards.map((card) => (
-            <motion.div
-              key={card.title}
-              whileHover={{ y: -4 }}
-              transition={{ duration: 0.2 }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 flex flex-col items-center text-center gap-3 sm:gap-4 hover:border-purple-500/40 transition-colors"
-            >
-              <div className="w-14 h-14 rounded-full bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400">
-                {card.icon}
-              </div>
-              <div>
-                <h3 className="text-white font-semibold text-lg mb-1">{card.title}</h3>
-                <p className="text-gray-500 text-sm mb-3">{card.subtitle}</p>
-                {card.href ? (
-                  <a href={card.href} className="text-purple-400 hover:text-purple-300 font-medium transition-colors break-all">
-                    {card.value}
-                  </a>
-                ) : (
-                  <span className="text-white font-semibold">{card.value}</span>
-                )}
-              </div>
-            </motion.div>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 mb-12">
+          {contactCards.map((card, i) => {
+            const Wrap: any = card.href ? "a" : "div";
+            return (
+              <motion.div
+                key={card.title}
+                initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: i * 0.08 }}
+              >
+                <Wrap
+                  href={card.href || undefined}
+                  className="cursor-hot group relative h-full overflow-hidden rounded-2xl p-6 sm:p-7 border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-transparent hover:border-purple-500/40 transition-all duration-300 hover:-translate-y-1.5 flex flex-col items-start gap-5"
+                >
+                  <div className="absolute -top-16 -right-12 w-40 h-40 rounded-full bg-purple-600/20 opacity-0 group-hover:opacity-100 blur-3xl transition-opacity duration-500 pointer-events-none" />
+                  <div className="w-12 h-12 rounded-xl bg-purple-500/12 border border-purple-500/25 flex items-center justify-center text-purple-300 group-hover:scale-110 group-hover:border-purple-400/50 transition-all duration-300">
+                    {card.icon}
+                  </div>
+                  <div className="relative">
+                    <p className="text-[10px] uppercase tracking-[0.22em] text-white/35 mb-1.5">{card.title}</p>
+                    <p className="text-white font-semibold text-[15px] group-hover:text-purple-200 transition-colors break-all">{card.value}</p>
+                    <p className="text-white/35 text-[12px] mt-1.5">{card.subtitle}</p>
+                  </div>
+                  {card.href && (
+                    <span className="absolute top-6 right-6 text-white/25 text-lg group-hover:text-purple-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300">↗</span>
+                  )}
+                </Wrap>
+              </motion.div>
+            );
+          })}
         </div>
 
       </div>
@@ -2002,6 +2017,210 @@ const ScrollToTop = () => {
   );
 };
 
+// ─── CUSTOM MAGNETIC CURSOR (desktop pointer only) ───
+const CustomCursor = () => {
+  const dot = useRef<HTMLDivElement>(null);
+  const ring = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    document.body.classList.add("has-custom-cursor");
+    let x = innerWidth / 2, y = innerHeight / 2, rx = x, ry = y, raf = 0;
+    const move = (e: MouseEvent) => {
+      x = e.clientX; y = e.clientY;
+      if (dot.current) dot.current.style.transform = `translate(${x - 3}px, ${y - 3}px)`;
+    };
+    const loop = () => {
+      rx += (x - rx) * 0.18; ry += (y - ry) * 0.18;
+      if (ring.current) ring.current.style.transform = `translate(${rx - 19}px, ${ry - 19}px)`;
+      raf = requestAnimationFrame(loop);
+    };
+    const over = (e: MouseEvent) => {
+      const hot = (e.target as HTMLElement)?.closest?.("a, button, .cursor-hot");
+      ring.current?.classList.toggle("hot", !!hot);
+    };
+    addEventListener("mousemove", move, { passive: true });
+    addEventListener("mouseover", over, { passive: true });
+    raf = requestAnimationFrame(loop);
+    return () => {
+      cancelAnimationFrame(raf);
+      removeEventListener("mousemove", move);
+      removeEventListener("mouseover", over);
+      document.body.classList.remove("has-custom-cursor");
+    };
+  }, []);
+  return (<>
+    <div ref={dot} className="cursor-dot" aria-hidden="true" />
+    <div ref={ring} className="cursor-ring" aria-hidden="true" />
+  </>);
+};
+
+// ─── TOP SCROLL-PROGRESS BAR ───
+const ScrollProgress = () => {
+  const { scrollYProgress } = useScroll();
+  return <motion.div className="scroll-progress" style={{ scaleX: scrollYProgress }} aria-hidden="true" />;
+};
+
+// ─── SHOWCASE TRIAD — 3 animated discipline sections (additive, gallery untouched) ───
+const ytThumb = (id: string) => `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+const thumbFallback = (e: React.SyntheticEvent<HTMLImageElement>) => {
+  const t = e.currentTarget;
+  if (t.src.includes("maxresdefault")) t.src = t.src.replace("maxresdefault", "sddefault");
+  else if (t.src.includes("sddefault")) t.src = t.src.replace("sddefault", "hqdefault");
+};
+
+type ShowItem = { img: string; t: string; k: string };
+type Tone = { glow: string; chip: string; grad: string };
+type Band = { id: string; n: string; eyebrow: string; word1: string; word2: string; copy: string; tone: Tone; stats: [string, string][]; items: ShowItem[]; dir: "left" | "right" };
+
+const showcaseBands: Band[] = [
+  {
+    id: "video-editing", n: "01", eyebrow: "Cut · Grade · Pace", word1: "Video", word2: "Editing",
+    copy: "Raw footage re-authored into rhythm — precision cuts, cinematic colour and sound design tuned so the viewer never looks away.",
+    tone: { glow: "rgba(168,85,247,0.42)", chip: "#c084fc", grad: "linear-gradient(90deg,#c084fc,#e879f9)" },
+    stats: [["120+", "Projects edited"], ["8M+", "Views driven"], ["6+ yrs", "Behind the cut"]],
+    dir: "left",
+    items: [
+      { img: ytThumb("aMfbbqBKJFk"), t: "Cinematic 4K Showreel", k: "Showreel" },
+      { img: ytThumb("lGdFXT4YXNE"), t: "Nakshatra — Launch Film", k: "Real Estate" },
+      { img: ytThumb("NyyMRQHWfcE"), t: "Cinematic Ad Film", k: "Advertising" },
+      { img: ytThumb("KK-4B8JKzBQ"), t: "Krishnashray — Senior Living", k: "Real Estate" },
+      { img: ytThumb("UVlZmflV9Kw"), t: "WCR — Railway Safety PSA", k: "Public Service" },
+      { img: ytThumb("iDjxRU1tiUw"), t: "HCET — Campus Promo", k: "Education" },
+      { img: ytThumb("_v_U-I4VKG4"), t: "Dr. Paul — Brand Reel", k: "Healthcare" },
+      { img: ytThumb("xknHIGn7GA4"), t: "SAM — Cricket World Cup", k: "Sports" },
+    ],
+  },
+  {
+    id: "graphic-design", n: "02", eyebrow: "Type · Grid · Brand", word1: "Graphic", word2: "Design",
+    copy: "Posters, campaigns and identity systems — bold typography on disciplined grids, a controlled palette and zero wasted pixels.",
+    tone: { glow: "rgba(236,72,153,0.42)", chip: "#f0abfc", grad: "linear-gradient(90deg,#f0abfc,#fb7185)" },
+    stats: [["300+", "Creatives shipped"], ["40+", "Brands served"], ["100%", "On-brand"]],
+    dir: "right",
+    items: [
+      { img: "https://res.cloudinary.com/dijteej5k/image/upload/q_auto,f_auto/v1776607927/MAR26_JKLC056_IPL_CAMP_MKV2B_OOH_ADPT_1-1_gwj2xs.jpg", t: "JK Lakshmi — IPL Campaign", k: "OOH" },
+      { img: "https://res.cloudinary.com/dijteej5k/image/upload/v1776355393/portfolio/social/file_1.webp", t: "Social Creative Set", k: "Social" },
+      { img: "https://res.cloudinary.com/dijteej5k/image/upload/v1776355439/portfolio/social/vectus.jpg", t: "Vectus — Brand Post", k: "Brand" },
+      { img: "https://res.cloudinary.com/dijteej5k/image/upload/v1776355436/portfolio/social/Inspire.jpg", t: "Inspire — Campaign", k: "Print" },
+      { img: "https://res.cloudinary.com/dijteej5k/image/upload/v1776355437/portfolio/social/new.webp", t: "Festival Creative", k: "Festive" },
+      { img: "https://res.cloudinary.com/dijteej5k/image/upload/v1776355394/portfolio/social/file_2.webp", t: "Identity System", k: "Branding" },
+    ],
+  },
+  {
+    id: "motion-design", n: "03", eyebrow: "Keyframe · Kinetic · Flow", word1: "Motion", word2: "Design",
+    copy: "Title sequences, kinetic type and logo animation — every keyframe eased and timed to give a brand its heartbeat.",
+    tone: { glow: "rgba(34,211,238,0.42)", chip: "#67e8f9", grad: "linear-gradient(90deg,#67e8f9,#818cf8)" },
+    stats: [["90+", "Animations"], ["24 FPS", "Award · MAAC"], ["∞", "Ideas in motion"]],
+    dir: "left",
+    items: [
+      { img: ytThumb("hgdI993TCwE"), t: "Krishnashray — Motion Graphics", k: "Mograph" },
+      { img: ytThumb("ckqwp5DZ154"), t: "Motion Book Animation", k: "2D Animation" },
+      { img: ytThumb("TDVAYyk_rWU"), t: "Brain Discovery — Explainer", k: "Explainer" },
+      { img: ytThumb("4ooLnEDfc1s"), t: "World Environment Day — PSA", k: "Kinetic" },
+      { img: ytThumb("HygEDCPohh8"), t: "Udyam Villa — Promo", k: "Title Seq" },
+      { img: ytThumb("85ahifvJFXo"), t: "UCB — Brand Film", k: "Logo Anim" },
+    ],
+  },
+];
+
+const ShowStrip = ({ items, dir, glow }: { items: ShowItem[]; dir: "left" | "right"; glow: string }) => {
+  const doubled = [...items, ...items];
+  const offsets = ["0px", "26px", "12px", "32px"];
+  const rots = ["-3deg", "2.2deg", "-1.4deg", "3deg"];
+  return (
+    <div
+      className="overflow-hidden perspective -mx-4 sm:-mx-6 px-4 sm:px-6 strip-paused py-6"
+      style={{ WebkitMaskImage: "linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)", maskImage: "linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)" }}
+    >
+      <div
+        className={`tilt-row flex w-max ${dir === "left" ? "animate-strip" : "animate-strip-rev"}`}
+        style={{ transform: "rotateX(8deg) rotateZ(-1deg)", willChange: "transform" }}
+      >
+        {doubled.map((it, i) => (
+          <div
+            key={i}
+            className="show-card cursor-hot mr-5 sm:mr-6 w-[158px] h-[224px] sm:w-[196px] sm:h-[278px]"
+            style={{ marginTop: offsets[i % 4], ["--rot" as any]: rots[i % 4], ["--glow" as any]: glow }}
+          >
+            <img
+              src={it.img}
+              onError={it.img.includes("ytimg") ? thumbFallback : undefined}
+              loading="lazy" decoding="async" draggable={false} alt={it.t}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <span className="glare" aria-hidden="true" />
+            <div className="absolute top-3 left-3 z-[2] px-2 py-[3px] rounded-full bg-black/45 backdrop-blur-sm border border-white/15">
+              <span className="text-[8px] font-semibold uppercase tracking-[0.16em] text-white/80">{it.k}</span>
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 z-[2] p-3.5">
+              <p className="text-white text-[13px] font-semibold leading-snug drop-shadow-md">{it.t}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const ShowcaseTriad = () => (
+  <section id="showreel" className="relative overflow-hidden bg-black border-t border-white/[0.05] py-20 md:py-32">
+    {/* Aurora gradient-mesh */}
+    <div className="aurora-field">
+      <div className="blob" style={{ width: 520, height: 520, left: "-8%", top: "4%", background: "radial-gradient(circle,#7c3aed,transparent 70%)", opacity: 0.4, animation: "auroraDrift 24s ease-in-out infinite" }} />
+      <div className="blob" style={{ width: 440, height: 440, right: "-6%", top: "34%", background: "radial-gradient(circle,#22d3ee,transparent 70%)", opacity: 0.32, animation: "auroraDrift2 28s ease-in-out infinite" }} />
+      <div className="blob" style={{ width: 560, height: 560, left: "24%", bottom: "-12%", background: "radial-gradient(circle,#db2777,transparent 70%)", opacity: 0.3, animation: "auroraDrift 32s ease-in-out infinite" }} />
+    </div>
+    <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:34px_34px] pointer-events-none" />
+
+    <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
+      {/* Triad header */}
+      <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16 md:mb-24">
+        <p className="text-[10px] tracking-[0.4em] uppercase text-purple-400/70 font-medium mb-5">( 02 ) — Showreel</p>
+        <h2 className="font-display text-[clamp(2.3rem,7.5vw,5.2rem)] font-extrabold leading-[0.92] tracking-tight text-white">
+          Three crafts.<br /><span className="text-shimmer">One obsession.</span>
+        </h2>
+        <p className="text-white/45 max-w-md mx-auto mt-6 text-sm leading-relaxed">
+          Every frame, every pixel, every keyframe — engineered to make people stop scrolling.
+        </p>
+      </motion.div>
+
+      <div className="space-y-24 md:space-y-36">
+        {showcaseBands.map((b, idx) => (
+          <motion.div
+            key={b.id} id={b.id}
+            initial={{ opacity: 0, y: 44 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+            className="scroll-mt-24"
+          >
+            <div className={`flex flex-col gap-5 mb-9 ${idx % 2 ? "md:items-end md:text-right" : ""}`}>
+              <div className={`flex items-center gap-4 sm:gap-6 ${idx % 2 ? "md:flex-row-reverse" : ""}`}>
+                <span className="num3d font-display text-[clamp(2.6rem,7vw,5rem)] font-extrabold text-white/[0.08] leading-none select-none">{b.n}</span>
+                <div>
+                  <p className="text-[10px] tracking-[0.34em] uppercase mb-2.5 font-medium" style={{ color: b.tone.chip }}>{b.eyebrow}</p>
+                  <h3 className="font-display text-[clamp(2.1rem,7vw,4.6rem)] font-extrabold leading-[0.9] tracking-tight text-white">
+                    {b.word1}{" "}
+                    <span className="bg-clip-text text-transparent" style={{ backgroundImage: b.tone.grad }}>{b.word2}.</span>
+                  </h3>
+                </div>
+              </div>
+              <p className={`text-white/50 text-[14px] sm:text-[15px] leading-relaxed max-w-lg ${idx % 2 ? "md:ml-auto" : ""}`}>{b.copy}</p>
+              <div className={`flex flex-wrap gap-x-9 gap-y-3 ${idx % 2 ? "md:justify-end" : ""}`}>
+                {b.stats.map(([v, l], i) => (
+                  <div key={i} className="flex flex-col">
+                    <span className="font-display text-2xl sm:text-[2rem] font-extrabold leading-none text-white">{v}</span>
+                    <span className="text-[10.5px] uppercase tracking-wider text-white/35 mt-1.5">{l}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <ShowStrip items={b.items} dir={b.dir} glow={b.tone.glow} />
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [showResume, setShowResume] = useState(false);
@@ -2028,13 +2247,16 @@ export default function App() {
           {/* Cinematic overlays — grain + vignette */}
           <div className="film-grain" aria-hidden="true" />
           <div className="vignette" aria-hidden="true" />
-          <Header onOpenResume={() => setShowResume(true)} />
+          <ScrollProgress />
+          <CustomCursor />
+          <Header onOpenResume={() => window.open("/resume.html", "_blank", "noopener,noreferrer")} />
           <main>
             <Hero />
             <About />
             <ToolsMarquee />
             <AiToolsSection />
             <ServicesSection />
+            <ShowcaseTriad />
             <ClientsSection />
             <CreativeWorks />
             <Contact />
