@@ -647,13 +647,13 @@ const Header = ({ onOpenResume }: { onOpenResume: () => void }) => {
 
           {/* Right side — Resume + Mobile toggle */}
           <div className="flex items-center gap-3">
-            <button
-              onClick={onOpenResume}
-              className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white text-[13px] font-semibold transition-all duration-300 shadow-lg shadow-purple-700/30 hover:shadow-purple-500/40 hover:-translate-y-0.5"
+            <a
+              href="/resume.html" target="_blank" rel="noopener noreferrer"
+              className="cursor-hot hidden md:flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white text-[13px] font-semibold transition-all duration-300 shadow-lg shadow-purple-700/30 hover:shadow-purple-500/40 hover:-translate-y-0.5"
             >
               <Download size={13} strokeWidth={2.5} />
               Resume
-            </button>
+            </a>
             <button
               className="md:hidden w-9 h-9 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
               onClick={() => setIsOpen(!isOpen)}
@@ -691,12 +691,13 @@ const Header = ({ onOpenResume }: { onOpenResume: () => void }) => {
                 </motion.button>
               ))}
               <div className="border-t border-white/10 mt-2 pt-3">
-                <button
-                  onClick={() => { onOpenResume(); setIsOpen(false); }}
+                <a
+                  href="/resume.html" target="_blank" rel="noopener noreferrer"
+                  onClick={() => setIsOpen(false)}
                   className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white text-[13px] font-semibold hover:from-purple-500 hover:to-fuchsia-500 transition-all duration-200"
                 >
                   <Download size={14} /> Resume
-                </button>
+                </a>
               </div>
             </nav>
           </motion.div>
@@ -793,23 +794,6 @@ const Hero = () => {
 
       <motion.div style={{ y: contentY, opacity: contentOpacity }} className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 pt-24 pb-16 md:pt-36 md:pb-28 text-center">
 
-        {/* Eyebrow — availability pill + locale */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-wrap items-center justify-center gap-3 mb-7 sm:mb-10"
-        >
-          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.12] backdrop-blur-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-            </span>
-            <span className="text-[10px] sm:text-[11px] font-semibold tracking-[0.18em] uppercase text-white/70">Available for work · 2026</span>
-          </span>
-          <span className="hidden sm:inline text-[10px] sm:text-[11px] font-medium tracking-[0.28em] uppercase text-white/30">Jabalpur · India</span>
-        </motion.div>
-
         {/* Main heading — editorial mask-reveal + mouse-parallax 3D */}
         <div ref={titleRef} className="mb-7 sm:mb-9 [transform-style:preserve-3d] transition-transform duration-300 ease-out will-change-transform">
           <motion.p
@@ -832,9 +816,11 @@ const Hero = () => {
               <motion.span
                 initial={{ y: "115%" }} animate={{ y: 0 }}
                 transition={{ duration: 0.95, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="block text-[clamp(1.3rem,5vw,3rem)] leading-[1.08] font-semibold tracking-tight text-white/85"
+                className="block text-[clamp(1.3rem,5vw,3rem)] leading-[1.08] font-semibold tracking-tight"
               >
-                Graphics <span className="text-white/30">&amp;</span> Motion Designer
+                <span className="animate-gradient-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-cyan-300 bg-clip-text text-transparent">Graphics</span>
+                {" "}<span className="text-white/40">&amp;</span>{" "}
+                <span className="animate-gradient-text bg-gradient-to-r from-cyan-300 via-fuchsia-300 to-purple-300 bg-clip-text text-transparent">Motion Designer</span>
               </motion.span>
             </span>
           </h1>
@@ -895,7 +881,7 @@ const Hero = () => {
             <span className="grid place-items-center w-9 h-9 rounded-full bg-black text-white group-hover:scale-110 transition-transform duration-300">
               <svg className="w-3.5 h-3.5 translate-x-[1px]" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
             </span>
-            Watch Showreel
+            Watch My Work
           </a>
           <a
             href="#contact"
