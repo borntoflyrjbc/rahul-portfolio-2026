@@ -591,7 +591,7 @@ const Header = ({ onOpenResume }: { onOpenResume: () => void }) => {
   const navLinks = [
     { name: 'About',     id: 'about' },
     { name: 'Expertise', id: 'services' },
-    { name: 'Showreel',  id: 'showreel' },
+    { name: 'Showcase',  id: 'showreel' },
     { name: 'Work',      id: 'creative-works' },
     { name: 'Contact',   id: 'contact' },
   ];
@@ -887,7 +887,7 @@ const Hero = () => {
             href="#contact"
             className="cursor-hot group w-full sm:w-auto min-h-[52px] px-9 py-3.5 rounded-full font-semibold text-white/90 bg-white/[0.05] backdrop-blur-sm hover:bg-white/[0.09] transition-all duration-300 border border-white/[0.14] hover:border-purple-400/40 flex items-center justify-center gap-2 hover:-translate-y-0.5"
           >
-            Let's talk
+            Contact
             <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
               <path d="M5 12h14M13 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -2160,7 +2160,7 @@ const ShowcaseTriad = () => (
     <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
       {/* Triad header */}
       <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16 md:mb-24">
-        <p className="text-[10px] tracking-[0.4em] uppercase text-purple-400/70 font-medium mb-5">( 02 ) — Showreel</p>
+        <p className="text-[10px] tracking-[0.4em] uppercase text-purple-400/70 font-medium mb-5">( 02 ) — Showcase</p>
         <h2 className="font-display text-[clamp(2.3rem,7.5vw,5.2rem)] font-extrabold leading-[0.92] tracking-tight text-white">
           Three crafts.<br /><span className="text-shimmer">One obsession.</span>
         </h2>

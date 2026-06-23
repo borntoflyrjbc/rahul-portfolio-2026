@@ -148,22 +148,17 @@
 
   footer{position:relative;z-index:2;text-align:center;padding:30px;font-size:12px;color:var(--soft);border-top:1px solid var(--line);margin-top:40px}
 
-  /* ===== PRINT — clean ATS-friendly CV ===== */
+  /* ===== PRINT — keep the dark premium theme in the PDF ===== */
   @media print{
-    @page{size:A4;margin:14mm}
-    .aurora,.grain,.prog,.fab,.avatar .ring{display:none!important}
-    body{background:#fff;color:#111;letter-spacing:0}
-    .wrap{max-width:100%;padding:0}
-    .shimmer{color:#6d28d9!important;-webkit-text-fill-color:#6d28d9}
-    .rv{opacity:1!important;transform:none!important}
-    .id h1,.job h3,.skill .sr b,.edu p,.award p,.sec h2{color:#111}
-    .lede,.lede b{color:#222}
-    .label{color:#7c3aed}
-    .chip{color:#444}
-    .bar i{transition:none}
-    .award{background:#f4f0ff;border-color:#ddd}
-    .tag,.job .per,.edu .yr{color:#333;background:#f3f3f7;border-color:#ddd}
-    .status{color:#059669;border-color:#bbf7d0;background:#ecfdf5}
+    @page{size:A4;margin:10mm}
+    *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+    html,body{ background:#05050a !important; }
+    body{ background:radial-gradient(circle at 28% -5%, #19122e, #05050a 58%) !important; color:#F2F0F7 !important; }
+    .aurora,.bg-grid,.bg-wash,.grain,.prog,.fab,.avatar .ring{ display:none !important; }
+    .wrap{ max-width:100%; padding:6mm 5mm; }
+    .rv{ opacity:1 !important; transform:none !important; }
+    .bar i{ transition:none !important; }
+    .avatar{ animation:none !important; }
   }
 </style>
 </head>
@@ -253,9 +248,11 @@
       pts:["Designed user-centric interfaces for apps & websites","Created graphics, banners & promotional materials","Delivered seamless UX using Sketch & Adobe XD"] },
   ];
   const skills = [
-    { n:"Video Editing & Post-Production", v:96 }, { n:"Motion Graphics & Animation", v:92 },
-    { n:"Graphic & Brand Design", v:90 }, { n:"Generative AI Production", v:88, cy:true },
-    { n:"Live Broadcast & Cinematography", v:85 },
+    { n:"Generative AI", v:90, cy:true },
+    { n:"Video Editing", v:96 },
+    { n:"Graphics Design", v:90 },
+    { n:"Motion Graphics & Animation", v:92 },
+    { n:"Live Media Broadcasting & Cinematography", v:85 },
   ];
   const tags = ["Premiere Pro","After Effects","Photoshop","Illustrator","Motion Graphics","UI/UX Design","Live Broadcasting","Generative AI Suite","AI Video & Image","AI Voice & Dubbing","Prompt Engineering"];
   const edu = [
