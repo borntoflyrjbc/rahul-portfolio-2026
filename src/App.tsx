@@ -39,6 +39,7 @@ const categories = ["All Work", "Video & Motion", "Graphics & Design"];
 
 const allWorks: WorkItem[] = [
   // ── PINNED TO TOP ──
+  { id:"OEVnJtqnaLc", title:"SAM — End of Season Sale", category: "Video & Motion", aspect:"horizontal" },
   { id:"4ooLnEDfc1s", title:"Save Environment — World Environment Day 2026", category: "Video & Motion", aspect:"horizontal" },
   { id:"_v_U-I4VKG4", title:"Dr. Paul – Video 3", category: "Video & Motion", aspect:"vertical" },
   { id:"UVlZmflV9Kw", title:"Railway Safety — जल्दबाज़ी जीवन पर भारी", category: "Video & Motion", aspect:"vertical" },
@@ -2178,8 +2179,8 @@ const ShowcaseTriad = () => (
             transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
             className="scroll-mt-24"
           >
-            <div className={`flex flex-col gap-5 mb-9 ${idx % 2 ? "md:items-end md:text-right" : ""}`}>
-              <div className={`flex items-center gap-3 sm:gap-6 ${idx % 2 ? "md:flex-row-reverse" : ""}`}>
+            <div className={`flex flex-col gap-5 mb-9 items-center text-center ${idx % 2 ? "md:items-end md:text-right" : "md:items-start md:text-left"}`}>
+              <div className={`flex items-center gap-3 sm:gap-6 justify-center ${idx % 2 ? "md:flex-row-reverse md:justify-end" : "md:justify-start"}`}>
                 <span className="num3d font-display text-[clamp(1.9rem,6vw,5rem)] font-extrabold text-white/[0.08] leading-none select-none flex-shrink-0">{b.n}</span>
                 <div className="min-w-0">
                   <p className="text-[10px] tracking-[0.34em] uppercase mb-2.5 font-medium" style={{ color: b.tone.chip }}>{b.eyebrow}</p>
@@ -2190,7 +2191,7 @@ const ShowcaseTriad = () => (
                 </div>
               </div>
               <p className={`text-white/50 text-[14px] sm:text-[15px] leading-relaxed max-w-lg ${idx % 2 ? "md:ml-auto" : ""}`}>{b.copy}</p>
-              <div className={`flex flex-wrap gap-x-9 gap-y-3 ${idx % 2 ? "md:justify-end" : ""}`}>
+              <div className={`flex flex-wrap gap-x-9 gap-y-3 justify-center ${idx % 2 ? "md:justify-end" : "md:justify-start"}`}>
                 {b.stats.map(([v, l], i) => (
                   <div key={i} className="flex flex-col">
                     <span className="font-display text-2xl sm:text-[2rem] font-extrabold leading-none text-white">{v}</span>
