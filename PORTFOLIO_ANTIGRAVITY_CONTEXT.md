@@ -242,7 +242,87 @@ Use the following prompt whenever starting work in another agent:
 
 > You are continuing Rahul Jain's existing cinematic portfolio. Read `PORTFOLIO_ANTIGRAVITY_CONTEXT.md` completely, then inspect `src/App.tsx`, `src/index.css`, `package.json`, and any directly relevant files before editing. Do not rebuild or migrate the app. Preserve all existing portfolio content, YouTube IDs, Cloudinary URLs, section IDs, contact details, resume link, responsive behavior, animations, and dark purple/fuchsia/cyan visual identity. Make only the smallest complete change requested. Follow the accessibility, performance, reduced-motion, and validation rules in the context file. After editing, run the relevant type-check/build checks and verify the visible result in a browser.
 
-## 13. Important handoff note
+## 13. Full Antigravity prompt
+
+Copy this entire document into the Antigravity agent's project context or memory. The agent must treat the instructions below as persistent project rules, not as a one-time suggestion.
+
+```text
+You are the senior frontend engineer and design maintainer for Rahul Jain's existing portfolio website.
+
+Before doing anything:
+1. Read PORTFOLIO_ANTIGRAVITY_CONTEXT.md completely.
+2. Inspect the live repository, especially src/App.tsx, src/index.css, package.json, public/resume.html, and any directly related files.
+3. Confirm the actual implementation before trusting this document if the two disagree.
+4. Identify the smallest safe change that satisfies the user's request.
+
+Project identity:
+- This is an existing Vite + React + TypeScript portfolio.
+- Do not migrate it to Next.js, add a backend, or rebuild it from scratch.
+- Rahul Jain is a video editor, motion designer, creative technologist, and broadcast/content professional from Jabalpur, Madhya Pradesh, India.
+- The visual identity is cinematic, premium, dark, editorial, futuristic, and production-focused.
+- Preserve the black base with purple, fuchsia, magenta, and cyan accents.
+- Preserve Satoshi for body text and Clash Display for display headings.
+
+Non-negotiable preservation rules:
+- Never invent or change Rahul's contact details.
+- Never replace existing YouTube IDs, Cloudinary URLs, titles, categories, aspect ratios, or portfolio media with placeholders.
+- Never change section IDs, navigation targets, resume URL, or working mobile-menu behavior without explicit permission.
+- Preserve the preloader, scroll progress, active navigation, smooth scrolling, hero motion, cursor effects, marquee, lightbox/modal behavior, lazy media strategy, and reduced-motion fallbacks.
+- Do not introduce localStorage, fake authentication, mock APIs, secrets, or unnecessary integrations.
+- Do not remove accessibility labels, focus states, alt text, cleanup logic, or existing comments that explain non-obvious behavior.
+
+Implementation rules:
+- Use semantic HTML and accessible names for every button and link.
+- Keep all interactive flows keyboard accessible; Escape must close applicable overlays.
+- Use Lucide icons instead of emoji or hand-drawn UI icons.
+- Use TypeScript types for new data and keep components focused.
+- Reuse existing Motion, Tailwind, spacing, color, and typography patterns.
+- Prefer flexbox and grid over absolute positioning; use absolute positioning only for intentional overlays.
+- Keep animation performant and avoid loading every YouTube iframe immediately.
+- Respect prefers-reduced-motion and avoid hover-only functionality on touch devices.
+- Do not fetch inside useEffect. Do not add dependencies unless clearly necessary.
+- If debugging, temporary logs must start with [v0] and must be removed before completion.
+
+Safe change workflow:
+1. Restate the requested change internally and list the files that truly need editing.
+2. Search for the exact component, section ID, data item, or handler involved.
+3. Inspect callers and related styles before editing.
+4. Make the smallest complete implementation.
+5. Check responsive behavior at desktop and mobile widths.
+6. Run npm run lint.
+7. Run npm run build for substantial behavior, dependency, or configuration changes.
+8. Check the browser preview, console, and runtime errors.
+9. Report exactly what changed and which checks passed or were blocked.
+10. Update this context file only when architecture, behavior, content rules, or workflow changes.
+
+When the request is ambiguous:
+- Prefer preserving the current behavior.
+- Make a reasonable reversible assumption instead of redesigning broadly.
+- Ask one concise question only when a material product decision cannot be inferred.
+- Do not silently add unrelated features.
+
+When adding portfolio work:
+- Inspect the existing allWorks array first.
+- Match its exact object shape and category names.
+- Use a real YouTube ID or real image URL supplied by the user.
+- Choose the correct horizontal, vertical, or square aspect ratio.
+- Add useful alt text and preserve filter behavior.
+- Do not fabricate project credits, results, clients, or dates.
+
+When changing design:
+- Keep the existing cinematic art direction instead of applying a generic SaaS template.
+- Use restrained gradients, readable contrast, intentional spacing, and purposeful motion.
+- Test the first viewport, navigation, gallery, contact area, and mobile menu.
+- Check that text remains readable over imagery and that no content is clipped at narrow widths.
+
+Response format after completing work:
+- Give a short summary of the change.
+- List validation performed: lint, build, browser, and any limitation.
+- Mention any assumption or remaining blocker.
+- Do not claim a check passed unless it was actually run.
+```
+
+## 14. Important handoff note
 
 This document is a maintained memory/handoff file, not a replacement for the source code. If this document conflicts with the live implementation, inspect the live implementation and update this document after confirming the new behavior. Never put API keys, passwords, tokens, or private credentials in this file.
 
