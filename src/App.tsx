@@ -456,8 +456,8 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
               {/* Info */}
               <div className="text-center sm:text-left">
                 <h2 className="text-[24px] sm:text-[28px] font-bold text-white tracking-tight leading-none">Rahul Jain</h2>
-                <p className="text-[10px] font-semibold tracking-[0.2em] uppercase mt-1.5 bg-gradient-to-r from-purple-300 via-fuchsia-300 to-cyan-300 bg-clip-text text-transparent">
-                  Video Editor &amp; Motion Graphics Artist | AI-Powered Creative Workflow Specialist
+                <p className="text-[12px] font-semibold tracking-[0.06em] mt-1.5 bg-gradient-to-r from-purple-300 to-cyan-300 bg-clip-text text-transparent">
+                  Video Editor &amp; Motion Designer
                 </p>
                 <div className="flex flex-wrap justify-center sm:justify-start gap-x-4 gap-y-1 mt-3">
                   {([
@@ -479,10 +479,8 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
             {/* About */}
             <motion.div custom={0} variants={secVar} initial="hidden" animate="show">
               <SectionLabel>About Me</SectionLabel>
-              <p className="text-white/48 text-[12.5px] leading-[1.85] mt-3">
-                Video Editor &amp; Motion Graphics Artist with{" "}
-                <span className="text-white/75 font-semibold">6+ years</span> of experience in digital campaigns, broadcast content, and motion-led brand storytelling. Proficient in{" "}
-                <span className="text-purple-300/90">AI Video Production</span> (Seedance, Kling, Runway, Veo), ElevenLabs audio sync, and modern creative workflows. Passionate about merging traditional editing craft with cutting-edge AI tools to deliver high-impact visual stories.
+              <p className="text-white/60 text-[12.5px] leading-[1.8] mt-3">
+                Results-driven <span className="text-white font-semibold">Video Editor &amp; Motion Designer</span> with <span className="text-white font-semibold">6+ years</span> of experience crafting high-impact commercial edits, motion design, and broadcast deliverables. Expert in Premiere Pro, After Effects, and next-generation AI video workflows (Seedance, Kling, Runway, ElevenLabs).
               </p>
             </motion.div>
 
