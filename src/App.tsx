@@ -330,10 +330,10 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
   const jobs = [
     {
       title: "Video Editor & Motion Graphics Artist",
-      company: "Degree 360 (Remote) · Project: West Central Railway (WCR)", period: "May 2026 – Present", current: true,
+      company: "Project: West Central Railway (WCR)", period: "May 2026 – Present", current: true,
       points: [
-        "Working remotely on video production and creative deliverables for the West Central Railway (WCR) project",
-        "Crafting broadcast-grade video editing, motion graphics, and visual storytelling assets",
+        "Producing broadcast-grade video editing, dynamic motion graphics, and visual storytelling assets for the West Central Railway (WCR) project",
+        "Crafting narrative edits, public awareness campaigns, and official media communications",
         "Utilizing AI-assisted video workflows and generative tools to accelerate creative turnarounds",
       ]
     },
@@ -953,8 +953,7 @@ const Hero = () => {
 const experiences = [
   {
     title: "Video Editor & Motion Graphics Artist",
-    company: "Degree 360 | Remote",
-    project: "West Central Railway (WCR)",
+    company: "Project: West Central Railway (WCR)",
     duration: "May 2026 - Present",
     icon: "🎞️",
     bgImage: "https://images.unsplash.com/photo-1492724441997-5dc865305da7?w=800&q=80",
@@ -1082,8 +1081,8 @@ const About = () => {
 
         {/* Paragraph */}
         <p className="text-gray-200 text-base md:text-[17px] leading-relaxed drop-shadow-md max-w-xl mx-auto mb-10 md:mb-14">
-          With <span className="text-white font-semibold">6+ years</span> of experience in video production, motion graphics, and digital design, I create compelling visual content that tells powerful stories. Working remotely with{" "}
-          <span className="text-purple-300 font-medium">Degree 360</span> on creative deliverables for the <span className="text-cyan-300 font-medium">West Central Railway (WCR)</span> project, I combine traditional editing craft with AI-assisted video tools and motion design to build fast, broadcast-quality production pipelines.
+          With <span className="text-white font-semibold">6+ years</span> of experience in video production, motion graphics, and digital design, I create compelling visual content that tells powerful stories. Currently producing broadcast-grade video editing and dynamic motion visuals for the{" "}
+          <span className="text-cyan-300 font-medium">West Central Railway (WCR)</span> project, I combine traditional editing craft with AI-assisted video tools and motion design to build fast, broadcast-quality production pipelines.
         </p>
 
         {/* Experience label */}
