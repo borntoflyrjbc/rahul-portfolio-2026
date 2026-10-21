@@ -574,7 +574,7 @@ const Header = ({ onOpenResume }: { onOpenResume: () => void }) => {
   const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
-    const sectionIds = ['about', 'ai-workflows', 'services', 'showreel', 'creative-works', 'contact'];
+    const sectionIds = ['about', 'services', 'showreel', 'creative-works', 'contact'];
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
       const scrollMid = window.scrollY + window.innerHeight / 3;
@@ -591,10 +591,9 @@ const Header = ({ onOpenResume }: { onOpenResume: () => void }) => {
 
   const navLinks = [
     { name: 'About',     id: 'about' },
-    { name: 'AI Studio',  id: 'ai-studio' },
     { name: 'Expertise', id: 'services' },
-    { name: 'Showcase',  id: 'showreel' },
-    { name: 'Work',      id: 'creative-works' },
+    { name: 'Showreel',  id: 'showreel' },
+    { name: 'My Work',   id: 'creative-works' },
     { name: 'Contact',   id: 'contact' },
   ];
 
@@ -2540,7 +2539,7 @@ const ShowcaseTriad = () => (
     <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
       {/* Triad header */}
       <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16 md:mb-24">
-        <p className="text-[10px] tracking-[0.4em] uppercase text-purple-400/70 font-medium mb-5">( 02 ) — Showcase</p>
+        <p className="text-[10px] tracking-[0.4em] uppercase text-purple-400/70 font-medium mb-5">( 02 ) — Showreel</p>
         <h2 className="font-display text-[clamp(2.3rem,7.5vw,5.2rem)] font-extrabold leading-[0.92] tracking-tight text-white">
           Three crafts.<br /><span className="text-shimmer">One obsession.</span>
         </h2>
