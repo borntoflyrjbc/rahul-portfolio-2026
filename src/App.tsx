@@ -338,7 +338,7 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
       ]
     },
     {
-      title: "Video Editor Graphics & Motion Designer",
+      title: "Video Editor, Graphics & Motion Designer",
       company: "Business Culture, Jabalpur", period: "2023 – Present", current: true,
       points: [
         "Designed visual content for social media & digital marketing campaigns",
@@ -349,7 +349,7 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
     },
     {
       title: "Social Media Manager",
-      company: "CI News Network, Jabalpur", period: "Nov 2020 – Aug 2023", current: false,
+      company: "CIN News Network, Jabalpur", period: "Nov 2020 – Aug 2023", current: false,
       points: [
         "Led social media management, digital content planning, and multi-channel publishing workflows",
         "Produced and coordinated high-tempo news snippets, social reels, and creative campaign assets",
@@ -960,7 +960,7 @@ const experiences = [
     bgImage: "https://images.unsplash.com/photo-1492724441997-5dc865305da7?w=800&q=80",
   },
   {
-    title: "Video Editor Graphics & Motion Designer",
+    title: "Video Editor, Graphics & Motion Designer",
     company: "Business Culture, Jabalpur",
     duration: "2023 - Present",
     icon: "🎬",
@@ -968,7 +968,7 @@ const experiences = [
   },
   {
     title: "Social Media Manager",
-    company: "CI News Network, Jabalpur",
+    company: "CIN News Network, Jabalpur",
     duration: "Nov 2020 - Aug 2023",
     icon: "📡",
     bgImage: "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=800&q=80",
@@ -1686,7 +1686,7 @@ const AiToolsSection = () => {
 
 const clientLogos = [
   { name: "Century Group",        src: "https://res.cloudinary.com/dijteej5k/image/upload/q_auto,f_auto/v1776608072/portfolio/social/Century_Group_logo_02.png" },
-  { name: "CI News Network",      src: "https://res.cloudinary.com/dijteej5k/image/upload/q_auto,f_auto/v1776608073/portfolio/social/cinn.png" },
+  { name: "CIN News Network",     src: "https://res.cloudinary.com/dijteej5k/image/upload/q_auto,f_auto/v1776608073/portfolio/social/cinn.png" },
   { name: "Cubedots",             src: "https://res.cloudinary.com/dijteej5k/image/upload/q_auto,f_auto/v1776608074/portfolio/social/cubedots.png" },
   { name: "Dainik Bhaskar",       src: "https://res.cloudinary.com/dijteej5k/image/upload/q_auto,f_auto/v1776608075/portfolio/social/dainik-bhaskar-seeklogo.png" },
   { name: "HCET",                 src: "https://res.cloudinary.com/dijteej5k/image/upload/q_auto,f_auto/v1776608083/portfolio/social/HCET_copy.png" },
