@@ -709,7 +709,7 @@ const Header = ({ onOpenResume }: { onOpenResume: () => void }) => {
 };
 
 const Hero = () => {
-  const tools = ["Premiere Pro", "After Effects", "Photoshop", "AI Video & Motion"];
+  const tools = ["Premiere Pro", "After Effects", "Photoshop", "Illustrator", "AI Video & Motion"];
   const { scrollY } = useScroll();
   const orbY1 = useTransform(scrollY, [0, 900], [0, 140]);
   const orbY2 = useTransform(scrollY, [0, 900], [0, -110]);
