@@ -7,7 +7,7 @@ const skillCategories = [
   {
     title: 'Video Editing & Post-Production',
     icon: <Film className="w-5 h-5 text-purple-400" />,
-    skills: ['Adobe Premiere Pro', 'After Effects', 'Color Grading', 'Audition', 'OBS Studio', 'DaVinci Resolve', 'Sound Design']
+    skills: ['Adobe Premiere Pro', 'After Effects', 'Color Grading', 'Audition', 'OBS Studio', 'VS Code', 'Sound Design']
   },
   {
     title: 'AI Video & Generative Production',
@@ -369,7 +369,7 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
 
   const skills = [
     { name: "Adobe Premiere Pro", c: "purple" }, { name: "After Effects", c: "purple" },
-    { name: "DaVinci Resolve", c: "purple" }, { name: "Photoshop", c: "blue" },
+    { name: "VS Code", c: "blue" }, { name: "Photoshop", c: "blue" },
     { name: "Illustrator", c: "orange" }, { name: "Seedance", c: "cyan" },
     { name: "Kling", c: "cyan" }, { name: "Veo", c: "cyan" },
     { name: "Runway", c: "cyan" }, { name: "ElevenLabs", c: "cyan" },
@@ -1227,15 +1227,21 @@ const ToolsMarquee = () => {
             </svg>
           </ToolIcon>
 
-          {/* DaVinci Resolve — color grading & finishing */}
-          <ToolIcon label="DaVinci Resolve" glow="rgba(255,75,90,0.35)">
+          {/* VS Code — code editor & workflow scripting */}
+          <ToolIcon label="VS Code" glow="rgba(0,122,204,0.35)">
             <svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-              <rect width="88" height="88" fill="#12131c"/>
-              <g transform="translate(44,44)">
-                <circle cx="-11" cy="-9" r="16" fill="#ff385c" opacity="0.9" />
-                <circle cx="12" cy="-7" r="16" fill="#00e599" opacity="0.9" />
-                <circle cx="0" cy="13" r="16" fill="#2d7eff" opacity="0.9" />
-                <circle cx="0" cy="0" r="7.5" fill="#ffffff" opacity="0.95" />
+              <rect width="88" height="88" fill="#111827"/>
+              <defs>
+                <linearGradient id="vscGrad" x1="0" y1="0" x2="88" y2="88" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="#2489ca"/>
+                  <stop offset="100%" stopColor="#007acc"/>
+                </linearGradient>
+              </defs>
+              <g transform="translate(19.8, 19.8) scale(2.035)">
+                <path
+                  d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .326 8.74L3.899 12 .326 15.26a1 1 0 0 0 .001 1.479L1.65 17.94a.999.999 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.492 1.492 0 0 0 1.704.29l4.942-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"
+                  fill="url(#vscGrad)"
+                />
               </g>
             </svg>
           </ToolIcon>
@@ -1306,9 +1312,9 @@ const studioModes: ModeData[] = [
 
 const studioMarquee = [
   'Seedance', 'Kling', 'Veo', 'Runway', 'ElevenLabs', 'Midjourney',
-  'Adobe Premiere Pro', 'After Effects', 'DaVinci Resolve', 'Photoshop', 'Cursor IDE', 'Workflow Automation',
+  'Adobe Premiere Pro', 'After Effects', 'VS Code', 'Photoshop', 'Cursor IDE', 'Workflow Automation',
   'Seedance', 'Kling', 'Veo', 'Runway', 'ElevenLabs', 'Midjourney',
-  'Adobe Premiere Pro', 'After Effects', 'DaVinci Resolve', 'Photoshop', 'Cursor IDE', 'Workflow Automation'
+  'Adobe Premiere Pro', 'After Effects', 'VS Code', 'Photoshop', 'Cursor IDE', 'Workflow Automation'
 ];
 
 const AiToolsSection = () => {
