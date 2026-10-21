@@ -708,6 +708,274 @@ const Header = ({ onOpenResume }: { onOpenResume: () => void }) => {
   );
 };
 
+const Hero3DCanvas = () => {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const parent = canvas.parentElement;
+    if (!parent) return;
+
+    let width = parent.clientWidth || window.innerWidth;
+    let height = parent.clientHeight || window.innerHeight;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+    camera.position.set(0, 0, 7.2);
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
+      powerPreference: 'high-performance',
+    });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // Master group for mouse parallax
+    const mainGroup = new THREE.Group();
+    scene.add(mainGroup);
+
+    // 1. Curved 3D Timeline Spline Ribbon (Violet keyframe curve)
+    const curvePoints: THREE.Vector3[] = [];
+    const numPoints = 60;
+    for (let i = 0; i <= numPoints; i++) {
+      const u = (i / numPoints) * 2 - 1; // -1 to 1
+      const x = u * 6.8;
+      const y = Math.sin(u * Math.PI * 1.5) * 0.72 - 0.35;
+      const z = Math.cos(u * Math.PI) * 0.75 - 1.2;
+      curvePoints.push(new THREE.Vector3(x, y, z));
+    }
+    const curve = new THREE.CatmullRomCurve3(curvePoints);
+    const tubeGeo = new THREE.TubeGeometry(curve, 70, 0.03, 8, false);
+    const tubeMat = new THREE.MeshBasicMaterial({
+      color: 0xa855f7,
+      transparent: true,
+      opacity: 0.32,
+    });
+    const tubeMesh = new THREE.Mesh(tubeGeo, tubeMat);
+    mainGroup.add(tubeMesh);
+
+    // 2. Secondary Echo Timeline Ribbon (Cyan)
+    const curvePoints2 = curvePoints.map((p) => new THREE.Vector3(p.x * 0.94, -p.y * 0.78 + 0.28, p.z - 0.6));
+    const curve2 = new THREE.CatmullRomCurve3(curvePoints2);
+    const tubeGeo2 = new THREE.TubeGeometry(curve2, 70, 0.018, 8, false);
+    const tubeMat2 = new THREE.MeshBasicMaterial({
+      color: 0x06b6d4,
+      transparent: true,
+      opacity: 0.24,
+    });
+    const tubeMesh2 = new THREE.Mesh(tubeGeo2, tubeMat2);
+    mainGroup.add(tubeMesh2);
+
+    // 3. Floating 3D 16:9 Cinema Viewfinder Frame (Left Floating)
+    const frameGroup1 = new THREE.Group();
+    const w1 = 2.4, h1 = 1.35; // 16:9 ratio
+    const frameGeo1 = new THREE.BufferGeometry();
+    const frameVerts1 = new Float32Array([
+      -w1 / 2, -h1 / 2, 0,  w1 / 2, -h1 / 2, 0,
+       w1 / 2, -h1 / 2, 0,  w1 / 2,  h1 / 2, 0,
+       w1 / 2,  h1 / 2, 0, -w1 / 2,  h1 / 2, 0,
+      -w1 / 2,  h1 / 2, 0, -w1 / 2, -h1 / 2, 0,
+    ]);
+    frameGeo1.setAttribute('position', new THREE.BufferAttribute(frameVerts1, 3));
+    const frameLine1 = new THREE.LineSegments(
+      frameGeo1,
+      new THREE.LineBasicMaterial({ color: 0xa855f7, transparent: true, opacity: 0.35 })
+    );
+    frameGroup1.add(frameLine1);
+
+    // Precision corner brackets for Frame 1
+    const bracketSize = 0.22;
+    const bVerts1 = new Float32Array([
+      -w1 / 2, h1 / 2 - bracketSize, 0,  -w1 / 2, h1 / 2, 0,
+      -w1 / 2, h1 / 2, 0,  -w1 / 2 + bracketSize, h1 / 2, 0,
+       w1 / 2 - bracketSize, h1 / 2, 0,   w1 / 2, h1 / 2, 0,
+       w1 / 2, h1 / 2, 0,   w1 / 2, h1 / 2 - bracketSize, 0,
+      -w1 / 2, -h1 / 2 + bracketSize, 0, -w1 / 2, -h1 / 2, 0,
+      -w1 / 2, -h1 / 2, 0, -w1 / 2 + bracketSize, -h1 / 2, 0,
+       w1 / 2 - bracketSize, -h1 / 2, 0,  w1 / 2, -h1 / 2, 0,
+       w1 / 2, -h1 / 2, 0,  w1 / 2, -h1 / 2 + bracketSize, 0,
+    ]);
+    const bracketGeo1 = new THREE.BufferGeometry();
+    bracketGeo1.setAttribute('position', new THREE.BufferAttribute(bVerts1, 3));
+    frameGroup1.add(new THREE.LineSegments(bracketGeo1, new THREE.LineBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.65 })));
+
+    frameGroup1.position.set(-3.1, 0.35, -0.7);
+    frameGroup1.rotation.set(0.08, 0.26, -0.07);
+    mainGroup.add(frameGroup1);
+
+    // 4. Floating 3D 9:16 Vertical Reel Frame (Right Floating)
+    const frameGroup2 = new THREE.Group();
+    const w2 = 1.05, h2 = 1.86; // 9:16 ratio
+    const frameGeo2 = new THREE.BufferGeometry();
+    const frameVerts2 = new Float32Array([
+      -w2 / 2, -h2 / 2, 0,  w2 / 2, -h2 / 2, 0,
+       w2 / 2, -h2 / 2, 0,  w2 / 2,  h2 / 2, 0,
+       w2 / 2,  h2 / 2, 0, -w2 / 2,  h2 / 2, 0,
+      -w2 / 2,  h2 / 2, 0, -w2 / 2, -h2 / 2, 0,
+    ]);
+    frameGeo2.setAttribute('position', new THREE.BufferAttribute(frameVerts2, 3));
+    const frameLine2 = new THREE.LineSegments(
+      frameGeo2,
+      new THREE.LineBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.32 })
+    );
+    frameGroup2.add(frameLine2);
+
+    // Precision corner brackets for Reel frame
+    const bVerts2 = new Float32Array([
+      -w2 / 2, h2 / 2 - 0.2, 0,  -w2 / 2, h2 / 2, 0,
+      -w2 / 2, h2 / 2, 0,  -w2 / 2 + 0.2, h2 / 2, 0,
+       w2 / 2 - 0.2, h2 / 2, 0,   w2 / 2, h2 / 2, 0,
+       w2 / 2, h2 / 2, 0,   w2 / 2, h2 / 2 - 0.2, 0,
+      -w2 / 2, -h2 / 2 + 0.2, 0, -w2 / 2, -h2 / 2, 0,
+      -w2 / 2, -h2 / 2, 0, -w2 / 2 + 0.2, -h2 / 2, 0,
+       w2 / 2 - 0.2, -h2 / 2, 0,  w2 / 2, -h2 / 2, 0,
+       w2 / 2, -h2 / 2, 0,  w2 / 2, -h2 / 2 + 0.2, 0,
+    ]);
+    const bracketGeo2 = new THREE.BufferGeometry();
+    bracketGeo2.setAttribute('position', new THREE.BufferAttribute(bVerts2, 3));
+    frameGroup2.add(new THREE.LineSegments(bracketGeo2, new THREE.LineBasicMaterial({ color: 0xa855f7, transparent: true, opacity: 0.6 })));
+
+    frameGroup2.position.set(3.2, -0.2, -0.5);
+    frameGroup2.rotation.set(-0.06, -0.3, 0.08);
+    mainGroup.add(frameGroup2);
+
+    // 5. Optical Aperture / Focus Rings
+    const ringGeo = new THREE.RingGeometry(1.62, 1.66, 48);
+    const ringMesh = new THREE.Mesh(
+      ringGeo,
+      new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.07, side: THREE.DoubleSide })
+    );
+    ringMesh.position.set(0, 0, -2.2);
+    mainGroup.add(ringMesh);
+
+    const outerRingGeo = new THREE.RingGeometry(2.32, 2.34, 64);
+    const outerRingMesh = new THREE.Mesh(
+      outerRingGeo,
+      new THREE.MeshBasicMaterial({ color: 0xa855f7, transparent: true, opacity: 0.08, side: THREE.DoubleSide })
+    );
+    outerRingMesh.position.set(0, 0, -2.4);
+    mainGroup.add(outerRingMesh);
+
+    // 6. Volumetric Cinema Dust Motes / Chromatic Particles (420 particles)
+    const particleCount = 420;
+    const particleGeo = new THREE.BufferGeometry();
+    const posArray = new Float32Array(particleCount * 3);
+    const colorArray = new Float32Array(particleCount * 3);
+
+    const purpleCol = new THREE.Color(0xa855f7);
+    const cyanCol = new THREE.Color(0x06b6d4);
+    const whiteCol = new THREE.Color(0xffffff);
+
+    for (let i = 0; i < particleCount; i++) {
+      posArray[i * 3] = (Math.random() - 0.5) * 14;
+      posArray[i * 3 + 1] = (Math.random() - 0.5) * 8;
+      posArray[i * 3 + 2] = (Math.random() - 0.5) * 6 - 1;
+
+      const pick = Math.random();
+      const col = pick < 0.45 ? purpleCol : pick < 0.85 ? cyanCol : whiteCol;
+      colorArray[i * 3] = col.r;
+      colorArray[i * 3 + 1] = col.g;
+      colorArray[i * 3 + 2] = col.b;
+    }
+
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    particleGeo.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+
+    const particles = new THREE.Points(
+      particleGeo,
+      new THREE.PointsMaterial({
+        size: 0.026,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.5,
+        blending: THREE.AdditiveBlending,
+      })
+    );
+    mainGroup.add(particles);
+
+    // Mouse Tracking with smooth Lerp
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      targetX = (e.clientX / window.innerWidth - 0.5) * 1.3;
+      targetY = (e.clientY / window.innerHeight - 0.5) * -0.9;
+    };
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+
+    const handleResize = () => {
+      if (!parent) return;
+      width = parent.clientWidth || window.innerWidth;
+      height = parent.clientHeight || window.innerHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    };
+    window.addEventListener('resize', handleResize);
+
+    let animId: number;
+    const clock = new THREE.Clock();
+
+    const animate = () => {
+      animId = requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+
+      // Smooth mouse lerping
+      currentX += (targetX - currentX) * 0.04;
+      currentY += (targetY - currentY) * 0.04;
+
+      // Parallax rotation
+      mainGroup.rotation.y = currentX * 0.4;
+      mainGroup.rotation.x = currentY * 0.3;
+
+      // Floating sine wave motion on frames
+      frameGroup1.position.y = 0.35 + Math.sin(t * 0.75) * 0.1;
+      frameGroup1.rotation.z = -0.07 + Math.cos(t * 0.55) * 0.035;
+
+      frameGroup2.position.y = -0.2 + Math.cos(t * 0.7) * 0.12;
+      frameGroup2.rotation.z = 0.08 + Math.sin(t * 0.5) * 0.035;
+
+      // Slow continuous spin on optical rings
+      ringMesh.rotation.z = t * 0.045;
+      outerRingMesh.rotation.z = -t * 0.03;
+
+      // Slow upward drift on particles
+      const positions = particleGeo.attributes.position.array as Float32Array;
+      for (let i = 1; i < positions.length; i += 3) {
+        positions[i] += 0.002;
+        if (positions[i] > 4) positions[i] = -4;
+      }
+      particleGeo.attributes.position.needsUpdate = true;
+
+      renderer.render(scene, camera);
+    };
+
+    animate();
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', handleResize);
+      renderer.dispose();
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full pointer-events-none z-[2]"
+      style={{ opacity: 0.82 }}
+    />
+  );
+};
+
+
 const Hero = () => {
   const tools = ["Premiere Pro", "After Effects", "Photoshop", "Illustrator", "AI Video & Motion"];
   const { scrollY } = useScroll();
@@ -752,6 +1020,8 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Interactive 3D WebGL Cinema & Timeline Atmosphere */}
+      <Hero3DCanvas />
 
       {/* Dot grid background */}
       <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
