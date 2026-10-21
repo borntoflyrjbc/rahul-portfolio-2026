@@ -133,6 +133,13 @@ User has GitHub credentials cached on Windows — push works without prompt.
 
 ## Recent decisions worth remembering
 
+- **Locked 21-Oct-2026 Decisions (CRITICAL)**:
+  - **Forbidden terms completely banned**: ZERO mentions of 'XML', 'vibe coding', 'Python/TypeScript scripting', 'Figma', 'Sketch', or 'DaVinci Resolve' across the entire codebase (src/App.tsx, public/resume.html, dist/).
+  - **Tool names cleaned**: Version numbers stripped (Seedance, Kling, Veo, Runway, ElevenLabs, Midjourney). Added VS Code (with custom SVG logo) & Cursor IDE / Workflow Automation. Added Illustrator to Hero bottom strip.
+  - **Company & Railway names locked**: 'CIN News Network, Jabalpur' (strictly CIN, not CI) and 'Project: West Central Railway (WCR)' (never 'Degree 360 | Remote' on public cards/resume).
+  - **Header navigation (Strictly 5 items)**: 1-to-1 matching section titles: About (#about), Expertise (#services), Showreel (#showreel), My Work (#creative-works), Contact (#contact) + Top-Right Resume CTA. No internal experimental 'AI Studio' links.
+  - **Hero 3D Canvas (Hero3DCanvas)**: Three.js WebGL canvas at z-[2] with 16:9 cinema viewfinder, 9:16 vertical reel frame, dual CatmullRom timeline curves, optical aperture rings, 420 volumetric cinema dust motes, and smooth mouse parallax.
+
 - **Preloader subtitles** are NOT uppercase ("Video Editor" not "VIDEO EDITOR") — user explicitly fixed this.
 - **Hero badge dot** sits BEFORE "with AI Innovation" gradient text, not at the start of the badge.
 - **Client logo cards** are large (170-210px wide, 90-110px tall) with subtle gradient bg + ring + soft shadow — user explicitly wanted bigger boxes with glassmorphism feel.
