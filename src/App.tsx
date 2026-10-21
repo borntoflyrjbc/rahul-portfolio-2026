@@ -1,27 +1,27 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
-import { Menu, X, Mail, Video, Layers, MonitorPlay, PenTool, Sparkles, Megaphone, ArrowUp, Film, Palette, Radio, Phone, MapPin, Download, Camera, Wand2, ImagePlay, Tv2 } from 'lucide-react';
+import { Menu, X, Mail, Video, Layers, MonitorPlay, PenTool, Sparkles, Megaphone, ArrowUp, Film, Palette, Radio, Phone, MapPin, Download, Camera, Wand2, ImagePlay, Tv2, Terminal, Cpu, Code2, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 
 const skillCategories = [
   {
-    title: 'Software & Tools',
-    icon: <Film className="w-5 h-5 text-white" />,
-    skills: ['Adobe Premiere Pro', 'After Effects', 'Photoshop', 'Illustrator', 'Audition', 'OBS Studio', 'WordPress']
+    title: 'Video Editing & Post-Production',
+    icon: <Film className="w-5 h-5 text-purple-400" />,
+    skills: ['Adobe Premiere Pro', 'After Effects', 'Color Grading', 'Audition', 'OBS Studio', 'DaVinci Resolve', 'Sound Design']
   },
   {
-    title: 'AI & Generative',
-    icon: <Sparkles className="w-5 h-5 text-white" />,
-    skills: ['AI Video Production', 'Midjourney', 'Runway ML', 'ElevenLabs', 'Prompt Engineering', 'Kling AI']
+    title: 'Agentic AI & Workflow Automation',
+    icon: <Sparkles className="w-5 h-5 text-cyan-400" />,
+    skills: ['Agentic Workflow Design', 'Task Automation', 'Premiere Pro XML Pipelines', 'Multi-Step Orchestration', 'Script Customization', 'Prompt Engineering']
   },
   {
-    title: 'Design & Motion',
-    icon: <Palette className="w-5 h-5 text-white" />,
-    skills: ['Motion Graphics', 'UI/UX Design', 'Brand Identity', 'Social Media Design', 'Video Editing', 'Digital Marketing']
+    title: 'AI-Assisted Production & Vibe Coding',
+    icon: <Wand2 className="w-5 h-5 text-fuchsia-400" />,
+    skills: ['AI Video (Seedance / Kling / Runway)', 'Midjourney & Image Gen', 'ElevenLabs Neural Audio', 'Vibe Coding & Scripting', 'Creative Workflow Prototyping']
   },
   {
-    title: 'Broadcast & Production',
-    icon: <Radio className="w-5 h-5 text-white" />,
-    skills: ['Live Broadcasting', 'Camera Operation', 'News Production', 'Social Media Mgmt', 'Content Strategy']
+    title: 'Motion, Design & Social Systems',
+    icon: <Palette className="w-5 h-5 text-amber-400" />,
+    skills: ['Motion Graphics', 'Brand Communication', 'Social Media Management', 'Campaign Workflows', 'Figma & UI Design', 'Live Broadcasting']
   }
 ];
 
@@ -328,11 +328,12 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
 
   const jobs = [
     {
-      title: "Video Editor & Motion Designer",
-      company: "Degree360 Solutions, Delhi", period: "May 2026 – Present", current: true,
+      title: "Video Editor & Motion Graphics Artist",
+      company: "Degree 360 (Remote) · Project: West Central Railway (WCR)", period: "May 2026 – Present", current: true,
       points: [
-        "Video editing & motion design for digital campaigns and brand content",
-        "Blending AI-assisted production workflows with traditional editing craft",
+        "Working remotely on video production and creative deliverables for the West Central Railway (WCR) project",
+        "Crafting broadcast-grade video editing, motion graphics, and visual storytelling assets",
+        "Integrating AI-assisted production workflows and Premiere Pro automation into editorial pipelines",
       ]
     },
     {
@@ -346,12 +347,12 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
       ]
     },
     {
-      title: "Production Manager",
-      company: "CIN News Network, Jabalpur", period: "Nov 2020 – Aug 2023", current: false,
+      title: "Social Media Manager",
+      company: "CI News Network, Jabalpur", period: "Nov 2020 – Aug 2023", current: false,
       points: [
-        "Ensured quality & timely delivery of video production content",
-        "Enhanced visual appeal of news segments with creative teams",
-        "Directed live broadcasts and camera operations for TV & social media",
+        "Led social media management, digital content planning, and multi-channel publishing workflows",
+        "Produced and coordinated high-tempo news snippets, social reels, and creative campaign assets",
+        "Directed live broadcasts, digital streaming, and multi-camera studio production",
       ]
     },
     {
@@ -360,7 +361,7 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
       points: [
         "Designed user-centric interfaces for applications and websites",
         "Created graphics, banners & promotional materials for clients",
-        "Delivered seamless UX using Sketch & Adobe XD",
+        "Delivered intuitive digital interfaces, wireframes, and design systems using Figma & Adobe XD",
       ]
     },
   ];
@@ -368,11 +369,10 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
   const skills = [
     { name: "Adobe Premiere Pro", c: "purple" }, { name: "After Effects", c: "purple" },
     { name: "Photoshop", c: "blue" }, { name: "Illustrator", c: "orange" },
-    { name: "Adobe XD", c: "pink" }, { name: "Sketch", c: "yellow" },
-    { name: "OBS Studio", c: "def" }, { name: "WordPress", c: "blue" },
-    { name: "AI Video Production", c: "cyan" }, { name: "Midjourney", c: "cyan" },
-    { name: "Runway ML", c: "cyan" }, { name: "ElevenLabs", c: "cyan" },
-    { name: "Kling AI", c: "cyan" }, { name: "Prompt Engineering", c: "purple" },
+    { name: "Figma", c: "purple" }, { name: "Agentic AI Workflows", c: "cyan" },
+    { name: "Premiere XML Pipelines", c: "purple" }, { name: "Vibe Coding", c: "cyan" },
+    { name: "AI Video Production", c: "cyan" }, { name: "ElevenLabs", c: "cyan" },
+    { name: "Kling AI & Veo", c: "cyan" }, { name: "OBS Studio", c: "def" },
   ];
 
   const chipClass = (c: string) => c === "purple" ? "bg-purple-500/8 border-purple-500/20 text-purple-300/75"
@@ -455,8 +455,8 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
               {/* Info */}
               <div className="text-center sm:text-left">
                 <h2 className="text-[24px] sm:text-[28px] font-bold text-white tracking-tight leading-none">Rahul Jain</h2>
-                <p className="text-[10px] font-semibold tracking-[0.2em] uppercase mt-1.5 bg-gradient-to-r from-purple-300 to-fuchsia-300 bg-clip-text text-transparent">
-                  Video Editor · Graphics &amp; Motion Designer
+                <p className="text-[10px] font-semibold tracking-[0.2em] uppercase mt-1.5 bg-gradient-to-r from-purple-300 via-fuchsia-300 to-cyan-300 bg-clip-text text-transparent">
+                  Video Editor &amp; Motion Graphics Artist | AI-Powered Creative Workflow Specialist
                 </p>
                 <div className="flex flex-wrap justify-center sm:justify-start gap-x-4 gap-y-1 mt-3">
                   {([
@@ -479,9 +479,9 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
             <motion.div custom={0} variants={secVar} initial="hidden" animate="show">
               <SectionLabel>About Me</SectionLabel>
               <p className="text-white/48 text-[12.5px] leading-[1.85] mt-3">
-                Creative and detail-oriented Graphic Designer &amp; Video Editor with{" "}
-                <span className="text-white/75 font-semibold">6+ years</span> of experience in Multimedia, Motion Graphics &amp; Creative Design. Skilled in crafting impactful digital content for Marketing, Advertising &amp; Social Media. Proficient in{" "}
-                <span className="text-purple-300/90">AI-driven Video Production</span>, Generative Content Creation, and Prompt Engineering. Passionate about blending Design, Technology &amp; Strategy to deliver high-impact, future-ready visual experiences.
+                Video Editor &amp; Motion Graphics Artist with{" "}
+                <span className="text-white/75 font-semibold">6+ years</span> of experience in digital campaigns, broadcast content, and motion-led brand storytelling. Proficient in{" "}
+                <span className="text-purple-300/90">Agentic AI Workflows</span>, AI-assisted video production, vibe coding, and Premiere Pro automation. Passionate about merging traditional editing craft with intelligent automation pipelines to streamline production and build scalable creative systems.
               </p>
             </motion.div>
 
@@ -574,7 +574,7 @@ const Header = ({ onOpenResume }: { onOpenResume: () => void }) => {
   const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
-    const sectionIds = ['about', 'services', 'showreel', 'creative-works', 'contact'];
+    const sectionIds = ['about', 'ai-workflows', 'services', 'showreel', 'creative-works', 'contact'];
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
       const scrollMid = window.scrollY + window.innerHeight / 3;
@@ -591,6 +591,7 @@ const Header = ({ onOpenResume }: { onOpenResume: () => void }) => {
 
   const navLinks = [
     { name: 'About',     id: 'about' },
+    { name: 'Workflows', id: 'ai-workflows' },
     { name: 'Expertise', id: 'services' },
     { name: 'Showcase',  id: 'showreel' },
     { name: 'Work',      id: 'creative-works' },
@@ -709,7 +710,7 @@ const Header = ({ onOpenResume }: { onOpenResume: () => void }) => {
 };
 
 const Hero = () => {
-  const tools = ["Generative AI", "Premiere Pro", "After Effects", "Photoshop", "Illustrator", "OBS Studio"];
+  const tools = ["Premiere Pro", "After Effects", "Agentic AI", "Motion Graphics", "Vibe Coding", "Photoshop", "Illustrator", "Figma"];
   const { scrollY } = useScroll();
   const orbY1 = useTransform(scrollY, [0, 900], [0, 140]);
   const orbY2 = useTransform(scrollY, [0, 900], [0, -110]);
@@ -756,30 +757,45 @@ const Hero = () => {
       {/* Dot grid background */}
       <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
 
-      {/* Ambient gradients */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_20%_50%,rgba(168,85,247,0.2)_0%,transparent_70%)] pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_50%_at_80%_55%,rgba(34,211,238,0.12)_0%,transparent_70%)] pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_50%_80%,rgba(217,70,239,0.08)_0%,transparent_70%)] pointer-events-none" />
+      {/* Filmic studio atmosphere — subtle warm tungsten rim & anamorphic violet */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_15%,rgba(245,158,11,0.05)_0%,transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_20%_50%,rgba(147,51,234,0.12)_0%,transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_50%_at_80%_55%,rgba(34,211,238,0.08)_0%,transparent_70%)] pointer-events-none" />
 
-      {/* Animated orbs — desktop only, blur-[100px] is GPU-heavy on mobile. Parallax-linked to scroll */}
+      {/* Parallax ambient accents — subtle and restrained */}
       <motion.div
-        className="hidden md:block absolute top-1/3 -left-32 w-[420px] h-[420px] rounded-full bg-purple-600/20 blur-[100px] pointer-events-none"
-        animate={{ x: [0, 50, 0] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        className="hidden md:block absolute top-1/3 -left-32 w-[420px] h-[420px] rounded-full bg-purple-600/15 blur-[110px] pointer-events-none"
+        animate={{ x: [0, 40, 0] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
         style={{ y: orbY1 }}
       />
       <motion.div
-        className="hidden md:block absolute bottom-1/3 -right-32 w-[380px] h-[380px] rounded-full bg-cyan-500/15 blur-[100px] pointer-events-none"
-        animate={{ x: [0, -40, 0] }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        className="hidden md:block absolute bottom-1/3 -right-32 w-[380px] h-[380px] rounded-full bg-cyan-500/10 blur-[110px] pointer-events-none"
+        animate={{ x: [0, -35, 0] }}
+        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
         style={{ y: orbY2, willChange: "transform" }}
       />
 
-      {/* Decorative corner lines */}
-      <div className="absolute top-24 left-4 sm:left-10 w-10 sm:w-16 h-10 sm:h-16 border-l border-t border-white/10 rounded-tl-lg pointer-events-none" />
-      <div className="absolute top-24 right-4 sm:right-10 w-10 sm:w-16 h-10 sm:h-16 border-r border-t border-white/10 rounded-tr-lg pointer-events-none" />
-      <div className="absolute bottom-20 left-4 sm:left-10 w-10 sm:w-16 h-10 sm:h-16 border-l border-b border-white/10 rounded-bl-lg pointer-events-none" />
-      <div className="absolute bottom-20 right-4 sm:right-10 w-10 sm:w-16 h-10 sm:h-16 border-r border-b border-white/10 rounded-br-lg pointer-events-none" />
+      {/* Viewfinder frame guides — cinema director & broadcast editor aesthetic */}
+      <div className="absolute top-20 sm:top-24 left-4 sm:left-10 flex flex-col gap-1 pointer-events-none">
+        <div className="w-10 sm:w-16 h-10 sm:h-16 border-l border-t border-white/20 rounded-tl-lg" />
+        <span className="font-mono text-[8px] sm:text-[9px] tracking-widest text-white/30 uppercase pl-1">4K DCI · 24.00 FPS</span>
+      </div>
+      <div className="absolute top-20 sm:top-24 right-4 sm:right-10 flex flex-col items-end gap-1 pointer-events-none">
+        <div className="w-10 sm:w-16 h-10 sm:h-16 border-r border-t border-white/20 rounded-tr-lg" />
+        <div className="flex items-center gap-1.5 pr-1">
+          <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+          <span className="font-mono text-[8px] sm:text-[9px] tracking-widest text-white/40 uppercase">REC ●</span>
+        </div>
+      </div>
+      <div className="absolute bottom-16 sm:bottom-20 left-4 sm:left-10 flex flex-col gap-1 pointer-events-none">
+        <span className="font-mono text-[8px] sm:text-[9px] tracking-widest text-white/30 uppercase pl-1">PRORES 422 HQ</span>
+        <div className="w-10 sm:w-16 h-10 sm:h-16 border-l border-b border-white/20 rounded-bl-lg" />
+      </div>
+      <div className="absolute bottom-16 sm:bottom-20 right-4 sm:right-10 flex flex-col items-end gap-1 pointer-events-none">
+        <span className="font-mono text-[8px] sm:text-[9px] tracking-widest text-white/30 uppercase pr-1">AUDIO -14 LUFS</span>
+        <div className="w-10 sm:w-16 h-10 sm:h-16 border-r border-b border-white/20 rounded-br-lg" />
+      </div>
 
       {/* Editorial side rails — desktop only */}
       <div className="hidden lg:flex absolute left-8 top-1/2 -translate-y-1/2 flex-col items-center gap-4 pointer-events-none">
@@ -862,10 +878,9 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.75 }}
-          className="text-[clamp(0.85rem,2vw,1.05rem)] text-white/50 mb-8 sm:mb-10 max-w-lg mx-auto leading-relaxed font-light px-2 sm:px-0"
+          className="text-[clamp(0.85rem,2vw,1.05rem)] text-white/50 mb-8 sm:mb-10 max-w-xl mx-auto leading-relaxed font-light px-2 sm:px-0"
         >
-          Blending design, technology &amp; strategy to deliver
-          high-impact visual experiences that captivate and engage.
+          Crafting compelling visual content, motion-led brand campaigns, and broadcast deliverables. Blending traditional editing craft with agentic AI workflows, vibe coding, and automation pipelines.
         </motion.p>
 
         {/* CTA Buttons */}
@@ -938,8 +953,9 @@ const Hero = () => {
 
 const experiences = [
   {
-    title: "Video Editor & Motion Designer",
-    company: "Degree360 Solutions, Delhi",
+    title: "Video Editor & Motion Graphics Artist",
+    company: "Degree 360 | Remote",
+    project: "West Central Railway (WCR)",
     duration: "May 2026 - Present",
     icon: "🎞️",
     bgImage: "https://images.unsplash.com/photo-1492724441997-5dc865305da7?w=800&q=80",
@@ -952,8 +968,8 @@ const experiences = [
     bgImage: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&q=80",
   },
   {
-    title: "Production Manager",
-    company: "CIN News Network, Jabalpur",
+    title: "Social Media Manager",
+    company: "CI News Network, Jabalpur",
     duration: "Nov 2020 - Aug 2023",
     icon: "📡",
     bgImage: "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=800&q=80",
@@ -1067,8 +1083,8 @@ const About = () => {
 
         {/* Paragraph */}
         <p className="text-gray-200 text-base md:text-[17px] leading-relaxed drop-shadow-md max-w-xl mx-auto mb-10 md:mb-14">
-          With <span className="text-white font-semibold">6+ years</span> of experience in video production, motion graphics, and digital design, I create compelling visual content that tells powerful stories. Currently working at{" "}
-          <span className="text-purple-300 font-medium">Degree360 Solutions, Delhi</span>, I combine traditional creativity with cutting-edge AI tools to deliver exceptional results.
+          With <span className="text-white font-semibold">6+ years</span> of experience in video production, motion graphics, and digital design, I create compelling visual content that tells powerful stories. Working remotely with{" "}
+          <span className="text-purple-300 font-medium">Degree 360</span> on creative deliverables for the <span className="text-cyan-300 font-medium">West Central Railway (WCR)</span> project, I combine traditional editing craft with AI-assisted workflows, agentic automation, and vibe coding to build fast, future-ready production pipelines.
         </p>
 
         {/* Experience label */}
@@ -1095,6 +1111,9 @@ const About = () => {
               <div className="flex-1 min-w-0">
                 <h3 className="text-white font-semibold text-[15px] leading-tight truncate">{card.title}</h3>
                 <p className="text-[13px] mt-0.5 truncate bg-gradient-to-r from-purple-300 to-fuchsia-300 bg-clip-text text-transparent font-medium">{card.company}</p>
+                {(card as any).project && (
+                  <p className="text-[11.5px] text-cyan-300/85 font-medium truncate mt-0.5">Project: {(card as any).project}</p>
+                )}
               </div>
               <span className="hidden sm:block flex-shrink-0 text-[10px] text-gray-400 font-medium tracking-wider uppercase whitespace-nowrap">{card.duration}</span>
             </div>
@@ -1210,20 +1229,16 @@ const ToolsMarquee = () => {
             </svg>
           </ToolIcon>
 
-          {/* Sketch — correct logo: diamond shape */}
-          <ToolIcon label="Sketch (UI/UX)" glow="rgba(247,183,49,0.3)">
+          {/* Figma — authentic 5-color logo */}
+          <ToolIcon label="Figma (UI/UX)" glow="rgba(162,89,255,0.35)">
             <svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-              <rect width="88" height="88" fill="#1c1400"/>
-              {/* Sketch diamond/gem shape */}
-              <g transform="translate(44,44)">
-                {/* Top triangle (lighter) */}
-                <polygon points="0,-22 -18,-4 18,-4" fill="#ffd45e" opacity="0.95"/>
-                {/* Bottom triangle (darker) */}
-                <polygon points="-18,-4 18,-4 0,22" fill="#e8a000" opacity="0.95"/>
-                {/* Left facet */}
-                <polygon points="-18,-4 0,-22 0,22" fill="#f5bc1c" opacity="0.85"/>
-                {/* Right facet */}
-                <polygon points="18,-4 0,-22 0,22" fill="#fcc928" opacity="0.9"/>
+              <rect width="88" height="88" fill="#16161d"/>
+              <g transform="translate(24, 16) scale(1.05)">
+                <path d="M0 9.5C0 4.25329 4.25329 0 9.5 0H19V19H9.5C4.25329 19 0 14.7467 0 9.5Z" fill="#F24E1E"/>
+                <path d="M19 0H28.5C33.7467 0 38 4.25329 38 9.5C38 14.7467 33.7467 19 28.5 19H19V0Z" fill="#FF7262"/>
+                <path d="M0 28.5C0 23.2533 4.25329 19 9.5 19H19V38H9.5C4.25329 38 0 33.7467 0 28.5Z" fill="#A259FF"/>
+                <circle cx="28.5" cy="28.5" r="9.5" fill="#1ABCFE"/>
+                <path d="M0 47.5C0 42.2533 4.25329 38 9.5 38H19V47.5C19 52.7467 14.7467 57 9.5 57C4.25329 57 0 52.7467 0 47.5Z" fill="#0ACF83"/>
               </g>
             </svg>
           </ToolIcon>
@@ -1235,70 +1250,210 @@ const ToolsMarquee = () => {
 };
 
 
-const aiToolsRow1 = ["Seedance", "KLing", "Veo", "Runway", "Nano Banana", "Seedream", "Midjourney", "ElevenLabs", "PixVerse", "Wan"];
-const aiToolsRow2 = ["Recraft", "Flux", "Ideogram", "PixVerse", "Wan", "ElevenLabs", "Seedance", "KLing", "Veo", "Runway", "Nano Banana", "Seedream"];
+const workflowSystems = [
+  {
+    num: "01",
+    tag: "Editorial Engineering",
+    title: "Premiere Pro Automated XML Pipelines",
+    role: "Creative Technologist & Video Editor",
+    icon: <Film className="w-5 h-5 text-purple-400" />,
+    stack: ["Adobe Premiere Pro", "FCP XML / EDL", "Python / Scripts", "FFmpeg"],
+    problem: "Conforming multi-cam shoots, translating EDL markers, and assembling multi-channel audio tracks manually creates hours of repetitive timeline friction.",
+    workflow: "Programmatic sequence generation that converts structured shoot cue sheets directly into native Premiere Pro XML—auto-mapping video clips, aligning multi-mic audio, and placing color-coded chapter markers.",
+    outcome: "Eliminates manual timeline conforming; sequences open immediately in Premiere ready for color grading and broadcast mastering.",
+    accent: "from-purple-500/20 via-fuchsia-500/10 to-transparent",
+    badgeBg: "bg-purple-500/15 text-purple-300 border-purple-500/30",
+  },
+  {
+    num: "02",
+    tag: "Agentic Systems",
+    title: "Agentic AI Creative Orchestration",
+    role: "Creative Director & Workflow Architect",
+    icon: <Cpu className="w-5 h-5 text-cyan-400" />,
+    stack: ["Claude / GPT-4o", "Agent Architectures", "Multi-Step Prompt Chains", "Midjourney / Kling"],
+    problem: "Pre-production conceptualization and visual research often suffer from vague prompts, inconsistent camera optics, and hallucinated details.",
+    workflow: "Multi-stage agentic prompt chains that parse creative briefs into locked technical shot matrices—specifying camera lenses (focal lengths mm), motion trajectories, lighting ratios, and facial FACS expressions before shooting.",
+    outcome: "Fast, coherent pre-visualization that bridges creative concepts directly into production-ready director shot lists.",
+    accent: "from-cyan-500/20 via-blue-500/10 to-transparent",
+    badgeBg: "bg-cyan-500/15 text-cyan-300 border-cyan-500/30",
+  },
+  {
+    num: "03",
+    tag: "AI-Assisted Development",
+    title: "Vibe Coding & Creative Tool Scripting",
+    role: "AI-Assisted Developer & Editor",
+    icon: <Code2 className="w-5 h-5 text-emerald-400" />,
+    stack: ["Python", "TypeScript", "React", "Tailwind CSS", "FFmpeg CLI"],
+    problem: "Commercial editing suites lack bespoke tools for specialized naming conventions, subtitle safe-margin enforcement, and batch asset formatting.",
+    workflow: "Rapid prototyping of lightweight creative utilities using vibe coding and AI-assisted programming—building custom caption cleaners (strict 2-3 word chunking, zero punctuation) and media metadata inspectors.",
+    outcome: "Bespoke internal utilities tailored to team post-production bottlenecks, developed and deployed in hours.",
+    accent: "from-emerald-500/20 via-teal-500/10 to-transparent",
+    badgeBg: "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
+  },
+  {
+    num: "04",
+    tag: "Social Operations",
+    title: "Social Media Multi-Format Automation",
+    role: "Social Media Manager & Motion Artist",
+    icon: <Layers className="w-5 h-5 text-amber-400" />,
+    stack: ["After Effects MOGRT", "Dynamic Reframe", "Lossless Transcode", "Meta / YouTube Workflows"],
+    problem: "Reformatting 16:9 broadcast masters into 9:16 vertical reels, shorts, and carousels creates repetitive cropping bottlenecks and subtitle overflow.",
+    workflow: "Template-driven automation using responsive After Effects MOGRTs with auto-centering, dynamic text bounding, and lossless audio stream copying across multiple target aspect ratios.",
+    outcome: "Consistent, brand-safe distribution across Instagram Reels, YouTube Shorts, and LinkedIn with zero visual degradation.",
+    accent: "from-amber-500/20 via-orange-500/10 to-transparent",
+    badgeBg: "bg-amber-500/15 text-amber-300 border-amber-500/30",
+  },
+];
 
+const aiToolsRow1 = ["Seedance 2.5", "Premiere Pro XML", "Kling AI", "Google Veo", "Runway Gen-3", "ElevenLabs", "Midjourney v6", "Nano Banana 2", "Python / Vibe Coding", "Figma", "After Effects", "FFmpeg"];
 const doubled1 = [...aiToolsRow1, ...aiToolsRow1];
-const doubled2 = [...aiToolsRow2, ...aiToolsRow2];
 
 const AiToolsSection = () => {
-
   return (
-    <section className="py-16 md:py-24 bg-black relative border-t border-white/[0.05] overflow-hidden">
-      {/* Ambient */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_50%,rgba(168,85,247,0.07)_0%,transparent_70%)] pointer-events-none" />
+    <section id="ai-workflows" className="py-20 md:py-28 bg-black relative border-t border-white/[0.05] overflow-hidden">
+      {/* Ambient background lighting */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_30%,rgba(168,85,247,0.08)_0%,transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_80%_70%,rgba(34,211,238,0.06)_0%,transparent_70%)] pointer-events-none" />
 
-      {/* Side fades */}
-      <div className="absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-28 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        {/* Header */}
+        <div className="text-center mb-14 md:mb-20">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-[10px] tracking-[0.35em] uppercase text-purple-400/80 font-medium mb-3"
+          >
+            Creative Systems &amp; Automation
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.08 }}
+            className="font-display text-[clamp(2.2rem,6.5vw,4.5rem)] font-extrabold text-white leading-[0.96] tracking-tight mb-5"
+          >
+            AI Workflows &amp;{" "}
+            <span className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-cyan-300 bg-clip-text text-transparent">
+              Creative Systems
+            </span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.14 }}
+            className="text-white/45 text-sm md:text-base max-w-2xl mx-auto leading-relaxed"
+          >
+            Bridging traditional video editing and motion design with agentic AI orchestration, Premiere Pro XML automation, and vibe coding pipelines to eliminate repetitive friction.
+          </motion.p>
+        </div>
 
-      {/* Header */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center mb-10 md:mb-16 relative z-10">
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-[10px] tracking-[0.35em] uppercase text-purple-400/70 font-medium mb-3"
-        >
-          Generative AI
-        </motion.p>
-        <motion.h2
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.08 }}
-          className="text-3xl md:text-4xl font-bold text-white mb-4"
-        >
-          Specialisation in{" "}
-          <span className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-200 bg-clip-text text-transparent">
-            AI Tools
-          </span>
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.14 }}
-          className="text-white/40 text-sm max-w-xl mx-auto leading-relaxed"
-        >
-          Leveraging the power of cutting-edge generative AI models to create stunning visual content.
-        </motion.p>
-      </div>
-
-      {/* Single row — left scroll (mr instead of gap for seamless loop) */}
-      <div className="overflow-hidden">
-        <div
-          className="flex w-max"
-          style={{ willChange: "transform", animation: "marquee 26s linear infinite" }}
-        >
-          {doubled1.map((tool, i) => (
-            <div
-              key={i}
-              className="flex-shrink-0 mr-3 sm:mr-4 px-5 sm:px-7 py-3 sm:py-3.5 rounded-2xl bg-white/[0.04] border border-white/[0.08] text-white/70 text-[13px] sm:text-[16px] font-medium whitespace-nowrap hover:bg-white/[0.09] hover:border-purple-500/30 hover:text-white transition-all duration-300 cursor-default"
+        {/* 4 Systems Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-7 mb-16 md:mb-20">
+          {workflowSystems.map((sys, idx) => (
+            <motion.div
+              key={sys.num}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="group relative rounded-2xl p-6 sm:p-8 bg-[#07070e]/80 border border-white/[0.08] hover:border-white/20 transition-all duration-300 overflow-hidden flex flex-col justify-between"
             >
-              {tool}
-            </div>
+              {/* Top ambient card glow on hover */}
+              <div
+                className={`absolute -top-24 -right-24 w-56 h-56 rounded-full bg-gradient-to-br ${sys.accent} opacity-0 group-hover:opacity-100 blur-3xl transition-opacity duration-500 pointer-events-none`}
+              />
+
+              <div className="relative z-10">
+                {/* Meta header */}
+                <div className="flex items-center justify-between gap-3 mb-5">
+                  <div className="flex items-center gap-2.5">
+                    <span className="font-mono text-[12px] font-bold text-white/30 group-hover:text-purple-300 transition-colors">
+                      {sys.num}
+                    </span>
+                    <span className={`text-[10px] font-semibold tracking-wider uppercase px-2.5 py-0.5 rounded-full border ${sys.badgeBg}`}>
+                      {sys.tag}
+                    </span>
+                  </div>
+                  <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center group-hover:scale-105 transition-transform">
+                    {sys.icon}
+                  </div>
+                </div>
+
+                {/* Title & Role */}
+                <h3 className="text-xl sm:text-[22px] font-bold text-white tracking-tight leading-snug mb-1.5 group-hover:text-white transition-colors">
+                  {sys.title}
+                </h3>
+                <p className="text-[12px] font-medium text-purple-300/70 mb-4">
+                  Role: {sys.role}
+                </p>
+
+                {/* Tech Stack Chips */}
+                <div className="flex flex-wrap gap-1.5 mb-6">
+                  {sys.stack.map((t, i) => (
+                    <span key={i} className="text-[11px] font-mono text-white/50 bg-white/[0.03] border border-white/[0.06] px-2 py-0.5 rounded-md">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Architecture Sections */}
+                <div className="space-y-3.5 text-[12.5px] leading-relaxed border-t border-white/[0.06] pt-5">
+                  <div>
+                    <span className="block text-[10px] font-mono uppercase tracking-wider text-white/30 mb-0.5">
+                      Problem Context
+                    </span>
+                    <p className="text-white/60">
+                      {sys.problem}
+                    </p>
+                  </div>
+                  <div>
+                    <span className="block text-[10px] font-mono uppercase tracking-wider text-purple-300/60 mb-0.5">
+                      Workflow Developed
+                    </span>
+                    <p className="text-white/75">
+                      {sys.workflow}
+                    </p>
+                  </div>
+                  <div>
+                    <span className="block text-[10px] font-mono uppercase tracking-wider text-emerald-400/70 mb-0.5 flex items-center gap-1">
+                      <CheckCircle2 size={11} /> Practical Outcome
+                    </span>
+                    <p className="text-white/85 font-medium">
+                      {sys.outcome}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           ))}
+        </div>
+
+        {/* Toolkit Strip Header */}
+        <div className="text-center mb-6">
+          <p className="text-[10px] tracking-[0.3em] uppercase text-white/30 font-medium">
+            AI Engines &amp; Automation Tooling
+          </p>
+        </div>
+
+        {/* Live Marquee Strip */}
+        <div className="relative overflow-hidden py-3">
+          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+          <div
+            className="flex w-max"
+            style={{ willChange: "transform", animation: "marquee 28s linear infinite" }}
+          >
+            {doubled1.map((tool, i) => (
+              <div
+                key={i}
+                className="flex-shrink-0 mr-3 px-5 py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.07] text-white/65 text-[13px] font-medium whitespace-nowrap hover:bg-white/[0.08] hover:border-purple-500/40 hover:text-white transition-all duration-200 cursor-default"
+              >
+                {tool}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -1307,7 +1462,7 @@ const AiToolsSection = () => {
 
 const clientLogos = [
   { name: "Century Group",        src: "https://res.cloudinary.com/dijteej5k/image/upload/q_auto,f_auto/v1776608072/portfolio/social/Century_Group_logo_02.png" },
-  { name: "CIN News Network",     src: "https://res.cloudinary.com/dijteej5k/image/upload/q_auto,f_auto/v1776608073/portfolio/social/cinn.png" },
+  { name: "CI News Network",      src: "https://res.cloudinary.com/dijteej5k/image/upload/q_auto,f_auto/v1776608073/portfolio/social/cinn.png" },
   { name: "Cubedots",             src: "https://res.cloudinary.com/dijteej5k/image/upload/q_auto,f_auto/v1776608074/portfolio/social/cubedots.png" },
   { name: "Dainik Bhaskar",       src: "https://res.cloudinary.com/dijteej5k/image/upload/q_auto,f_auto/v1776608075/portfolio/social/dainik-bhaskar-seeklogo.png" },
   { name: "HCET",                 src: "https://res.cloudinary.com/dijteej5k/image/upload/q_auto,f_auto/v1776608083/portfolio/social/HCET_copy.png" },
