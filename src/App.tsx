@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { Menu, X, Mail, Video, Layers, MonitorPlay, PenTool, Sparkles, Megaphone, ArrowUp, Film, Palette, Radio, Phone, MapPin, Download, Camera, Wand2, ImagePlay, Tv2, Terminal, Cpu, Code2, ArrowUpRight, CheckCircle2 } from 'lucide-react';
@@ -9,19 +10,19 @@ const skillCategories = [
     skills: ['Adobe Premiere Pro', 'After Effects', 'Color Grading', 'Audition', 'OBS Studio', 'DaVinci Resolve', 'Sound Design']
   },
   {
-    title: 'Agentic AI & Workflow Automation',
+    title: 'AI Video & Generative Production',
     icon: <Sparkles className="w-5 h-5 text-cyan-400" />,
-    skills: ['Agentic Workflow Design', 'Task Automation', 'Premiere Pro XML Pipelines', 'Multi-Step Orchestration', 'Script Customization', 'Prompt Engineering']
+    skills: ['Seedance 2.5', 'Kling AI', 'Google Veo', 'Runway Gen-3', 'Midjourney v6', 'Prompt Engineering']
   },
   {
-    title: 'AI-Assisted Production & Vibe Coding',
+    title: 'Audio Design & Neural Voice',
     icon: <Wand2 className="w-5 h-5 text-fuchsia-400" />,
-    skills: ['AI Video (Seedance / Kling / Runway)', 'Midjourney & Image Gen', 'ElevenLabs Neural Audio', 'Vibe Coding & Scripting', 'Creative Workflow Prototyping']
+    skills: ['ElevenLabs Voice Direction', 'Audio Sync & Pacing', 'Sound Effects & Mixing', 'Dialogue Polish', 'Broadcast Mastering']
   },
   {
-    title: 'Motion, Design & Social Systems',
+    title: 'Motion Graphics & Social Video',
     icon: <Palette className="w-5 h-5 text-amber-400" />,
-    skills: ['Motion Graphics', 'Brand Communication', 'Social Media Management', 'Campaign Workflows', 'Figma & UI Design', 'Live Broadcasting']
+    skills: ['Motion Graphics', 'Kinetic Typography', 'Social Media Reels', 'Short-form Video Pacing', 'Brand Visuals', 'Live Broadcasting']
   }
 ];
 
@@ -333,7 +334,7 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
       points: [
         "Working remotely on video production and creative deliverables for the West Central Railway (WCR) project",
         "Crafting broadcast-grade video editing, motion graphics, and visual storytelling assets",
-        "Integrating AI-assisted production workflows and Premiere Pro automation into editorial pipelines",
+        "Utilizing AI-assisted video workflows and generative tools to accelerate creative turnarounds",
       ]
     },
     {
@@ -361,7 +362,7 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
       points: [
         "Designed user-centric interfaces for applications and websites",
         "Created graphics, banners & promotional materials for clients",
-        "Delivered intuitive digital interfaces, wireframes, and design systems using Figma & Adobe XD",
+        "Created promotional graphics, marketing banners, and branding collateral for diverse clients",
       ]
     },
   ];
@@ -369,10 +370,10 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
   const skills = [
     { name: "Adobe Premiere Pro", c: "purple" }, { name: "After Effects", c: "purple" },
     { name: "Photoshop", c: "blue" }, { name: "Illustrator", c: "orange" },
-    { name: "Figma", c: "purple" }, { name: "Agentic AI Workflows", c: "cyan" },
-    { name: "Premiere XML Pipelines", c: "purple" }, { name: "Vibe Coding", c: "cyan" },
-    { name: "AI Video Production", c: "cyan" }, { name: "ElevenLabs", c: "cyan" },
-    { name: "Kling AI & Veo", c: "cyan" }, { name: "OBS Studio", c: "def" },
+    { name: "DaVinci Resolve", c: "purple" }, { name: "AI Video Production", c: "cyan" },
+    { name: "Seedance 2.5", c: "cyan" }, { name: "Kling AI & Veo", c: "cyan" },
+    { name: "ElevenLabs", c: "cyan" }, { name: "Midjourney", c: "cyan" },
+    { name: "OBS Studio", c: "def" }, { name: "Prompt Engineering", c: "purple" },
   ];
 
   const chipClass = (c: string) => c === "purple" ? "bg-purple-500/8 border-purple-500/20 text-purple-300/75"
@@ -481,7 +482,7 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
               <p className="text-white/48 text-[12.5px] leading-[1.85] mt-3">
                 Video Editor &amp; Motion Graphics Artist with{" "}
                 <span className="text-white/75 font-semibold">6+ years</span> of experience in digital campaigns, broadcast content, and motion-led brand storytelling. Proficient in{" "}
-                <span className="text-purple-300/90">Agentic AI Workflows</span>, AI-assisted video production, vibe coding, and Premiere Pro automation. Passionate about merging traditional editing craft with intelligent automation pipelines to streamline production and build scalable creative systems.
+                <span className="text-purple-300/90">AI Video Production</span> (Seedance, Kling, Runway, Veo), ElevenLabs audio sync, and modern creative workflows. Passionate about merging traditional editing craft with cutting-edge AI tools to deliver high-impact visual stories.
               </p>
             </motion.div>
 
@@ -591,7 +592,7 @@ const Header = ({ onOpenResume }: { onOpenResume: () => void }) => {
 
   const navLinks = [
     { name: 'About',     id: 'about' },
-    { name: 'Workflows', id: 'ai-workflows' },
+    { name: 'AI Studio',  id: 'ai-studio' },
     { name: 'Expertise', id: 'services' },
     { name: 'Showcase',  id: 'showreel' },
     { name: 'Work',      id: 'creative-works' },
@@ -710,7 +711,7 @@ const Header = ({ onOpenResume }: { onOpenResume: () => void }) => {
 };
 
 const Hero = () => {
-  const tools = ["Premiere Pro", "After Effects", "Agentic AI", "Motion Graphics", "Vibe Coding", "Photoshop", "Illustrator", "Figma"];
+  const tools = ["Premiere Pro", "After Effects", "Photoshop", "AI Video & Motion"];
   const { scrollY } = useScroll();
   const orbY1 = useTransform(scrollY, [0, 900], [0, 140]);
   const orbY2 = useTransform(scrollY, [0, 900], [0, -110]);
@@ -878,9 +879,9 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.75 }}
-          className="text-[clamp(0.85rem,2vw,1.05rem)] text-white/50 mb-8 sm:mb-10 max-w-xl mx-auto leading-relaxed font-light px-2 sm:px-0"
+          className="text-[clamp(0.85rem,2vw,1.05rem)] text-white/50 mb-8 sm:mb-10 max-w-lg mx-auto leading-relaxed font-light px-2 sm:px-0"
         >
-          Crafting compelling visual content, motion-led brand campaigns, and broadcast deliverables. Blending traditional editing craft with agentic AI workflows, vibe coding, and automation pipelines.
+          Crafting high-impact video edits, motion design, and broadcast visuals — elevated with modern AI workflows.
         </motion.p>
 
         {/* CTA Buttons */}
@@ -1084,7 +1085,7 @@ const About = () => {
         {/* Paragraph */}
         <p className="text-gray-200 text-base md:text-[17px] leading-relaxed drop-shadow-md max-w-xl mx-auto mb-10 md:mb-14">
           With <span className="text-white font-semibold">6+ years</span> of experience in video production, motion graphics, and digital design, I create compelling visual content that tells powerful stories. Working remotely with{" "}
-          <span className="text-purple-300 font-medium">Degree 360</span> on creative deliverables for the <span className="text-cyan-300 font-medium">West Central Railway (WCR)</span> project, I combine traditional editing craft with AI-assisted workflows, agentic automation, and vibe coding to build fast, future-ready production pipelines.
+          <span className="text-purple-300 font-medium">Degree 360</span> on creative deliverables for the <span className="text-cyan-300 font-medium">West Central Railway (WCR)</span> project, I combine traditional editing craft with AI-assisted video tools and motion design to build fast, broadcast-quality production pipelines.
         </p>
 
         {/* Experience label */}
@@ -1229,16 +1230,15 @@ const ToolsMarquee = () => {
             </svg>
           </ToolIcon>
 
-          {/* Figma — authentic 5-color logo */}
-          <ToolIcon label="Figma (UI/UX)" glow="rgba(162,89,255,0.35)">
+          {/* DaVinci Resolve — color grading & finishing */}
+          <ToolIcon label="DaVinci Resolve" glow="rgba(255,75,90,0.35)">
             <svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-              <rect width="88" height="88" fill="#16161d"/>
-              <g transform="translate(24, 16) scale(1.05)">
-                <path d="M0 9.5C0 4.25329 4.25329 0 9.5 0H19V19H9.5C4.25329 19 0 14.7467 0 9.5Z" fill="#F24E1E"/>
-                <path d="M19 0H28.5C33.7467 0 38 4.25329 38 9.5C38 14.7467 33.7467 19 28.5 19H19V0Z" fill="#FF7262"/>
-                <path d="M0 28.5C0 23.2533 4.25329 19 9.5 19H19V38H9.5C4.25329 38 0 33.7467 0 28.5Z" fill="#A259FF"/>
-                <circle cx="28.5" cy="28.5" r="9.5" fill="#1ABCFE"/>
-                <path d="M0 47.5C0 42.2533 4.25329 38 9.5 38H19V47.5C19 52.7467 14.7467 57 9.5 57C4.25329 57 0 52.7467 0 47.5Z" fill="#0ACF83"/>
+              <rect width="88" height="88" fill="#12131c"/>
+              <g transform="translate(44,44)">
+                <circle cx="-11" cy="-9" r="16" fill="#ff385c" opacity="0.9" />
+                <circle cx="12" cy="-7" r="16" fill="#00e599" opacity="0.9" />
+                <circle cx="0" cy="13" r="16" fill="#2d7eff" opacity="0.9" />
+                <circle cx="0" cy="0" r="7.5" fill="#ffffff" opacity="0.95" />
               </g>
             </svg>
           </ToolIcon>
@@ -1250,92 +1250,296 @@ const ToolsMarquee = () => {
 };
 
 
-const workflowSystems = [
+type StudioMode = 'video' | 'motion' | 'audio';
+
+interface ModeData {
+  id: StudioMode;
+  label: string;
+  badge: string;
+  tagline: string;
+  accentHex: number;
+  tools: string[];
+  capabilities: string[];
+}
+
+const studioModes: ModeData[] = [
   {
-    num: "01",
-    tag: "Editorial Engineering",
-    title: "Premiere Pro Automated XML Pipelines",
-    role: "Creative Technologist & Video Editor",
-    icon: <Film className="w-5 h-5 text-purple-400" />,
-    stack: ["Adobe Premiere Pro", "FCP XML / EDL", "Python / Scripts", "FFmpeg"],
-    problem: "Conforming multi-cam shoots, translating EDL markers, and assembling multi-channel audio tracks manually creates hours of repetitive timeline friction.",
-    workflow: "Programmatic sequence generation that converts structured shoot cue sheets directly into native Premiere Pro XML—auto-mapping video clips, aligning multi-mic audio, and placing color-coded chapter markers.",
-    outcome: "Eliminates manual timeline conforming; sequences open immediately in Premiere ready for color grading and broadcast mastering.",
-    accent: "from-purple-500/20 via-fuchsia-500/10 to-transparent",
-    badgeBg: "bg-purple-500/15 text-purple-300 border-purple-500/30",
+    id: 'video',
+    label: 'AI Video Generation',
+    badge: 'Cinematic AI',
+    tagline: 'Directing narrative video, dynamic camera motion, and hyper-real visual stories.',
+    accentHex: 0x06b6d4, // Cyan
+    tools: ['Seedance 2.5', 'Kling AI', 'Google Veo', 'Runway Gen-3', 'Midjourney v6'],
+    capabilities: [
+      'Multi-shot cinematic scene pacing and visual continuity',
+      'Prompt direction with camera focal lengths, angles & lighting',
+      'Text-to-video and image-to-video character consistency',
+      'Fast visual ideation for high-impact social and commercial ads',
+    ],
   },
   {
-    num: "02",
-    tag: "Agentic Systems",
-    title: "Agentic AI Creative Orchestration",
-    role: "Creative Director & Workflow Architect",
-    icon: <Cpu className="w-5 h-5 text-cyan-400" />,
-    stack: ["Claude / GPT-4o", "Agent Architectures", "Multi-Step Prompt Chains", "Midjourney / Kling"],
-    problem: "Pre-production conceptualization and visual research often suffer from vague prompts, inconsistent camera optics, and hallucinated details.",
-    workflow: "Multi-stage agentic prompt chains that parse creative briefs into locked technical shot matrices—specifying camera lenses (focal lengths mm), motion trajectories, lighting ratios, and facial FACS expressions before shooting.",
-    outcome: "Fast, coherent pre-visualization that bridges creative concepts directly into production-ready director shot lists.",
-    accent: "from-cyan-500/20 via-blue-500/10 to-transparent",
-    badgeBg: "bg-cyan-500/15 text-cyan-300 border-cyan-500/30",
+    id: 'motion',
+    label: 'Motion Graphics & VFX',
+    badge: 'Post-Production',
+    tagline: 'Crafting kinetic typography, brand animations, and seamless visual compositing.',
+    accentHex: 0xa855f7, // Purple
+    tools: ['After Effects', 'Premiere Pro', 'Photoshop', 'Illustrator'],
+    capabilities: [
+      'High-impact kinetic typography and cinematic title sequences',
+      'Dynamic brand logo reveals, stings, and animated identities',
+      'Visual effects compositing and seamless scene transitions',
+      '9:16 vertical reel formatting optimized to stop the scroll',
+    ],
   },
   {
-    num: "03",
-    tag: "AI-Assisted Development",
-    title: "Vibe Coding & Creative Tool Scripting",
-    role: "AI-Assisted Developer & Editor",
-    icon: <Code2 className="w-5 h-5 text-emerald-400" />,
-    stack: ["Python", "TypeScript", "React", "Tailwind CSS", "FFmpeg CLI"],
-    problem: "Commercial editing suites lack bespoke tools for specialized naming conventions, subtitle safe-margin enforcement, and batch asset formatting.",
-    workflow: "Rapid prototyping of lightweight creative utilities using vibe coding and AI-assisted programming—building custom caption cleaners (strict 2-3 word chunking, zero punctuation) and media metadata inspectors.",
-    outcome: "Bespoke internal utilities tailored to team post-production bottlenecks, developed and deployed in hours.",
-    accent: "from-emerald-500/20 via-teal-500/10 to-transparent",
-    badgeBg: "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
-  },
-  {
-    num: "04",
-    tag: "Social Operations",
-    title: "Social Media Multi-Format Automation",
-    role: "Social Media Manager & Motion Artist",
-    icon: <Layers className="w-5 h-5 text-amber-400" />,
-    stack: ["After Effects MOGRT", "Dynamic Reframe", "Lossless Transcode", "Meta / YouTube Workflows"],
-    problem: "Reformatting 16:9 broadcast masters into 9:16 vertical reels, shorts, and carousels creates repetitive cropping bottlenecks and subtitle overflow.",
-    workflow: "Template-driven automation using responsive After Effects MOGRTs with auto-centering, dynamic text bounding, and lossless audio stream copying across multiple target aspect ratios.",
-    outcome: "Consistent, brand-safe distribution across Instagram Reels, YouTube Shorts, and LinkedIn with zero visual degradation.",
-    accent: "from-amber-500/20 via-orange-500/10 to-transparent",
-    badgeBg: "bg-amber-500/15 text-amber-300 border-amber-500/30",
+    id: 'audio',
+    label: 'Audio Sync & Neural Voice',
+    badge: 'Sound Design',
+    tagline: 'Synchronizing expressive voiceovers, diegetic soundscapes, and broadcast audio.',
+    accentHex: 0xf59e0b, // Amber
+    tools: ['ElevenLabs Voice', 'Adobe Audition', 'Premiere Pro Sound', 'OBS Studio'],
+    capabilities: [
+      'Expressive AI voiceover direction with natural breathing & tone',
+      'Diegetic sound effects matching on-screen motion and cuts',
+      'Clean dialogue enhancement and noise suppression',
+      'Broadcast loudness normalization (-14 LUFS standard)',
+    ],
   },
 ];
 
-const aiToolsRow1 = ["Seedance 2.5", "Premiere Pro XML", "Kling AI", "Google Veo", "Runway Gen-3", "ElevenLabs", "Midjourney v6", "Nano Banana 2", "Python / Vibe Coding", "Figma", "After Effects", "FFmpeg"];
-const doubled1 = [...aiToolsRow1, ...aiToolsRow1];
+const studioMarquee = [
+  'Seedance 2.5', 'Kling AI', 'Google Veo', 'Runway Gen-3', 'ElevenLabs', 'Midjourney v6',
+  'Adobe Premiere Pro', 'After Effects', 'DaVinci Resolve', 'Photoshop', 'Adobe Audition', 'OBS Studio',
+  'Seedance 2.5', 'Kling AI', 'Google Veo', 'Runway Gen-3', 'ElevenLabs', 'Midjourney v6',
+  'Adobe Premiere Pro', 'After Effects', 'DaVinci Resolve', 'Photoshop', 'Adobe Audition', 'OBS Studio'
+];
 
 const AiToolsSection = () => {
+  const [activeMode, setActiveMode] = useState<StudioMode>('video');
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const currentAccentRef = useRef<number>(0x06b6d4);
+
+  // Sync mode accent color
+  useEffect(() => {
+    const current = studioModes.find((m) => m.id === activeMode);
+    if (current) {
+      currentAccentRef.current = current.accentHex;
+    }
+  }, [activeMode]);
+
+  // Three.js interactive 3D WebGL Canvas
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
+
+    let width = container.clientWidth;
+    let height = container.clientHeight;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+    camera.position.z = 4.8;
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
+      powerPreference: 'high-performance',
+    });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // 1. Center Crystal / Prism Geometry
+    const prismGeo = new THREE.IcosahedronGeometry(1.25, 1);
+    const wireMat = new THREE.MeshBasicMaterial({
+      color: 0x06b6d4,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.38,
+    });
+    const prismMesh = new THREE.Mesh(prismGeo, wireMat);
+    scene.add(prismMesh);
+
+    // 2. Inner Glowing Core
+    const coreGeo = new THREE.OctahedronGeometry(0.55, 0);
+    const coreMat = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.85,
+    });
+    const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+    scene.add(coreMesh);
+
+    // 3. Orbiting Particle Nebula
+    const particleCount = 700;
+    const particleGeo = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+
+    const baseColor = new THREE.Color(0x06b6d4);
+    const purpleColor = new THREE.Color(0xa855f7);
+
+    for (let i = 0; i < particleCount; i++) {
+      const u = Math.random();
+      const v = Math.random();
+      const theta = u * 2.0 * Math.PI;
+      const phi = Math.acos(2.0 * v - 1.0);
+      const r = 1.6 + Math.random() * 1.25;
+
+      positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+      positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      positions[i * 3 + 2] = r * Math.cos(phi);
+
+      const mixed = baseColor.clone().lerp(purpleColor, Math.random());
+      colors[i * 3] = mixed.r;
+      colors[i * 3 + 1] = mixed.g;
+      colors[i * 3 + 2] = mixed.b;
+    }
+
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    particleGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    const particleMat = new THREE.PointsMaterial({
+      size: 0.035,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.75,
+      blending: THREE.AdditiveBlending,
+    });
+    const particlePoints = new THREE.Points(particleGeo, particleMat);
+    scene.add(particlePoints);
+
+    // 4. Outer Gimbal Rings (Camera & Film Reel feel)
+    const ringGeo1 = new THREE.RingGeometry(2.1, 2.13, 64);
+    const ringMat1 = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.12,
+    });
+    const ring1 = new THREE.Mesh(ringGeo1, ringMat1);
+    ring1.rotation.x = Math.PI / 3;
+    scene.add(ring1);
+
+    const ringGeo2 = new THREE.RingGeometry(2.35, 2.37, 64);
+    const ringMat2 = new THREE.MeshBasicMaterial({
+      color: 0xa855f7,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.18,
+    });
+    const ring2 = new THREE.Mesh(ringGeo2, ringMat2);
+    ring2.rotation.y = Math.PI / 4;
+    scene.add(ring2);
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetX = 0;
+    let targetY = 0;
+
+    const onMouseMove = (e: MouseEvent) => {
+      const rect = container.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      const y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+      targetX = x * 0.45;
+      targetY = y * 0.35;
+    };
+
+    container.addEventListener('mousemove', onMouseMove);
+
+    const onResize = () => {
+      if (!container) return;
+      width = container.clientWidth;
+      height = container.clientHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    };
+    window.addEventListener('resize', onResize);
+
+    let animId: number;
+    const clock = new THREE.Clock();
+    const targetColor = new THREE.Color();
+
+    const animate = () => {
+      animId = requestAnimationFrame(animate);
+      const delta = clock.getDelta();
+      const time = clock.getElapsedTime();
+
+      mouseX += (targetX - mouseX) * 0.06;
+      mouseY += (targetY - mouseY) * 0.06;
+
+      targetColor.setHex(currentAccentRef.current);
+      wireMat.color.lerp(targetColor, 0.05);
+      ringMat2.color.lerp(targetColor, 0.05);
+
+      prismMesh.rotation.y += 0.35 * delta;
+      prismMesh.rotation.x = Math.sin(time * 0.4) * 0.15 + mouseY;
+      prismMesh.rotation.z = mouseX * 0.5;
+
+      coreMesh.rotation.y -= 0.6 * delta;
+      coreMesh.rotation.x += 0.3 * delta;
+
+      const pulse = 1 + Math.sin(time * 2.5) * 0.08;
+      coreMesh.scale.set(pulse, pulse, pulse);
+
+      particlePoints.rotation.y += 0.15 * delta;
+      particlePoints.rotation.x = mouseY * 0.2;
+      ring1.rotation.z += 0.1 * delta;
+      ring2.rotation.z -= 0.12 * delta;
+
+      renderer.render(scene, camera);
+    };
+    animate();
+
+    return () => {
+      cancelAnimationFrame(animId);
+      container.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('resize', onResize);
+      renderer.dispose();
+      prismGeo.dispose();
+      wireMat.dispose();
+      coreGeo.dispose();
+      coreMat.dispose();
+      particleGeo.dispose();
+      particleMat.dispose();
+      ringGeo1.dispose();
+      ringMat1.dispose();
+      ringGeo2.dispose();
+      ringMat2.dispose();
+    };
+  }, []);
+
+  const currentMode = studioModes.find((m) => m.id === activeMode) || studioModes[0];
+
   return (
-    <section id="ai-workflows" className="py-20 md:py-28 bg-black relative border-t border-white/[0.05] overflow-hidden">
-      {/* Ambient background lighting */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_30%,rgba(168,85,247,0.08)_0%,transparent_70%)] pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_80%_70%,rgba(34,211,238,0.06)_0%,transparent_70%)] pointer-events-none" />
+    <section id="ai-studio" className="py-20 md:py-28 bg-black relative border-t border-white/[0.05] overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_35%,rgba(168,85,247,0.08)_0%,transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_75%_60%,rgba(34,211,238,0.06)_0%,transparent_70%)] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-        {/* Header */}
-        <div className="text-center mb-14 md:mb-20">
+        {/* Section Header */}
+        <div className="text-center mb-10 md:mb-14">
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-[10px] tracking-[0.35em] uppercase text-purple-400/80 font-medium mb-3"
           >
-            Creative Systems &amp; Automation
+            Creative Technology &amp; Innovation
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.08 }}
-            className="font-display text-[clamp(2.2rem,6.5vw,4.5rem)] font-extrabold text-white leading-[0.96] tracking-tight mb-5"
+            className="font-display text-[clamp(2.2rem,6.5vw,4.5rem)] font-extrabold text-white leading-[0.96] tracking-tight mb-4"
           >
-            AI Workflows &amp;{" "}
+            AI-Powered{' '}
             <span className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-cyan-300 bg-clip-text text-transparent">
-              Creative Systems
+              Creative Studio
             </span>
           </motion.h2>
           <motion.p
@@ -1343,112 +1547,134 @@ const AiToolsSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.14 }}
-            className="text-white/45 text-sm md:text-base max-w-2xl mx-auto leading-relaxed"
+            className="text-white/45 text-sm md:text-base max-w-xl mx-auto leading-relaxed"
           >
-            Bridging traditional video editing and motion design with agentic AI orchestration, Premiere Pro XML automation, and vibe coding pipelines to eliminate repetitive friction.
+            Harnessing generative AI tools and motion design to produce cinematic visuals, dynamic animations, and broadcast-grade stories at lightning speed.
           </motion.p>
         </div>
 
-        {/* 4 Systems Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-7 mb-16 md:mb-20">
-          {workflowSystems.map((sys, idx) => (
-            <motion.div
-              key={sys.num}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="group relative rounded-2xl p-6 sm:p-8 bg-[#07070e]/80 border border-white/[0.08] hover:border-white/20 transition-all duration-300 overflow-hidden flex flex-col justify-between"
-            >
-              {/* Top ambient card glow on hover */}
-              <div
-                className={`absolute -top-24 -right-24 w-56 h-56 rounded-full bg-gradient-to-br ${sys.accent} opacity-0 group-hover:opacity-100 blur-3xl transition-opacity duration-500 pointer-events-none`}
-              />
+        {/* Mode Selector Tabs */}
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-8">
+          {studioModes.map((m) => {
+            const isActive = activeMode === m.id;
+            return (
+              <button
+                key={m.id}
+                onClick={() => setActiveMode(m.id)}
+                className={`relative flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-semibold transition-all duration-300 cursor-pointer ${
+                  isActive
+                    ? 'text-white bg-white/[0.1] border border-white/20 shadow-[0_0_24px_rgba(168,85,247,0.3)]'
+                    : 'text-white/50 bg-white/[0.03] border border-white/[0.07] hover:text-white/80 hover:bg-white/[0.06]'
+                }`}
+              >
+                <span>{m.id === 'video' ? '🎬' : m.id === 'motion' ? '⚡' : '🎙️'}</span>
+                <span>{m.label}</span>
+                {isActive && (
+                  <motion.div
+                    layoutId="studioActiveTab"
+                    className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/20 to-cyan-500/20 -z-10"
+                    transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                  />
+                )}
+              </button>
+            );
+          })}
+        </div>
 
-              <div className="relative z-10">
-                {/* Meta header */}
-                <div className="flex items-center justify-between gap-3 mb-5">
-                  <div className="flex items-center gap-2.5">
-                    <span className="font-mono text-[12px] font-bold text-white/30 group-hover:text-purple-300 transition-colors">
-                      {sys.num}
-                    </span>
-                    <span className={`text-[10px] font-semibold tracking-wider uppercase px-2.5 py-0.5 rounded-full border ${sys.badgeBg}`}>
-                      {sys.tag}
-                    </span>
-                  </div>
-                  <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center group-hover:scale-105 transition-transform">
-                    {sys.icon}
-                  </div>
-                </div>
+        {/* 3D Interactive Viewport + Capabilities Card */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center bg-[#06060c]/80 border border-white/[0.08] rounded-3xl p-6 sm:p-8 lg:p-10 backdrop-blur-xl relative overflow-hidden">
+          <div className="absolute top-4 right-6 font-mono text-[9px] text-white/20 tracking-widest uppercase pointer-events-none">
+            3D WEBGL ENGINE · INTERACTIVE VIEWPORT
+          </div>
 
-                {/* Title & Role */}
-                <h3 className="text-xl sm:text-[22px] font-bold text-white tracking-tight leading-snug mb-1.5 group-hover:text-white transition-colors">
-                  {sys.title}
-                </h3>
-                <p className="text-[12px] font-medium text-purple-300/70 mb-4">
-                  Role: {sys.role}
-                </p>
+          {/* Left Column: 3D Three.js Viewport */}
+          <div
+            ref={containerRef}
+            className="lg:col-span-5 h-[300px] sm:h-[360px] lg:h-[400px] w-full rounded-2xl bg-black/40 border border-white/[0.06] relative flex items-center justify-center overflow-hidden group cursor-grab active:cursor-grabbing shadow-[inset_0_0_40px_rgba(0,0,0,0.8)]"
+          >
+            <canvas ref={canvasRef} className="w-full h-full block" />
 
-                {/* Tech Stack Chips */}
-                <div className="flex flex-wrap gap-1.5 mb-6">
-                  {sys.stack.map((t, i) => (
-                    <span key={i} className="text-[11px] font-mono text-white/50 bg-white/[0.03] border border-white/[0.06] px-2 py-0.5 rounded-md">
-                      {t}
-                    </span>
-                  ))}
-                </div>
+            <div className="absolute top-3 left-3 w-4 h-4 border-l border-t border-white/20 pointer-events-none" />
+            <div className="absolute top-3 right-3 w-4 h-4 border-r border-t border-white/20 pointer-events-none" />
+            <div className="absolute bottom-3 left-3 w-4 h-4 border-l border-b border-white/20 pointer-events-none" />
+            <div className="absolute bottom-3 right-3 w-4 h-4 border-r border-b border-white/20 pointer-events-none" />
 
-                {/* Architecture Sections */}
-                <div className="space-y-3.5 text-[12.5px] leading-relaxed border-t border-white/[0.06] pt-5">
-                  <div>
-                    <span className="block text-[10px] font-mono uppercase tracking-wider text-white/30 mb-0.5">
-                      Problem Context
-                    </span>
-                    <p className="text-white/60">
-                      {sys.problem}
-                    </p>
-                  </div>
-                  <div>
-                    <span className="block text-[10px] font-mono uppercase tracking-wider text-purple-300/60 mb-0.5">
-                      Workflow Developed
-                    </span>
-                    <p className="text-white/75">
-                      {sys.workflow}
-                    </p>
-                  </div>
-                  <div>
-                    <span className="block text-[10px] font-mono uppercase tracking-wider text-emerald-400/70 mb-0.5 flex items-center gap-1">
-                      <CheckCircle2 size={11} /> Practical Outcome
-                    </span>
-                    <p className="text-white/85 font-medium">
-                      {sys.outcome}
-                    </p>
-                  </div>
-                </div>
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 font-mono text-[9px] text-white/35 tracking-widest uppercase pointer-events-none whitespace-nowrap bg-black/60 px-3 py-1 rounded-full border border-white/10">
+              Interactive 3D · Move Mouse to Tilt
+            </div>
+          </div>
+
+          {/* Right Column: Mode Details */}
+          <div className="lg:col-span-7 flex flex-col justify-center space-y-6">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-[10px] font-semibold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/30">
+                  {currentMode.badge}
+                </span>
+                <span className="font-mono text-[11px] text-white/30">
+                  Mode: {currentMode.id.toUpperCase()}
+                </span>
               </div>
-            </motion.div>
-          ))}
+              <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight leading-snug">
+                {currentMode.label}
+              </h3>
+              <p className="text-white/60 text-sm sm:text-[15px] leading-relaxed mt-2">
+                {currentMode.tagline}
+              </p>
+            </div>
+
+            <div className="space-y-2.5">
+              <span className="block text-[11px] font-mono uppercase tracking-wider text-white/40">
+                Core Production Strengths:
+              </span>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                {currentMode.capabilities.map((cap, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-2.5 text-[12.5px] text-white/75 bg-white/[0.025] border border-white/[0.05] rounded-xl p-3 leading-snug"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-1.5 flex-shrink-0" />
+                    <span>{cap}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="border-t border-white/[0.06] pt-5">
+              <span className="block text-[10px] font-mono uppercase tracking-wider text-white/35 mb-2.5">
+                Primary Software &amp; AI Engines:
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {currentMode.tools.map((tool, i) => (
+                  <span
+                    key={i}
+                    className="text-[11.5px] font-medium text-white/80 bg-white/[0.04] border border-white/[0.1] px-3 py-1 rounded-lg"
+                  >
+                    {tool}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Toolkit Strip Header */}
-        <div className="text-center mb-6">
-          <p className="text-[10px] tracking-[0.3em] uppercase text-white/30 font-medium">
-            AI Engines &amp; Automation Tooling
-          </p>
-        </div>
-
-        {/* Live Marquee Strip */}
-        <div className="relative overflow-hidden py-3">
+        {/* Live Rolling Tool Marquee */}
+        <div className="mt-12 relative overflow-hidden py-3">
+          <div className="text-center mb-3">
+            <span className="text-[10px] tracking-[0.3em] uppercase text-white/30 font-medium">
+              Production Arsenal
+            </span>
+          </div>
           <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
           <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
           <div
             className="flex w-max"
-            style={{ willChange: "transform", animation: "marquee 28s linear infinite" }}
+            style={{ willChange: 'transform', animation: 'marquee 28s linear infinite' }}
           >
-            {doubled1.map((tool, i) => (
+            {studioMarquee.map((tool, i) => (
               <div
                 key={i}
-                className="flex-shrink-0 mr-3 px-5 py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.07] text-white/65 text-[13px] font-medium whitespace-nowrap hover:bg-white/[0.08] hover:border-purple-500/40 hover:text-white transition-all duration-200 cursor-default"
+                className="flex-shrink-0 mr-3 px-5 py-2 rounded-xl bg-white/[0.03] border border-white/[0.07] text-white/65 text-[12.5px] font-medium whitespace-nowrap hover:bg-white/[0.08] hover:border-purple-500/40 hover:text-white transition-all duration-200 cursor-default"
               >
                 {tool}
               </div>
