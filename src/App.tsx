@@ -1377,7 +1377,7 @@ const About = () => {
                 </div>
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-white font-semibold text-[15px] leading-tight truncate">{card.title}</h3>
+                <h3 className="text-white font-semibold text-[13.5px] sm:text-[15px] leading-snug sm:leading-tight">{card.title}</h3>
                 <p className="text-[13px] mt-0.5 truncate bg-gradient-to-r from-purple-300 to-fuchsia-300 bg-clip-text text-transparent font-medium">{card.company}</p>
                 {(card as any).project && (
                   <p className="text-[11.5px] text-cyan-300/85 font-medium truncate mt-0.5">Project: {(card as any).project}</p>
@@ -2754,7 +2754,7 @@ const showcaseBands: Band[] = [
     dir: "left",
     items: [
       { img: ytThumb("hgdI993TCwE"), t: "Krishnashray — Motion Graphics", k: "Mograph" },
-      { img: ytThumb("ckqwp5DZ154"), t: "Motion Book Animation", k: "2D Animation" },
+      { img: "https://i.ytimg.com/vi/ckqwp5DZ154/hqdefault.jpg", t: "Motion Book Animation", k: "2D Animation" },
       { img: ytThumb("TDVAYyk_rWU"), t: "Brain Discovery — Explainer", k: "Explainer" },
       { img: ytThumb("4ooLnEDfc1s"), t: "World Environment Day — PSA", k: "Kinetic" },
       { img: ytThumb("HygEDCPohh8"), t: "Udyam Villa — Promo", k: "Title Seq" },
