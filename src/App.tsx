@@ -12,7 +12,7 @@ const skillCategories = [
   {
     title: 'AI Video & Generative Production',
     icon: <Sparkles className="w-5 h-5 text-cyan-400" />,
-    skills: ['Seedance 2.5', 'Kling AI', 'Google Veo', 'Runway Gen-3', 'Midjourney v6', 'Prompt Engineering']
+    skills: ['Seedance', 'Kling', 'Veo', 'Runway', 'ElevenLabs', 'Midjourney']
   },
   {
     title: 'Audio Design & Neural Voice',
@@ -369,11 +369,12 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
 
   const skills = [
     { name: "Adobe Premiere Pro", c: "purple" }, { name: "After Effects", c: "purple" },
-    { name: "Photoshop", c: "blue" }, { name: "Illustrator", c: "orange" },
-    { name: "DaVinci Resolve", c: "purple" }, { name: "AI Video Production", c: "cyan" },
-    { name: "Seedance 2.5", c: "cyan" }, { name: "Kling AI & Veo", c: "cyan" },
-    { name: "ElevenLabs", c: "cyan" }, { name: "Midjourney", c: "cyan" },
-    { name: "OBS Studio", c: "def" }, { name: "Prompt Engineering", c: "purple" },
+    { name: "DaVinci Resolve", c: "purple" }, { name: "Photoshop", c: "blue" },
+    { name: "Illustrator", c: "orange" }, { name: "Seedance", c: "cyan" },
+    { name: "Kling", c: "cyan" }, { name: "Veo", c: "cyan" },
+    { name: "Runway", c: "cyan" }, { name: "ElevenLabs", c: "cyan" },
+    { name: "Midjourney", c: "cyan" }, { name: "Cursor IDE", c: "purple" },
+    { name: "Workflow Automation", c: "cyan" }, { name: "OBS Studio", c: "def" },
   ];
 
   const chipClass = (c: string) => c === "purple" ? "bg-purple-500/8 border-purple-500/20 text-purple-300/75"
@@ -1266,7 +1267,7 @@ const studioModes: ModeData[] = [
     badge: 'Cinematic AI',
     tagline: 'Directing narrative video, dynamic camera motion, and hyper-real visual stories.',
     accentHex: 0x06b6d4, // Cyan
-    tools: ['Seedance 2.5', 'Kling AI', 'Google Veo', 'Runway Gen-3', 'Midjourney v6'],
+    tools: ['Seedance', 'Kling', 'Veo', 'Runway', 'Midjourney'],
     capabilities: [
       'Multi-shot cinematic scene pacing and visual continuity',
       'Prompt direction with camera focal lengths, angles & lighting',
@@ -1294,7 +1295,7 @@ const studioModes: ModeData[] = [
     badge: 'Sound Design',
     tagline: 'Synchronizing expressive voiceovers, diegetic soundscapes, and broadcast audio.',
     accentHex: 0xf59e0b, // Amber
-    tools: ['ElevenLabs Voice', 'Adobe Audition', 'Premiere Pro Sound', 'OBS Studio'],
+    tools: ['ElevenLabs', 'Adobe Audition', 'Premiere Pro Sound', 'OBS Studio'],
     capabilities: [
       'Expressive AI voiceover direction with natural breathing & tone',
       'Diegetic sound effects matching on-screen motion and cuts',
@@ -1305,10 +1306,10 @@ const studioModes: ModeData[] = [
 ];
 
 const studioMarquee = [
-  'Seedance 2.5', 'Kling AI', 'Google Veo', 'Runway Gen-3', 'ElevenLabs', 'Midjourney v6',
-  'Adobe Premiere Pro', 'After Effects', 'DaVinci Resolve', 'Photoshop', 'Adobe Audition', 'OBS Studio',
-  'Seedance 2.5', 'Kling AI', 'Google Veo', 'Runway Gen-3', 'ElevenLabs', 'Midjourney v6',
-  'Adobe Premiere Pro', 'After Effects', 'DaVinci Resolve', 'Photoshop', 'Adobe Audition', 'OBS Studio'
+  'Seedance', 'Kling', 'Veo', 'Runway', 'ElevenLabs', 'Midjourney',
+  'Adobe Premiere Pro', 'After Effects', 'DaVinci Resolve', 'Photoshop', 'Cursor IDE', 'Workflow Automation',
+  'Seedance', 'Kling', 'Veo', 'Runway', 'ElevenLabs', 'Midjourney',
+  'Adobe Premiere Pro', 'After Effects', 'DaVinci Resolve', 'Photoshop', 'Cursor IDE', 'Workflow Automation'
 ];
 
 const AiToolsSection = () => {
