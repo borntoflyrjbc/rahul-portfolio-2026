@@ -1085,24 +1085,24 @@ const Hero = () => {
       />
 
       {/* Viewfinder frame guides — cinema director & broadcast editor aesthetic */}
-      <div className="absolute top-20 sm:top-24 left-4 sm:left-10 flex flex-col gap-1 pointer-events-none">
-        <div className="w-10 sm:w-16 h-10 sm:h-16 border-l border-t border-white/20 rounded-tl-lg" />
-        <span className="font-mono text-[8px] sm:text-[9px] tracking-widest text-white/30 uppercase pl-1">4K DCI · 24.00 FPS</span>
+      <div className="absolute top-6 sm:top-24 left-4 sm:left-10 flex flex-col gap-1 pointer-events-none z-20">
+        <div className="w-6 h-6 sm:w-16 sm:h-16 border-l border-t border-white/20 rounded-tl-md sm:rounded-tl-lg" />
+        <span className="hidden sm:inline-block font-mono text-[8px] sm:text-[9px] tracking-widest text-white/30 uppercase pl-1">4K DCI · 24.00 FPS</span>
       </div>
-      <div className="absolute top-20 sm:top-24 right-4 sm:right-10 flex flex-col items-end gap-1 pointer-events-none">
-        <div className="w-10 sm:w-16 h-10 sm:h-16 border-r border-t border-white/20 rounded-tr-lg" />
-        <div className="flex items-center gap-1.5 pr-1">
+      <div className="absolute top-6 sm:top-24 right-4 sm:right-10 flex flex-col items-end gap-1 pointer-events-none z-20">
+        <div className="w-6 h-6 sm:w-16 sm:h-16 border-r border-t border-white/20 rounded-tr-md sm:rounded-tr-lg" />
+        <div className="flex items-center gap-1.5 pr-0.5 sm:pr-1">
           <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
           <span className="font-mono text-[8px] sm:text-[9px] tracking-widest text-white/40 uppercase">REC ●</span>
         </div>
       </div>
-      <div className="absolute bottom-16 sm:bottom-20 left-4 sm:left-10 flex flex-col gap-1 pointer-events-none">
-        <span className="font-mono text-[8px] sm:text-[9px] tracking-widest text-white/30 uppercase pl-1">PRORES 422 HQ</span>
-        <div className="w-10 sm:w-16 h-10 sm:h-16 border-l border-b border-white/20 rounded-bl-lg" />
+      <div className="absolute bottom-4 sm:bottom-20 left-4 sm:left-10 flex flex-col gap-1 pointer-events-none z-20">
+        <span className="hidden sm:inline-block font-mono text-[8px] sm:text-[9px] tracking-widest text-white/30 uppercase pl-1">PRORES 422 HQ</span>
+        <div className="w-6 h-6 sm:w-16 sm:h-16 border-l border-b border-white/20 rounded-bl-md sm:rounded-bl-lg" />
       </div>
-      <div className="absolute bottom-16 sm:bottom-20 right-4 sm:right-10 flex flex-col items-end gap-1 pointer-events-none">
-        <span className="font-mono text-[8px] sm:text-[9px] tracking-widest text-white/30 uppercase pr-1">AUDIO -14 LUFS</span>
-        <div className="w-10 sm:w-16 h-10 sm:h-16 border-r border-b border-white/20 rounded-br-lg" />
+      <div className="absolute bottom-4 sm:bottom-20 right-4 sm:right-10 flex flex-col items-end gap-1 pointer-events-none z-20">
+        <span className="hidden sm:inline-block font-mono text-[8px] sm:text-[9px] tracking-widest text-white/30 uppercase pr-1">AUDIO -14 LUFS</span>
+        <div className="w-6 h-6 sm:w-16 sm:h-16 border-r border-b border-white/20 rounded-br-md sm:rounded-br-lg" />
       </div>
 
       {/* Editorial side rails — desktop only */}
@@ -1117,7 +1117,7 @@ const Hero = () => {
         <span className="h-16 w-px bg-gradient-to-b from-transparent via-white/15 to-transparent" />
       </div>
 
-      <motion.div style={{ y: contentY, opacity: contentOpacity }} className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 pt-24 pb-16 md:pt-36 md:pb-28 text-center">
+      <motion.div style={{ y: contentY, opacity: contentOpacity }} className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 pt-20 pb-12 sm:pt-36 sm:pb-28 text-center">
 
         {/* Main heading — editorial mask-reveal + mouse-parallax 3D */}
         <div ref={titleRef} className="mb-7 sm:mb-9 [transform-style:preserve-3d] transition-transform duration-300 ease-out will-change-transform">
@@ -1196,7 +1196,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.9 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-10 sm:mb-14"
+          className="flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-4 mb-6 sm:mb-14 w-full sm:w-auto max-w-xs sm:max-w-none mx-auto"
         >
           <a
             href="#showreel"
@@ -1223,7 +1223,7 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.1 }}
-          className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 px-2"
+          className="flex flex-wrap items-center justify-center gap-x-2.5 sm:gap-x-3 gap-y-1.5 sm:gap-y-2 px-3 sm:px-2 max-w-md mx-auto"
         >
           {tools.map((tool, i) => (
             <React.Fragment key={tool}>
@@ -1232,7 +1232,7 @@ const Hero = () => {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 1.1 + i * 0.07 }}
-                className="text-[10px] sm:text-[11px] tracking-[0.16em] uppercase text-white/35 hover:text-white/70 transition-colors duration-200 cursor-default"
+                className="text-[9.5px] sm:text-[11px] tracking-[0.14em] sm:tracking-[0.16em] uppercase text-white/40 hover:text-white/70 transition-colors duration-200 cursor-default"
               >
                 {tool}
               </motion.span>
@@ -1246,7 +1246,7 @@ const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.6, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        className="hidden sm:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2"
       >
         <span className="text-[9px] text-white/25 uppercase tracking-[0.4em]">Scroll</span>
         <motion.div
