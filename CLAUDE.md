@@ -136,7 +136,7 @@ User has GitHub credentials cached on Windows — push works without prompt.
 - **Locked 21-Oct-2026 Decisions (CRITICAL)**:
   - **Forbidden terms completely banned**: ZERO mentions of 'XML', 'vibe coding', 'Python/TypeScript scripting', 'Figma', 'Sketch', or 'DaVinci Resolve' across the entire codebase (src/App.tsx, public/resume.html, dist/).
   - **Tool names cleaned**: Version numbers stripped (Seedance, Kling, Veo, Runway, ElevenLabs, Midjourney). Added VS Code (with custom SVG logo) & Cursor IDE / Workflow Automation. Added Illustrator to Hero bottom strip.
-  - **Company & Railway names locked**: 'CIN News Network, Jabalpur' (strictly CIN, not CI) and 'Project: West Central Railway (WCR)' (never 'Degree 360 | Remote' on public cards/resume).
+  - **Company & Railway names locked**: 'CIN News Network, Jabalpur' (strictly CIN, not CI) and 'Degree 360, Delhi · Project: West Central Railway (WCR)' (never 'Degree 360 | Remote' on public cards/resume).
   - **Header navigation (Strictly 5 items)**: 1-to-1 matching section titles: About (#about), Expertise (#services), Showreel (#showreel), My Work (#creative-works), Contact (#contact) + Top-Right Resume CTA. No internal experimental 'AI Studio' links.
   - **AI Studio 5 Pure AI Modes Architecture (Updated 22-Oct-2026)**:
     - Traditional 'Motion Graphics & VFX' completely removed from the AI section (traditional editing lives in ToolsMarquee/Expertise).
