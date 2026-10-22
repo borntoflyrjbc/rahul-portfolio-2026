@@ -1121,17 +1121,6 @@ const Hero = () => {
 
         {/* Main heading — editorial mask-reveal + mouse-parallax 3D */}
         <div ref={titleRef} className="mb-7 sm:mb-9 [transform-style:preserve-3d] transition-transform duration-300 ease-out will-change-transform">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.08, duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-[10.5px] sm:text-[11.5px] font-medium text-white/70 mb-3 sm:mb-4 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Video Editor at <span className="text-white font-semibold">Degree 360, Delhi</span></span>
-            <span className="text-white/25">·</span>
-            <span className="text-purple-300 font-medium">West Central Railway (WCR)</span>
-          </motion.div>
           <motion.p
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.14, duration: 0.6 }}
             className="text-[10px] sm:text-[11px] tracking-[0.4em] uppercase text-white/35 mb-3 sm:mb-5"
@@ -1199,7 +1188,7 @@ const Hero = () => {
           transition={{ duration: 0.6, delay: 0.75 }}
           className="text-[clamp(0.85rem,2vw,1.05rem)] text-white/50 mb-8 sm:mb-10 max-w-lg mx-auto leading-relaxed font-light px-2 sm:px-0"
         >
-          Crafting high-impact video edits, motion design, and broadcast visuals at <span className="text-white/80 font-normal">Degree 360, Delhi</span> (West Central Railway) — elevated with modern AI workflows.
+          Crafting high-impact video edits, motion design, and broadcast visuals — elevated with modern AI workflows.
         </motion.p>
 
         {/* CTA Buttons */}
