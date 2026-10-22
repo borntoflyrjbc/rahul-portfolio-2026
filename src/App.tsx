@@ -330,7 +330,7 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
   const jobs = [
     {
       title: "Video Editor & Motion Graphics Artist",
-      company: "Project: West Central Railway (WCR)", period: "May 2026 – Present", current: true,
+      company: "Degree 360, Delhi · Project: West Central Railway (WCR)", period: "May 2026 – Present", current: true,
       points: [
         "Producing broadcast-grade video editing, dynamic motion graphics, and visual storytelling assets for the West Central Railway (WCR) project",
         "Crafting narrative edits, public awareness campaigns, and official media communications",
@@ -1082,8 +1082,19 @@ const Hero = () => {
 
         {/* Main heading — editorial mask-reveal + mouse-parallax 3D */}
         <div ref={titleRef} className="mb-7 sm:mb-9 [transform-style:preserve-3d] transition-transform duration-300 ease-out will-change-transform">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.08, duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-[10.5px] sm:text-[11.5px] font-medium text-white/70 mb-3 sm:mb-4 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Video Editor at <span className="text-white font-semibold">Degree 360, Delhi</span></span>
+            <span className="text-white/25">·</span>
+            <span className="text-purple-300 font-medium">West Central Railway (WCR)</span>
+          </motion.div>
           <motion.p
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1, duration: 0.6 }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.14, duration: 0.6 }}
             className="text-[10px] sm:text-[11px] tracking-[0.4em] uppercase text-white/35 mb-3 sm:mb-5"
           >
             Portfolio — Rahul Jain
@@ -1149,7 +1160,7 @@ const Hero = () => {
           transition={{ duration: 0.6, delay: 0.75 }}
           className="text-[clamp(0.85rem,2vw,1.05rem)] text-white/50 mb-8 sm:mb-10 max-w-lg mx-auto leading-relaxed font-light px-2 sm:px-0"
         >
-          Crafting high-impact video edits, motion design, and broadcast visuals — elevated with modern AI workflows.
+          Crafting high-impact video edits, motion design, and broadcast visuals at <span className="text-white/80 font-normal">Degree 360, Delhi</span> (West Central Railway) — elevated with modern AI workflows.
         </motion.p>
 
         {/* CTA Buttons */}
@@ -1223,7 +1234,8 @@ const Hero = () => {
 const experiences = [
   {
     title: "Video Editor & Motion Graphics Artist",
-    company: "Project: West Central Railway (WCR)",
+    company: "Degree 360, Delhi",
+    project: "West Central Railway (WCR)",
     duration: "May 2026 - Present",
     icon: "🎞️",
     bgImage: "https://images.unsplash.com/photo-1492724441997-5dc865305da7?w=800&q=80",
@@ -1351,7 +1363,7 @@ const About = () => {
 
         {/* Paragraph */}
         <p className="text-gray-200 text-base md:text-[17px] leading-relaxed drop-shadow-md max-w-xl mx-auto mb-10 md:mb-14">
-          With <span className="text-white font-semibold">6+ years</span> of experience in video production, motion graphics, and digital design, I create compelling visual content that tells powerful stories. Currently producing broadcast-grade video editing and dynamic motion visuals for the{" "}
+          With <span className="text-white font-semibold">6+ years</span> of experience in video production, motion graphics, and digital design, I create compelling visual content that tells powerful stories. Currently producing broadcast-grade video editing and dynamic motion visuals at <span className="text-white font-semibold">Degree 360, Delhi</span> for the{" "}
           <span className="text-cyan-300 font-medium">West Central Railway (WCR)</span> project, I combine traditional editing craft with AI-assisted video tools and motion design to build fast, broadcast-quality production pipelines.
         </p>
 
