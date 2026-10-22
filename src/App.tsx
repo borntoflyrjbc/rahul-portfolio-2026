@@ -381,16 +381,13 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
         { name: "Adobe Premiere Pro", c: "purple" },
         { name: "After Effects", c: "purple" },
         { name: "Adobe Audition", c: "purple" },
-        { name: "OBS Studio", c: "def" },
-        { name: "Color Grading", c: "purple" },
       ],
     },
     {
-      title: "AI Graphics & Visual Design",
+      title: "Graphic & Motion Design",
       skills: [
         { name: "Photoshop", c: "blue" },
         { name: "Illustrator", c: "orange" },
-        { name: "Social Media Content", c: "pink" },
       ],
     },
     {
@@ -398,18 +395,16 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
       skills: [
         { name: "Seedance", c: "cyan" },
         { name: "Kling", c: "cyan" },
-        { name: "Google Omni Flash", c: "cyan" },
+        { name: "Omni Flash", c: "cyan" },
         { name: "Runway", c: "cyan" },
         { name: "ElevenLabs", c: "cyan" },
         { name: "Midjourney", c: "cyan" },
       ],
     },
     {
-      title: "Workflow Automation & Tools",
+      title: "Code & Development",
       skills: [
         { name: "VS Code", c: "blue" },
-        { name: "Cursor IDE", c: "purple" },
-        { name: "Workflow Automation", c: "cyan" },
       ],
     },
   ];
