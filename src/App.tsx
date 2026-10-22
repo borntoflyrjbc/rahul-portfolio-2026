@@ -12,7 +12,7 @@ const skillCategories = [
   {
     title: 'AI Video & Generative Production',
     icon: <Sparkles className="w-5 h-5 text-cyan-400" />,
-    skills: ['Seedance', 'Kling', 'Veo', 'Runway', 'ElevenLabs', 'Midjourney']
+    skills: ['Seedance', 'Kling', 'Google Omni Flash', 'Runway', 'ElevenLabs', 'Midjourney']
   },
   {
     title: 'Audio Design & Neural Voice',
@@ -367,14 +367,44 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
     },
   ];
 
-  const skills = [
-    { name: "Adobe Premiere Pro", c: "purple" }, { name: "After Effects", c: "purple" },
-    { name: "VS Code", c: "blue" }, { name: "Photoshop", c: "blue" },
-    { name: "Illustrator", c: "orange" }, { name: "Seedance", c: "cyan" },
-    { name: "Kling", c: "cyan" }, { name: "Veo", c: "cyan" },
-    { name: "Runway", c: "cyan" }, { name: "ElevenLabs", c: "cyan" },
-    { name: "Midjourney", c: "cyan" }, { name: "Cursor IDE", c: "purple" },
-    { name: "Workflow Automation", c: "cyan" }, { name: "OBS Studio", c: "def" },
+  const skillCategories = [
+    {
+      title: "Video Editing & Post",
+      skills: [
+        { name: "Adobe Premiere Pro", c: "purple" },
+        { name: "After Effects", c: "purple" },
+        { name: "Adobe Audition", c: "purple" },
+        { name: "OBS Studio", c: "def" },
+        { name: "Color Grading", c: "purple" },
+      ],
+    },
+    {
+      title: "Graphic & Motion Design",
+      skills: [
+        { name: "Photoshop", c: "blue" },
+        { name: "Illustrator", c: "orange" },
+        { name: "Social Media Content", c: "pink" },
+      ],
+    },
+    {
+      title: "Generative AI Video & Voice",
+      skills: [
+        { name: "Seedance", c: "cyan" },
+        { name: "Kling", c: "cyan" },
+        { name: "Google Omni Flash", c: "cyan" },
+        { name: "Runway", c: "cyan" },
+        { name: "ElevenLabs", c: "cyan" },
+        { name: "Midjourney", c: "cyan" },
+      ],
+    },
+    {
+      title: "Workflow Automation & Tools",
+      skills: [
+        { name: "VS Code", c: "blue" },
+        { name: "Cursor IDE", c: "purple" },
+        { name: "Workflow Automation", c: "cyan" },
+      ],
+    },
   ];
 
   const chipClass = (c: string) => c === "purple" ? "bg-purple-500/8 border-purple-500/20 text-purple-300/75"
@@ -512,12 +542,19 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
               </div>
             </motion.div>
 
-            {/* Skills */}
+            {/* Skills & Tools — Systematic Categorization */}
             <motion.div custom={2} variants={secVar} initial="hidden" animate="show">
-              <SectionLabel>Skills &amp; Tools</SectionLabel>
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {skills.map((s, i) => (
-                  <span key={i} className={`px-2.5 py-[3px] rounded-full text-[11px] font-medium border ${chipClass(s.c)}`}>{s.name}</span>
+              <SectionLabel>Tools &amp; AI Stack</SectionLabel>
+              <div className="mt-3 space-y-3">
+                {skillCategories.map((group, gi) => (
+                  <div key={gi} className="space-y-1.5">
+                    <p className="font-mono text-[9.5px] uppercase tracking-wider text-white/40 font-semibold">{group.title}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {group.skills.map((s, i) => (
+                        <span key={i} className={`px-2.5 py-[3px] rounded-full text-[11px] font-medium border ${chipClass(s.c)}`}>{s.name}</span>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
             </motion.div>
@@ -1556,7 +1593,7 @@ const studioModes: ModeData[] = [
     icon: '🎬',
     tagline: 'Directing multi-shot cinematic video, dynamic camera physics, and photoreal image generation.',
     accentHex: 0x06b6d4, // Cyan
-    tools: ['Seedance', 'Kling', 'Veo', 'Runway', 'Midjourney'],
+    tools: ['Seedance', 'Kling', 'Google Omni Flash', 'Runway', 'Midjourney'],
     capabilities: [
       'Multi-shot cinematic scene pacing and visual continuity',
       'Photorealistic image synthesis & concept keyframe direction',
@@ -1627,9 +1664,9 @@ const studioModes: ModeData[] = [
 ];
 
 const studioMarquee = [
-  'Seedance', 'Kling', 'Veo', 'Runway', 'ElevenLabs', 'Midjourney',
+  'Seedance', 'Kling', 'Google Omni Flash', 'Runway', 'ElevenLabs', 'Midjourney',
   'VS Code', 'Cursor IDE', 'Workflow Automation', 'Hedra', 'Suno', 'Whisper AI', 'LivePortrait', 'Autonomous Agents',
-  'Seedance', 'Kling', 'Veo', 'Runway', 'ElevenLabs', 'Midjourney',
+  'Seedance', 'Kling', 'Google Omni Flash', 'Runway', 'ElevenLabs', 'Midjourney',
   'VS Code', 'Cursor IDE', 'Workflow Automation', 'Hedra', 'Suno', 'Whisper AI', 'LivePortrait', 'Autonomous Agents',
 ];
 
@@ -2215,7 +2252,7 @@ const serviceCards = [
     icon: <Wand2 size={22} />,
     title: "AI Video Generation",
     tag: "Generative AI",
-    desc: "Next-generation video content produced using tools like Runway, Kling, Veo, and Wan — pushing the creative boundaries of what's possible.",
+    desc: "Next-generation video content produced using tools like Runway, Kling, Google Omni Flash, and Wan — pushing the creative boundaries of what's possible.",
     accent: "from-blue-500/20 to-blue-500/0",
     border: "hover:border-blue-500/40",
     iconBg: "bg-blue-500/10 text-blue-400",

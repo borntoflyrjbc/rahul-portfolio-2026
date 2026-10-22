@@ -116,10 +116,17 @@
   .bar i{display:block;height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,var(--purple),var(--fuchsia));transition:width 1.3s var(--ease)}
   .bar.cy i{background:linear-gradient(90deg,var(--cyan),#818cf8)}
 
-  /* tags */
-  .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
-  .tag{font-size:11px;font-weight:600;color:#cfcdde;background:rgba(255,255,255,.04);border:1px solid var(--line);padding:5px 11px;border-radius:20px;transition:.25s}
+  /* stack groups - systematic categorization */
+  .stack-groups{display:flex;flex-direction:column;gap:14px;margin-top:6px}
+  .stack-group{display:flex;flex-direction:column;gap:6px}
+  .stack-group .grp-title{font-size:10px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.45);font-weight:600;display:flex;align-items:center;gap:8px}
+  .stack-group .grp-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.07)}
+  .tags{display:flex;flex-wrap:wrap;gap:6px}
+  .tag{font-size:11px;font-weight:600;color:#cfcdde;background:rgba(255,255,255,.04);border:1px solid var(--line);padding:4px 11px;border-radius:18px;transition:.25s;display:inline-flex;align-items:center}
   .tag:hover{border-color:rgba(168,85,247,.4);color:#fff;transform:translateY(-2px)}
+  .tag.prime{background:rgba(168,85,247,.08);border-color:rgba(168,85,247,.24);color:#e9d5ff}
+  .tag.ai{background:rgba(6,182,212,.08);border-color:rgba(6,182,212,.24);color:#a5f3fc}
+  .tag.dev{background:rgba(139,92,246,.08);border-color:rgba(139,92,246,.24);color:#ddd6fe}
 
   /* edu */
   .edu{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
@@ -184,7 +191,6 @@
           <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Jabalpur, Madhya Pradesh</span>
         </div>
       </div>
-      <span class="status"><b></b>Available for work</span>
     </header>
 
     <div class="grid">
@@ -210,7 +216,7 @@
 
         <section class="sec rv">
           <p class="label">Tools &amp; AI Stack</p>
-          <div class="tags" id="tags"></div>
+          <div class="stack-groups" id="tags"></div>
         </section>
 
         <section class="sec rv">
@@ -257,15 +263,49 @@
   const skills = [
     { n:"Video Editing (Premiere Pro)", v:96 },
     { n:"Motion Graphics (After Effects)", v:92 },
-    { n:"AI Video Generation (Seedance / Kling / Veo)", v:90, cy:true },
+    { n:"AI Video Generation (Seedance / Kling / Google Omni Flash)", v:90, cy:true },
     { n:"Audio Sync & Neural Voice (ElevenLabs)", v:88, cy:true },
     { n:"Color Grading & Finishing (Lumetri)", v:88 },
     { n:"Visual Design (Photoshop / Illustrator)", v:88 },
   ];
-  const tags = [
-    "Adobe Premiere Pro","After Effects","VS Code","Photoshop","Illustrator","Adobe Audition",
-    "OBS Studio","Seedance","Kling","Veo","Runway","ElevenLabs","Midjourney",
-    "Cursor IDE","Workflow Automation","Color Grading","Social Media Content"
+  const stackGroups = [
+    {
+      title: "Video Editing & Post-Production",
+      tags: [
+        { n: "Adobe Premiere Pro", c: "prime" },
+        { n: "After Effects", c: "prime" },
+        { n: "Adobe Audition", c: "" },
+        { n: "OBS Studio", c: "" },
+        { n: "Color Grading (Lumetri)", c: "" },
+      ]
+    },
+    {
+      title: "Graphic & Motion Design",
+      tags: [
+        { n: "Photoshop", c: "prime" },
+        { n: "Illustrator", c: "prime" },
+        { n: "Social Media Content", c: "" },
+      ]
+    },
+    {
+      title: "Generative AI Video & Voice",
+      tags: [
+        { n: "Seedance", c: "ai" },
+        { n: "Kling", c: "ai" },
+        { n: "Google Omni Flash", c: "ai" },
+        { n: "Runway", c: "ai" },
+        { n: "ElevenLabs", c: "ai" },
+        { n: "Midjourney", c: "ai" },
+      ]
+    },
+    {
+      title: "Workflow Automation & IDE",
+      tags: [
+        { n: "VS Code", c: "dev" },
+        { n: "Cursor IDE", c: "dev" },
+        { n: "Workflow Automation", c: "dev" },
+      ]
+    },
   ];
   const edu = [
     { d:"Master of Commerce (M.Com)", i:"G.S. College, Jabalpur", y:"2019–2021" },
@@ -289,7 +329,13 @@
       <div class="bar ${s.cy?'cy':''}"><i data-w="${s.v}"></i></div>
     </div>`).join("");
 
-  document.getElementById("tags").innerHTML = tags.map(t=>`<span class="tag">${t}</span>`).join("");
+  document.getElementById("tags").innerHTML = stackGroups.map(g => `
+    <div class="stack-group">
+      <span class="grp-title">${g.title}</span>
+      <div class="tags">
+        ${g.tags.map(t => `<span class="tag ${t.c}">${t.n}</span>`).join("")}
+      </div>
+    </div>`).join("");
   document.getElementById("edu").innerHTML = edu.map(e=>`
     <div class="edu"><p>${e.d}<small>${e.i}</small></p><span class="yr">${e.y}</span></div>`).join("");
 
