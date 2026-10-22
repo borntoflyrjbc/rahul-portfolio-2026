@@ -40,7 +40,10 @@ const categories = ["All Work", "Video & Motion", "Graphics & Design"];
 
 const allWorks: WorkItem[] = [
   // ── PINNED TO TOP ──
+  { id:"DxlG4S1B7jI", title:"CGI AI Product Commercial", category: "Video & Motion", aspect:"vertical" },
   { id:"OEVnJtqnaLc", title:"SAM — End of Season Sale", category: "Video & Motion", aspect:"horizontal" },
+  { id:"GRZH515PBiw", title:"SAM Parking AI Commercial", category: "Video & Motion", aspect:"vertical" },
+  { id:"Fa2lhAShL34", title:"SAM Event AI Commercial", category: "Video & Motion", aspect:"vertical" },
   { id:"4ooLnEDfc1s", title:"Save Environment — World Environment Day 2026", category: "Video & Motion", aspect:"horizontal" },
   { id:"_v_U-I4VKG4", title:"Dr. Paul – Video 3", category: "Video & Motion", aspect:"vertical" },
   { id:"UVlZmflV9Kw", title:"Railway Safety — जल्दबाज़ी जीवन पर भारी", category: "Video & Motion", aspect:"vertical" },
@@ -79,6 +82,8 @@ const allWorks: WorkItem[] = [
   { id:"KzPUtmlQjes", title:"Sam Model Edit 1", category: "Video & Motion", aspect:"aspect-square" },
   { id:"w8nJf0LR-5Q", title:"Sam Model Edit 2", category: "Video & Motion", aspect:"aspect-square" },
   { id:"0vThMfrPVwM", title:"Sam Winter Fest Highlights", category: "Video & Motion", aspect:"aspect-square" },
+  { id:"gSmx6HeQPWI", title:"Amrit Bharat Station — Gangapur City Teaser", category: "Video & Motion", aspect:"horizontal" },
+  { id:"V6aM_ugfihs", title:"SAM — Battle of the Bands", category: "Video & Motion", aspect:"vertical" },
   { id:"FoiJ86uQgzQ", title:"Sam Christmas Slideshow", category: "Video & Motion", aspect:"aspect-square" },
   { id:"QEoTWXXGAzU", title:"Silk N Salt", category: "Video & Motion", aspect:"aspect-square" },
   { id:"85ahifvJFXo", title:"UCB Brand Film", category: "Video & Motion", aspect:"aspect-square" },
@@ -115,6 +120,8 @@ const allWorks: WorkItem[] = [
   { id:"Tw0O3Ov6ywE", title:"WhatsApp Short 2", category: "Video & Motion", aspect:"vertical" },
   { id:"eU63DKeEDVw", title:"WhatsApp Short 3", category: "Video & Motion", aspect:"vertical" },
   { id:"J_KD81K1Xu0", title:"WhatsApp Short 4", category: "Video & Motion", aspect:"vertical" },
+  { id:"WHUFW_fuk5k", title:"AI Promotion Commercial", category: "Video & Motion", aspect:"vertical" },
+  { id:"ZT5UbhJlM94", title:"Rail Talk — Official Railway Podcast", category: "Video & Motion", aspect:"horizontal" },
   { id:"62QyaFI7v28", title:"Sam Max", category: "Video & Motion", aspect:"vertical" },
   { id:"YLIZZ9sgv2k", title:"Sam Cricket Short", category: "Video & Motion", aspect:"vertical" },
 
