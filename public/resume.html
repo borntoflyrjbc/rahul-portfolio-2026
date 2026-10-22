@@ -35,7 +35,7 @@
     width: 210mm;
     height: 297mm;
     max-height: 297mm;
-    padding: 13mm 16mm 12mm;
+    padding: 14mm 16mm 12mm;
     margin: 0 auto;
     position: relative;
     box-sizing: border-box;
@@ -109,37 +109,28 @@
     fill: none;
   }
 
-  /* PAGE 2 HEADER */
-  .p2-header {
+  /* PAGE 2 SLEEK SUBTLE TOP BAR (ZERO TEXT OVERLAP) */
+  .p2-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 18px;
+    padding-bottom: 14px;
     border-bottom: 1px solid var(--line);
-    margin-bottom: 22px;
+    margin-bottom: 24px;
   }
-  .p2-header h2 {
+  .p2-bar-left {
     font-family: var(--head);
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: #ffffff;
-    line-height: 1.1;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #e879f9;
   }
-  .p2-header h2 .hl { color: #e879f9; }
-  .p2-header .p2-role {
-    font-size: 12.8px;
-    color: #38bdf8;
+  .p2-bar-right {
+    font-size: 11.5px;
     font-weight: 600;
-    margin-top: 4px;
-  }
-  .p2-header .p2-meta {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    font-size: 12px;
-    color: #c9c7dc;
-    white-space: nowrap;
-    font-weight: 500;
+    color: var(--soft);
+    letter-spacing: 0.06em;
   }
 
   /* SECTION LABELS */
@@ -423,7 +414,7 @@
     font-size: 11px;
     color: #8b88a2;
     border-top: 1px solid var(--line);
-    margin-top: 24px;
+    margin-top: auto;
   }
 
   @media print {
@@ -435,7 +426,7 @@
       height: 297mm !important;
       min-height: 297mm !important;
       max-height: 297mm !important;
-      padding: 13mm 16mm 12mm !important;
+      padding: 14mm 16mm 12mm !important;
       margin: 0 !important;
       page-break-after: always !important;
       break-after: page !important;
@@ -443,8 +434,8 @@
       box-shadow: none !important;
     }
     .page-break { page-break-before: always !important; break-before: page !important; }
-    .id h1 .hl, .p2-header h2 .hl { color: #e879f9 !important; -webkit-text-fill-color: #e879f9 !important; }
-    .id .role, .p2-header .p2-role { color: #38bdf8 !important; -webkit-text-fill-color: #38bdf8 !important; }
+    .id h1 .hl { color: #e879f9 !important; -webkit-text-fill-color: #e879f9 !important; }
+    .id .role { color: #38bdf8 !important; -webkit-text-fill-color: #38bdf8 !important; }
   }
 </style>
 </head>
@@ -565,24 +556,16 @@
     </div>
 
     <!-- Page 1 Footer -->
-    <footer>Page 1 of 2 · Rahul Jain Executive Resume · Continued on Page 2</footer>
+    <footer>Page 1 of 2 · Rahul Jain — Video Editor &amp; Motion Designer</footer>
   </div>
 
   <!-- ================= PAGE 2 ================= -->
   <div class="page page-break">
     <div>
-      <div class="p2-header">
-        <div>
-          <h2>Rahul <span class="hl">Jain</span></h2>
-          <p class="p2-role">Video Editor &amp; Motion Designer — Career Record &amp; Education</p>
-        </div>
-        <div class="p2-meta">
-          <span>+91 99936 81478</span>
-          <span>·</span>
-          <span>borntoflyrj@gmail.com</span>
-          <span>·</span>
-          <span>Jabalpur, MP</span>
-        </div>
+      <!-- Clean, sleek running bar (No duplicate phone/email collisions) -->
+      <div class="p2-bar">
+        <span class="p2-bar-left">Rahul Jain · Career History &amp; Education</span>
+        <span class="p2-bar-right">Page 2 of 2</span>
       </div>
 
       <div class="grid" style="margin-top:0">
