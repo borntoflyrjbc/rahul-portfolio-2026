@@ -138,6 +138,14 @@ User has GitHub credentials cached on Windows — push works without prompt.
   - **Tool names cleaned**: Version numbers stripped (Seedance, Kling, Veo, Runway, ElevenLabs, Midjourney). Added VS Code (with custom SVG logo) & Cursor IDE / Workflow Automation. Added Illustrator to Hero bottom strip.
   - **Company & Railway names locked**: 'CIN News Network, Jabalpur' (strictly CIN, not CI) and 'Project: West Central Railway (WCR)' (never 'Degree 360 | Remote' on public cards/resume).
   - **Header navigation (Strictly 5 items)**: 1-to-1 matching section titles: About (#about), Expertise (#services), Showreel (#showreel), My Work (#creative-works), Contact (#contact) + Top-Right Resume CTA. No internal experimental 'AI Studio' links.
+  - **AI Studio 5 Pure AI Modes Architecture (Updated 22-Oct-2026)**:
+    - Traditional 'Motion Graphics & VFX' completely removed from the AI section (traditional editing lives in ToolsMarquee/Expertise).
+    - AI Studio strictly features 5 Pure AI modes:
+      1. AI Image & Video (Seedance, Kling, Veo, Runway, Midjourney)
+      2. AI Music & Voice (ElevenLabs, Suno, Adobe Audition, Premiere Pro Sound)
+      3. AI Avatar & Presenter (Hedra, LivePortrait, OmniHuman, ElevenLabs)
+      4. AI Editing Automations (Automated Pipelines, Whisper AI, Smart Scene Detection, Auto-Captions)
+      5. AI Agentic Workflows (VS Code, Cursor IDE, Autonomous Agents, Workflow Scripts)
   - **Hero 3D Canvas (Hero3DCanvas)**: Three.js WebGL canvas at z-[2] with 16:9 cinema viewfinder, 9:16 vertical reel frame, dual CatmullRom timeline curves, optical aperture rings, 420 volumetric cinema dust motes, and smooth mouse parallax.
 
 - **Preloader subtitles** are NOT uppercase ("Video Editor" not "VIDEO EDITOR") — user explicitly fixed this.
