@@ -133,6 +133,13 @@ User has GitHub credentials cached on Windows — push works without prompt.
 
 ## Recent decisions worth remembering
 
+  - **Featured Gallery Curation Order (Locked 22-Oct-2026)**:
+    - Position 1 (Top Hero Work): DxlG4S1B7jI (CGI AI Product Commercial)
+    - Position 2: OEVnJtqnaLc (SAM — End of Season Sale)
+    - Position 3: GRZH515PBiw (SAM Parking AI Commercial)
+    - Position 4: Fa2lhAShL34 (SAM Event AI Commercial)
+    - Gallery Middle: V6aM_ugfihs (SAM — Battle of the Bands) and gSmx6HeQPWI (Amrit Bharat Station — Gangapur City Teaser)
+    - Gallery Lower: WHUFW_fuk5k (AI Promotion Commercial) and ZT5UbhJlM94 (Rail Talk — Official Railway Podcast)
   - **Core Skills Clean Rules (Locked 22-Oct-2026)**:
     - Zero percentages (%) on skills bars in resume (clean titles with animated gradient lines only).
     - Exact 6 Core Skills:
