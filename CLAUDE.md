@@ -133,6 +133,15 @@ User has GitHub credentials cached on Windows — push works without prompt.
 
 ## Recent decisions worth remembering
 
+  - **Core Skills Clean Rules (Locked 22-Oct-2026)**:
+    - Zero percentages (%) on skills bars in resume (clean titles with animated gradient lines only).
+    - Exact 6 Core Skills:
+      1. Video Editing (Premiere Pro)
+      2. Motion Graphics (After Effects)
+      3. AI Video Generation (Seedance / Kling / Google Omni Flash)
+      4. AI Voiceover & Music Generation (ElevenLabs / Suno)
+      5. AI Image Generation (Midjourney / Concept Design)
+      6. AI Graphics & Visual Design (Photoshop / Illustrator)
   - **Resume & Tools Stack Rules (Locked 22-Oct-2026)**:
     - Zero 'Available for work' badges on resume (clean header only).
     - ZERO 'Veo' mentions — ALWAYS write 'Google Omni Flash' everywhere in portfolio and resume.
