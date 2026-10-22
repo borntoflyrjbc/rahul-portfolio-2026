@@ -1523,12 +1523,13 @@ const ToolsMarquee = () => {
 };
 
 
-type StudioMode = 'video' | 'motion' | 'audio';
+type StudioMode = 'visuals' | 'audio' | 'avatar' | 'automations' | 'agentic';
 
 interface ModeData {
   id: StudioMode;
   label: string;
   badge: string;
+  icon: string;
   tagline: string;
   accentHex: number;
   tools: string[];
@@ -1537,58 +1538,129 @@ interface ModeData {
 
 const studioModes: ModeData[] = [
   {
-    id: 'video',
-    label: 'AI Video Generation',
-    badge: 'Cinematic AI',
-    tagline: 'Directing narrative video, dynamic camera motion, and hyper-real visual stories.',
+    id: 'visuals',
+    label: 'AI Image & Video',
+    badge: 'Generative Visuals',
+    icon: '🎬',
+    tagline: 'Directing multi-shot cinematic video, dynamic camera physics, and photoreal image generation.',
     accentHex: 0x06b6d4, // Cyan
     tools: ['Seedance', 'Kling', 'Veo', 'Runway', 'Midjourney'],
     capabilities: [
       'Multi-shot cinematic scene pacing and visual continuity',
-      'Prompt direction with camera focal lengths, angles & lighting',
-      'Text-to-video and image-to-video character consistency',
-      'Fast visual ideation for high-impact social and commercial ads',
-    ],
-  },
-  {
-    id: 'motion',
-    label: 'Motion Graphics & VFX',
-    badge: 'Post-Production',
-    tagline: 'Crafting kinetic typography, brand animations, and seamless visual compositing.',
-    accentHex: 0xa855f7, // Purple
-    tools: ['After Effects', 'Premiere Pro', 'Photoshop', 'Illustrator'],
-    capabilities: [
-      'High-impact kinetic typography and cinematic title sequences',
-      'Dynamic brand logo reveals, stings, and animated identities',
-      'Visual effects compositing and seamless scene transitions',
-      '9:16 vertical reel formatting optimized to stop the scroll',
+      'Photorealistic image synthesis & concept keyframe direction',
+      'Camera optics, focal lengths, lighting ratios & physics',
+      'Character consistency and image-to-video scene expansion',
     ],
   },
   {
     id: 'audio',
-    label: 'Audio Sync & Neural Voice',
-    badge: 'Sound Design',
-    tagline: 'Synchronizing expressive voiceovers, diegetic soundscapes, and broadcast audio.',
-    accentHex: 0xf59e0b, // Amber
-    tools: ['ElevenLabs', 'Adobe Audition', 'Premiere Pro Sound', 'OBS Studio'],
+    label: 'AI Music & Voice',
+    badge: 'Neural Audio & Music',
+    icon: '🎙️',
+    tagline: 'Crafting expressive neural voiceovers, generative background scores, and synchronized diegetic sound.',
+    accentHex: 0xf59e0b, // Amber/Gold
+    tools: ['ElevenLabs', 'Suno', 'Adobe Audition', 'Premiere Pro Sound'],
     capabilities: [
-      'Expressive AI voiceover direction with natural breathing & tone',
-      'Diegetic sound effects matching on-screen motion and cuts',
-      'Clean dialogue enhancement and noise suppression',
-      'Broadcast loudness normalization (-14 LUFS standard)',
+      'Expressive emotional voice cloning with breath & cadence control',
+      'Generative cinematic background scores tailored to scene tempo',
+      'Diegetic sound effects, foley & atmospheric audio layering',
+      'Broadcast loudness mastering (-14 LUFS standard for web & TV)',
+    ],
+  },
+  {
+    id: 'avatar',
+    label: 'AI Avatar & Presenter',
+    badge: 'Digital Humans',
+    icon: '👤',
+    tagline: 'Generating lifelike digital presenters, photoreal lip-sync, and localized multilingual video.',
+    accentHex: 0xec4899, // Neon Pink/Rose
+    tools: ['Hedra', 'LivePortrait', 'OmniHuman', 'ElevenLabs'],
+    capabilities: [
+      'Photoreal facial micro-expressions and natural eye blinks',
+      'Sub-frame accurate lip-sync matching multi-language voice tracks',
+      'Scalable explainer & educational video production without studio shoot',
+      'Consistent digital presenter preservation across multi-episode series',
+    ],
+  },
+  {
+    id: 'automations',
+    label: 'AI Editing Automations',
+    badge: 'Pipeline Automation',
+    icon: '⚡',
+    tagline: 'Accelerating post-production with automated cutting, smart transcriptions, and batch processing.',
+    accentHex: 0x10b981, // Emerald Green
+    tools: ['Automated Pipelines', 'Whisper AI', 'Smart Scene Detection', 'Auto-Captions'],
+    capabilities: [
+      'Automated silence & filler word removal with instant rough cuts',
+      'Accurate speech-to-text transcriptions and styled vertical subtitles',
+      'Batch media renaming, metadata tagging, and ingest organization',
+      'Automated multi-aspect reframing (16:9 widescreen to 9:16 vertical)',
+    ],
+  },
+  {
+    id: 'agentic',
+    label: 'AI Agentic Workflows',
+    badge: 'Autonomous Tools & IDE',
+    icon: '🤖',
+    tagline: 'Leveraging modern IDEs, autonomous AI agents, and custom scripts for high-speed creative workflows.',
+    accentHex: 0x8b5cf6, // Electric Violet
+    tools: ['VS Code', 'Cursor IDE', 'Autonomous Agents', 'Workflow Scripts'],
+    capabilities: [
+      'Autonomous agent-driven prompt engineering and asset pipeline integration',
+      'Custom video helper scripts executed in VS Code and Cursor IDE',
+      'Rapid iterative debugging and automated asset packaging',
+      'Seamless bridge between generative AI tools and video post-production',
     ],
   },
 ];
 
 const studioMarquee = [
   'Seedance', 'Kling', 'Veo', 'Runway', 'ElevenLabs', 'Midjourney',
-  'Adobe Premiere Pro', 'After Effects', 'VS Code', 'Photoshop', 'Cursor IDE', 'Workflow Automation',
+  'VS Code', 'Cursor IDE', 'Workflow Automation', 'Hedra', 'Suno', 'Whisper AI', 'LivePortrait', 'Autonomous Agents',
   'Seedance', 'Kling', 'Veo', 'Runway', 'ElevenLabs', 'Midjourney',
-  'Adobe Premiere Pro', 'After Effects', 'VS Code', 'Photoshop', 'Cursor IDE', 'Workflow Automation'
+  'VS Code', 'Cursor IDE', 'Workflow Automation', 'Hedra', 'Suno', 'Whisper AI', 'LivePortrait', 'Autonomous Agents',
 ];
 
+const badgeStyles: Record<StudioMode, { bg: string; text: string; border: string; dot: string; glow: string }> = {
+  visuals: {
+    bg: 'bg-cyan-500/15',
+    text: 'text-cyan-300',
+    border: 'border-cyan-500/30',
+    dot: 'bg-cyan-400',
+    glow: 'shadow-[0_0_24px_rgba(6,182,212,0.35)] border-cyan-500/40',
+  },
+  audio: {
+    bg: 'bg-amber-500/15',
+    text: 'text-amber-300',
+    border: 'border-amber-500/30',
+    dot: 'bg-amber-400',
+    glow: 'shadow-[0_0_24px_rgba(245,158,11,0.35)] border-amber-500/40',
+  },
+  avatar: {
+    bg: 'bg-pink-500/15',
+    text: 'text-pink-300',
+    border: 'border-pink-500/30',
+    dot: 'bg-pink-400',
+    glow: 'shadow-[0_0_24px_rgba(236,72,153,0.35)] border-pink-500/40',
+  },
+  automations: {
+    bg: 'bg-emerald-500/15',
+    text: 'text-emerald-300',
+    border: 'border-emerald-500/30',
+    dot: 'bg-emerald-400',
+    glow: 'shadow-[0_0_24px_rgba(16,185,129,0.35)] border-emerald-500/40',
+  },
+  agentic: {
+    bg: 'bg-purple-500/15',
+    text: 'text-purple-300',
+    border: 'border-purple-500/30',
+    dot: 'bg-purple-400',
+    glow: 'shadow-[0_0_24px_rgba(139,92,246,0.35)] border-purple-500/40',
+  },
+};
+
 const AiToolsSection = () => {
-  const [activeMode, setActiveMode] = useState<StudioMode>('video');
+  const [activeMode, setActiveMode] = useState<StudioMode>('visuals');
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const currentAccentRef = useRef<number>(0x06b6d4);
@@ -1698,10 +1770,10 @@ const AiToolsSection = () => {
 
     const ringGeo2 = new THREE.RingGeometry(2.35, 2.37, 64);
     const ringMat2 = new THREE.MeshBasicMaterial({
-      color: 0xa855f7,
+      color: 0x06b6d4,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.18,
+      opacity: 0.22,
     });
     const ring2 = new THREE.Mesh(ringGeo2, ringMat2);
     ring2.rotation.y = Math.PI / 4;
@@ -1786,6 +1858,7 @@ const AiToolsSection = () => {
   }, []);
 
   const currentMode = studioModes.find((m) => m.id === activeMode) || studioModes[0];
+  const currentBadgeStyle = badgeStyles[currentMode.id];
 
   return (
     <section id="ai-studio" className="py-20 md:py-28 bg-black relative border-t border-white/[0.05] overflow-hidden">
@@ -1822,25 +1895,26 @@ const AiToolsSection = () => {
             transition={{ delay: 0.14 }}
             className="text-white/45 text-sm md:text-base max-w-xl mx-auto leading-relaxed"
           >
-            Harnessing generative AI tools and motion design to produce cinematic visuals, dynamic animations, and broadcast-grade stories at lightning speed.
+            Harnessing generative visual engines, neural audio, digital avatars, and agentic workflows to produce broadcast-grade creative stories at lightning speed.
           </motion.p>
         </div>
 
-        {/* Mode Selector Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-8">
+        {/* Mode Selector Tabs (5 Pure AI Modes) */}
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mb-8">
           {studioModes.map((m) => {
             const isActive = activeMode === m.id;
+            const bStyle = badgeStyles[m.id];
             return (
               <button
                 key={m.id}
                 onClick={() => setActiveMode(m.id)}
-                className={`relative flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-semibold transition-all duration-300 cursor-pointer ${
+                className={`relative flex items-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-[12px] sm:text-[13px] font-semibold transition-all duration-300 cursor-pointer ${
                   isActive
-                    ? 'text-white bg-white/[0.1] border border-white/20 shadow-[0_0_24px_rgba(168,85,247,0.3)]'
+                    ? `text-white bg-white/[0.1] border ${bStyle.glow}`
                     : 'text-white/50 bg-white/[0.03] border border-white/[0.07] hover:text-white/80 hover:bg-white/[0.06]'
                 }`}
               >
-                <span>{m.id === 'video' ? '🎬' : m.id === 'motion' ? '⚡' : '🎙️'}</span>
+                <span>{m.icon}</span>
                 <span>{m.label}</span>
                 {isActive && (
                   <motion.div
@@ -1881,7 +1955,7 @@ const AiToolsSection = () => {
           <div className="lg:col-span-7 flex flex-col justify-center space-y-6">
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-[10px] font-semibold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/30">
+                <span className={`text-[10px] font-semibold tracking-wider uppercase px-2.5 py-0.5 rounded-full ${currentBadgeStyle.bg} ${currentBadgeStyle.text} border ${currentBadgeStyle.border}`}>
                   {currentMode.badge}
                 </span>
                 <span className="font-mono text-[11px] text-white/30">
@@ -1904,9 +1978,9 @@ const AiToolsSection = () => {
                 {currentMode.capabilities.map((cap, i) => (
                   <li
                     key={i}
-                    className="flex items-start gap-2.5 text-[12.5px] text-white/75 bg-white/[0.025] border border-white/[0.05] rounded-xl p-3 leading-snug"
+                    className="flex items-start gap-2.5 text-[12.5px] text-white/75 bg-white/[0.025] border border-white/[0.05] rounded-xl p-3 leading-snug hover:border-white/10 transition-colors"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-1.5 flex-shrink-0" />
+                    <span className={`w-1.5 h-1.5 rounded-full ${currentBadgeStyle.dot} mt-1.5 flex-shrink-0`} />
                     <span>{cap}</span>
                   </li>
                 ))}
@@ -1921,7 +1995,7 @@ const AiToolsSection = () => {
                 {currentMode.tools.map((tool, i) => (
                   <span
                     key={i}
-                    className="text-[11.5px] font-medium text-white/80 bg-white/[0.04] border border-white/[0.1] px-3 py-1 rounded-lg"
+                    className="text-[11.5px] font-medium text-white/80 bg-white/[0.04] border border-white/[0.1] px-3 py-1 rounded-lg hover:border-white/20 transition-colors"
                   >
                     {tool}
                   </span>
@@ -1935,7 +2009,7 @@ const AiToolsSection = () => {
         <div className="mt-12 relative overflow-hidden py-3">
           <div className="text-center mb-3">
             <span className="text-[10px] tracking-[0.3em] uppercase text-white/30 font-medium">
-              Production Arsenal
+              AI Production Arsenal
             </span>
           </div>
           <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
