@@ -379,7 +379,7 @@ const ResumeModal = ({ onClose }: { onClose: () => void }) => {
       ],
     },
     {
-      title: "Graphic & Motion Design",
+      title: "AI Graphics & Visual Design",
       skills: [
         { name: "Photoshop", c: "blue" },
         { name: "Illustrator", c: "orange" },

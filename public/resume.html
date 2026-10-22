@@ -263,10 +263,10 @@
   const skills = [
     { n:"Video Editing (Premiere Pro)", v:96 },
     { n:"Motion Graphics (After Effects)", v:92 },
-    { n:"AI Video Generation (Seedance / Kling / Google Omni Flash)", v:90, cy:true },
-    { n:"Audio Sync & Neural Voice (ElevenLabs)", v:88, cy:true },
-    { n:"Color Grading & Finishing (Lumetri)", v:88 },
-    { n:"Visual Design (Photoshop / Illustrator)", v:88 },
+    { n:"AI Video Generation (Seedance / Kling / Google Omni Flash)", v:92, cy:true },
+    { n:"AI Voiceover & Music Generation (ElevenLabs / Suno)", v:88, cy:true },
+    { n:"AI Image Generation (Midjourney / Concept Design)", v:90, cy:true },
+    { n:"AI Graphics & Visual Design (Photoshop / Illustrator)", v:88 },
   ];
   const stackGroups = [
     {
@@ -325,7 +325,7 @@
 
   document.getElementById("skills").innerHTML = skills.map(s=>`
     <div class="skill">
-      <div class="sr"><b>${s.n}</b><span>${s.v}%</span></div>
+      <div class="sr"><b>${s.n}</b></div>
       <div class="bar ${s.cy?'cy':''}"><i data-w="${s.v}"></i></div>
     </div>`).join("");
 
