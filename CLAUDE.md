@@ -186,6 +186,15 @@ User has GitHub credentials cached on Windows — push works without prompt.
 - **Resume opens in modal** (not PDF download) — glassmorphism dark UI, scan-line entry animation.
 - **About section is centered** on all screens (not split-layout).
 
+- **Showcase Triad Creative Replacement & Instant Video Thumbnail Engine (Locked 22-Oct-2026)**:
+    - Replaced black-and-white salon logo 'Inspire — Campaign' (Inspire.jpg) in Showcase Triad and allWorks with vibrant commercial campaign 'Udyam Villas — Brand Campaign' (Why_go_through_the_stress_of_building_from_scratchUdyam_Villas_bring_you_the_best_of_both_worlds.jpg).
+    - Fixed all video thumbnail latency and loading failures:
+      1. Vertical shorts (isVertical) directly request 'hqdefault.jpg' (480x360), completely eliminating maxresdefault 404 network errors and multi-hop retry waterfalls.
+      2. Non-vertical videos lacking maxres (_zCEfwWNPM8, ro2JpXOJzPQ, RW5gsFCVEfs, ckqwp5DZ154) configured with direct 'thumbnail: .../hqdefault.jpg'.
+      3. fallbackThumbnail skips 404-prone sddefault and goes straight to hqdefault, with 120px YouTube placeholder detection on onLoad.
+      4. Eager-loading expanded to top 8 video cards (eager={index < 8}) for instant above-the-fold display.
+      5. ShowcaseTriad ytThumb switched to 'hqdefault.jpg' for 100% instant marquee card load.
+
 ## Quick reference: where common things live in App.tsx
 
 - `allWorks` array: lines ~40-177 — all gallery items (videos + images)

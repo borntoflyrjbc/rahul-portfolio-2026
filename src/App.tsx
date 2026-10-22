@@ -61,7 +61,7 @@ const allWorks: WorkItem[] = [
   { id:"l3FdAX0i1sY", title:"Train Journey Ka Golden Rule", category: "Video & Motion", aspect:"horizontal" },
   { id:"Lw98VpMZTSM", title:"2K Udyam Independence Day", category: "Video & Motion", aspect:"horizontal" },
   { id:"iDjxRU1tiUw", title:"HCET Promo Video", category: "Video & Motion", aspect:"horizontal" },
-  { id:"_zCEfwWNPM8", title:"Hitkarini Hills Live", category: "Video & Motion", aspect:"horizontal" },
+  { id:"_zCEfwWNPM8", title:"Hitkarini Hills Live", category: "Video & Motion", aspect:"horizontal", thumbnail: "https://i.ytimg.com/vi/_zCEfwWNPM8/hqdefault.jpg" },
   { id:"KK-4B8JKzBQ", title:"Krishnashray Senior Living", category: "Video & Motion", aspect:"horizontal" },
   { id:"uyGuZRLdQv0", title:"Winter Fest Horizontal", category: "Video & Motion", aspect:"horizontal" },
   { id:"rm0IcbX9hB8", title:"Sam Winter Fest", category: "Video & Motion", aspect:"horizontal" },
@@ -69,7 +69,7 @@ const allWorks: WorkItem[] = [
   { id:"rv3MfaQdoi4", title:"Holi Wishes", category: "Video & Motion", aspect:"horizontal" },
   { id:"Z9yG_OIiaSk", title:"Vastraa Reel", category: "Video & Motion", aspect:"horizontal" },
   { id:"xknHIGn7GA4", title:"Sam Cricket World Cup", category: "Video & Motion", aspect:"horizontal" },
-  { id:"ro2JpXOJzPQ", title:"Edit Reel", category: "Video & Motion", aspect:"horizontal" },
+  { id:"ro2JpXOJzPQ", title:"Edit Reel", category: "Video & Motion", aspect:"horizontal", thumbnail: "https://i.ytimg.com/vi/ro2JpXOJzPQ/hqdefault.jpg" },
   { id:"_DlnFJjT_t8", title:"Urban Reel 4", category: "Video & Motion", aspect:"horizontal" },
   { id:"_YlMYR4D7eg", title:"Urban Reel 7", category: "Video & Motion", aspect:"horizontal" },
   { id:"69rV1I6IiCY", title:"Udyam Full Campaign", category: "Video & Motion", aspect:"horizontal" },
@@ -89,8 +89,8 @@ const allWorks: WorkItem[] = [
   { id:"85ahifvJFXo", title:"UCB Brand Film", category: "Video & Motion", aspect:"aspect-square" },
   { id:"IXzlQO0_ww0", title:"Brand Reel", category: "Video & Motion", aspect:"aspect-square" },
   { id:"46g4s7ZzOBQ", title:"Short Edit", category: "Video & Motion", aspect:"aspect-square" },
-  { id:"RW5gsFCVEfs", title:"Campaign Edit", category: "Video & Motion", aspect:"aspect-square" },
-  { id:"ckqwp5DZ154", title:"Motion Book Animation", category: "Video & Motion", aspect:"aspect-square" },
+  { id:"RW5gsFCVEfs", title:"Campaign Edit", category: "Video & Motion", aspect:"aspect-square", thumbnail: "https://i.ytimg.com/vi/RW5gsFCVEfs/hqdefault.jpg" },
+  { id:"ckqwp5DZ154", title:"Motion Book Animation", category: "Video & Motion", aspect:"aspect-square", thumbnail: "https://i.ytimg.com/vi/ckqwp5DZ154/hqdefault.jpg" },
 
   // ── VERTICAL 9:16 ──
   { id:"Qu91-liFdV8", title:"Short Reel A", category: "Video & Motion", aspect:"vertical" },
@@ -164,7 +164,7 @@ const allWorks: WorkItem[] = [
   { type: "image", src: "https://res.cloudinary.com/dijteej5k/image/upload/v1776355433/portfolio/social/IMG-20250820-WA0045.jpg", title: "Creative Design", category: "Graphics & Design" },
   { type: "image", src: "https://res.cloudinary.com/dijteej5k/image/upload/v1776355434/portfolio/social/IMG-20250820-WA0046.jpg", title: "Creative Design", category: "Graphics & Design" },
   { type: "image", src: "https://res.cloudinary.com/dijteej5k/image/upload/v1776355435/portfolio/social/IMG-20250820-WA0047.jpg", title: "Creative Design", category: "Graphics & Design" },
-  { type: "image", src: "https://res.cloudinary.com/dijteej5k/image/upload/v1776355436/portfolio/social/Inspire.jpg", title: "Creative Design", category: "Graphics & Design" },
+  { type: "image", src: "https://res.cloudinary.com/dijteej5k/image/upload/q_auto,f_auto/v1776355461/portfolio/social/Why_go_through_the_stress_of_building_from_scratchUdyam_Villas_bring_you_the_best_of_both_worlds.jpg", title: "Udyam Villas — Brand Campaign", category: "Graphics & Design" },
   { type: "image", src: "https://res.cloudinary.com/dijteej5k/image/upload/v1776355437/portfolio/social/new.webp", title: "Creative Design", category: "Graphics & Design" },
   { type: "image", src: "https://res.cloudinary.com/dijteej5k/image/upload/v1776355439/portfolio/social/vectus.jpg", title: "Creative Design", category: "Graphics & Design" },
   { type: "image", src: "https://res.cloudinary.com/dijteej5k/image/upload/v1776355440/portfolio/social/WhatsApp_Image_2025-08-18_at_15.09.31_a11f9345.jpg", title: "Creative Design", category: "Graphics & Design" },
@@ -2430,11 +2430,21 @@ const VideoCard: React.FC<{
       ? { position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", height: "100%", width: "178%", border: 0 }
       : { position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 };
 
+  // Priority: custom thumbnail -> for vertical/shorts use hqdefault directly (100% fast & zero 404s) -> for horizontal try maxres
+  const initialThumb = item.thumbnail || (
+    isVertical
+      ? `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`
+      : `https://i.ytimg.com/vi/${item.id}/maxresdefault.jpg`
+  );
+
   const fallbackThumbnail = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
-    if (img.src.includes("maxresdefault")) img.src = `https://i.ytimg.com/vi/${item.id}/sddefault.jpg`;
-    else if (img.src.includes("sddefault")) img.src = `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`;
-    else if (img.src.includes("hqdefault")) img.src = `https://i.ytimg.com/vi/${item.id}/mqdefault.jpg`;
+    // Fast direct fallback to hqdefault (skipping 404-prone sddefault), then mqdefault
+    if (img.src.includes("maxresdefault") || img.src.includes("sddefault")) {
+      img.src = `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`;
+    } else if (img.src.includes("hqdefault")) {
+      img.src = `https://i.ytimg.com/vi/${item.id}/mqdefault.jpg`;
+    }
   };
 
   return (
@@ -2452,10 +2462,12 @@ const VideoCard: React.FC<{
       `}>
 
         <img
-          src={`https://i.ytimg.com/vi/${item.id}/maxresdefault.jpg`}
+          src={initialThumb}
           onLoad={(e) => {
             const img = e.currentTarget;
-            if (img.naturalWidth <= 120) fallbackThumbnail(e);
+            if (img.naturalWidth <= 120 && !img.src.includes("hqdefault") && !img.src.includes("mqdefault")) {
+              img.src = `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`;
+            }
           }}
           onError={fallbackThumbnail}
           className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out ${isVertical ? "scale-[1.4] origin-center" : ""} group-hover:scale-[1.04]`}
@@ -2604,7 +2616,7 @@ const CreativeWorks = () => {
                       )}
                     </div>
                   ) : (
-                    <VideoCard item={item} onCardClick={(item) => setModalItem(item)} eager={index < 4} />
+                    <VideoCard item={item} onCardClick={(item) => setModalItem(item)} eager={index < 8} />
                   )}
                 </motion.div>
               ))}
@@ -2827,11 +2839,13 @@ const ScrollProgress = () => {
 };
 
 // ─── SHOWCASE TRIAD — 3 animated discipline sections (additive, gallery untouched) ───
-const ytThumb = (id: string) => `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+const ytThumb = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 const thumbFallback = (e: React.SyntheticEvent<HTMLImageElement>) => {
   const t = e.currentTarget;
-  if (t.src.includes("maxresdefault")) t.src = t.src.replace("maxresdefault", "sddefault");
-  else if (t.src.includes("sddefault")) t.src = t.src.replace("sddefault", "hqdefault");
+  if (t.src.includes("maxresdefault") || t.src.includes("sddefault")) {
+    const vidId = t.src.split("/vi/")[1]?.split("/")[0];
+    if (vidId) t.src = `https://i.ytimg.com/vi/${vidId}/hqdefault.jpg`;
+  }
 };
 
 type ShowItem = { img: string; t: string; k: string };
@@ -2866,7 +2880,7 @@ const showcaseBands: Band[] = [
       { img: "https://res.cloudinary.com/dijteej5k/image/upload/q_auto,f_auto/v1776607927/MAR26_JKLC056_IPL_CAMP_MKV2B_OOH_ADPT_1-1_gwj2xs.jpg", t: "JK Lakshmi — IPL Campaign", k: "OOH" },
       { img: "https://res.cloudinary.com/dijteej5k/image/upload/v1776355393/portfolio/social/file_1.webp", t: "Social Creative Set", k: "Social" },
       { img: "https://res.cloudinary.com/dijteej5k/image/upload/v1776355439/portfolio/social/vectus.jpg", t: "Vectus — Brand Post", k: "Brand" },
-      { img: "https://res.cloudinary.com/dijteej5k/image/upload/v1776355436/portfolio/social/Inspire.jpg", t: "Inspire — Campaign", k: "Print" },
+      { img: "https://res.cloudinary.com/dijteej5k/image/upload/q_auto,f_auto/v1776355461/portfolio/social/Why_go_through_the_stress_of_building_from_scratchUdyam_Villas_bring_you_the_best_of_both_worlds.jpg", t: "Udyam Villas — Brand Campaign", k: "Campaign" },
       { img: "https://res.cloudinary.com/dijteej5k/image/upload/v1776355437/portfolio/social/new.webp", t: "Festival Creative", k: "Festive" },
       { img: "https://res.cloudinary.com/dijteej5k/image/upload/v1776355394/portfolio/social/file_2.webp", t: "Identity System", k: "Branding" },
     ],
