@@ -133,6 +133,14 @@ User has GitHub credentials cached on Windows — push works without prompt.
 
 ## Recent decisions worth remembering
 
+  - **Resume Layout Precision Rules (Locked 22-Oct-2026)**:
+    - In Core Skills: use AI Video Generation (Seedance / Kling / Omni Flash) (omit 'Google ' in resume to prevent 2-line wrapping).
+    - In Tools & AI Stack (Resume only):
+      - Video Editing & Post: Adobe Premiere Pro, After Effects, Adobe Audition (omit OBS Studio & Color Grading).
+      - Graphic & Motion Design: Photoshop, Illustrator (omit Social Media Content).
+      - Generative AI Video & Voice: Seedance, Kling, Omni Flash, Runway, ElevenLabs, Midjourney.
+      - Code & Development: VS Code (omit Cursor IDE & Workflow Automation in resume).
+    - Ensures right column aligns with left column and never causes page stretching.
   - **Featured Gallery Curation Order (Locked 22-Oct-2026)**:
     - Position 1 (Top Hero Work): DxlG4S1B7jI (CGI AI Product Commercial)
     - Position 2: OEVnJtqnaLc (SAM — End of Season Sale)
