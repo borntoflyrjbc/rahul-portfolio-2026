@@ -40,7 +40,7 @@ package.json     ← name: "rahul-jain-portfolio"
 | 4 | `Hero` | Landing — badge with pulsing dot before "with AI Innovation", h1, CTAs, tools row |
 | 5 | `About` | YouTube background video (mobile gets vertical short, desktop wide), experience cards |
 | 6 | `ToolsMarquee` | Software icons (Premiere, AE, Ps, Ai, OBS, Sketch) — horizontal scroll on mobile |
-| 7 | `AiToolsSection` | Single-row marquee of AI tool names (Runway, Kling, Veo, etc.) |
+| 7 | `AiToolsSection` | Single-row marquee of AI tool names (Runway, Kling, Google Omni Flash, etc.) |
 | 8 | `ServicesSection` | 8 expertise cards in 2x4 grid (mobile 2-col, desktop 4-col) |
 | 9 | `ClientsSection` | Two-row marquee of client logos in white pill cards (left + right scroll) |
 | 10 | `CreativeWorks` | Masonry gallery (1/2/3 col) of YouTube videos + Cloudinary images, filterable |
@@ -133,15 +133,23 @@ User has GitHub credentials cached on Windows — push works without prompt.
 
 ## Recent decisions worth remembering
 
+  - **Resume & Tools Stack Rules (Locked 22-Oct-2026)**:
+    - Zero 'Available for work' badges on resume (clean header only).
+    - ZERO 'Veo' mentions — ALWAYS write 'Google Omni Flash' everywhere in portfolio and resume.
+    - 'Tools & AI Stack' in resume and modal must ALWAYS be systematically categorized into 4 tiers:
+      1. Video Editing & Post-Production (Premiere, AE, Audition, OBS, Lumetri)
+      2. Graphic & Motion Design (Photoshop, Illustrator, Social Media Content)
+      3. Generative AI Video & Voice (Seedance, Kling, Google Omni Flash, Runway, ElevenLabs, Midjourney)
+      4. Workflow Automation & IDE (VS Code, Cursor IDE, Workflow Automation)
 - **Locked 21-Oct-2026 Decisions (CRITICAL)**:
   - **Forbidden terms completely banned**: ZERO mentions of 'XML', 'vibe coding', 'Python/TypeScript scripting', 'Figma', 'Sketch', or 'DaVinci Resolve' across the entire codebase (src/App.tsx, public/resume.html, dist/).
-  - **Tool names cleaned**: Version numbers stripped (Seedance, Kling, Veo, Runway, ElevenLabs, Midjourney). Added VS Code (with custom SVG logo) & Cursor IDE / Workflow Automation. Added Illustrator to Hero bottom strip.
+  - **Tool names cleaned**: Version numbers stripped (Seedance, Kling, Google Omni Flash, Runway, ElevenLabs, Midjourney). Added VS Code (with custom SVG logo) & Cursor IDE / Workflow Automation. Added Illustrator to Hero bottom strip.
   - **Company & Railway names locked**: 'CIN News Network, Jabalpur' (strictly CIN, not CI) and 'Degree 360, Delhi · Project: West Central Railway (WCR)' (never 'Degree 360 | Remote' on public cards/resume).
   - **Header navigation (Strictly 5 items)**: 1-to-1 matching section titles: About (#about), Expertise (#services), Showreel (#showreel), My Work (#creative-works), Contact (#contact) + Top-Right Resume CTA. No internal experimental 'AI Studio' links.
   - **AI Studio 5 Pure AI Modes Architecture (Updated 22-Oct-2026)**:
     - Traditional 'Motion Graphics & VFX' completely removed from the AI section (traditional editing lives in ToolsMarquee/Expertise).
     - AI Studio strictly features 5 Pure AI modes:
-      1. AI Image & Video (Seedance, Kling, Veo, Runway, Midjourney)
+      1. AI Image & Video (Seedance, Kling, Google Omni Flash, Runway, Midjourney)
       2. AI Music & Voice (ElevenLabs, Suno, Adobe Audition, Premiere Pro Sound)
       3. AI Avatar & Presenter (Hedra, LivePortrait, OmniHuman, ElevenLabs)
       4. AI Editing Automations (Automated Pipelines, Whisper AI, Smart Scene Detection, Auto-Captions)
